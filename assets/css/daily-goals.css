@@ -1,0 +1,120 @@
+/* daily-goals.css */
+
+.badge-streak {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(245, 158, 11, 0.1);
+  color: #F59E0B;
+  border: 1px solid rgba(245, 158, 11, 0.2);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.badge-streak svg {
+  width: 14px;
+  height: 14px;
+  fill: #F59E0B;
+}
+
+.goals-checklist-box {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.goal-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 20px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+}
+
+.goal-item:hover {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.1);
+  transform: translateX(4px);
+}
+
+.goal-checkbox-wrapper {
+  position: relative;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+}
+
+.goal-item.completed .goal-checkbox-wrapper {
+  background: var(--success);
+  border-color: var(--success);
+}
+
+.goal-checkbox-wrapper svg {
+  width: 12px;
+  height: 12px;
+  color: white;
+  opacity: 0;
+  transform: scale(0.6);
+  transition: all var(--transition-normal);
+}
+
+.goal-item.completed .goal-checkbox-wrapper svg {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.goal-text-display {
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: var(--text-main);
+  transition: all var(--transition-normal);
+}
+
+.goal-item.completed .goal-text-display {
+  color: #9CA3AF;
+  text-decoration: line-through;
+}
+
+/* Progress circular ring details */
+.progress-ring-box {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  margin: 15px auto;
+}
+
+.ring-label {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ring-label span {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--text-main);
+  line-height: 1;
+}
+
+.ring-label small {
+  font-size: 0.65rem;
+  color: #9CA3AF;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: 3px;
+}

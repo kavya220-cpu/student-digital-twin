@@ -1,0 +1,203 @@
+/* certificates.css */
+
+/* KPI TOTAL CARD */
+.cert-kpi-count {
+  font-size: 3.5rem;
+  font-weight: 800;
+  color: var(--primary);
+  line-height: 1.1;
+  text-shadow: 0 0 20px rgba(108, 99, 255, 0.15);
+}
+
+/* PLATFORM SPLIT LIST */
+.platform-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.platform-row {
+  display: flex;
+  flex-direction: column;
+}
+
+.platform-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.82rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.platform-name {
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.platform-count {
+  color: var(--secondary);
+}
+
+.platform-bar-track {
+  height: 5px;
+  background: var(--border-color);
+  border-radius: var(--radius-full);
+}
+
+.platform-bar-fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  background: var(--secondary);
+  width: 0%;
+  transition: width 0.8s ease-in-out;
+}
+
+/* CERTIFICATE CARDS */
+.cert-card {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  box-shadow: var(--glass-shadow);
+  backdrop-filter: var(--glass-backdrop-blur);
+  -webkit-backdrop-filter: var(--glass-backdrop-blur);
+  transition: all var(--transition-normal);
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  height: 100%;
+  text-align: left;
+}
+
+.cert-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--primary);
+  box-shadow: 0 10px 20px rgba(108, 99, 255, 0.06);
+}
+
+/* Custom platform-specific icons */
+.cert-platform-icon-box {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: white;
+  font-weight: 700;
+  font-size: 0.88rem;
+}
+
+.cert-platform-icon-box.google { background: linear-gradient(135deg, #EA4335 0%, #FBBC05 100%); }
+.cert-platform-icon-box.microsoft { background: linear-gradient(135deg, #00A4EF 0%, #2563EB 100%); }
+.cert-platform-icon-box.coursera { background: linear-gradient(135deg, #0056D2 0%, #00419E 100%); }
+.cert-platform-icon-box.nptel { background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%); }
+.cert-platform-icon-box.udemy { background: linear-gradient(135deg, #A435F0 0%, #8710D8 100%); }
+.cert-platform-icon-box.cisco { background: linear-gradient(135deg, #049FD9 0%, #015D8C 100%); }
+.cert-platform-icon-box.oracle { background: linear-gradient(135deg, #F20000 0%, #B30000 100%); }
+.cert-platform-icon-box.fallback { background: linear-gradient(135deg, #6B7280 0%, #4B5563 100%); }
+
+.cert-details-wrap {
+  flex: 1;
+  overflow: hidden;
+}
+
+.cert-title-text {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin: 0 0 4px 0;
+  line-height: 1.3;
+}
+
+.cert-meta-platform {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.cert-meta-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  margin-bottom: 12px;
+}
+
+.cert-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.cert-meta-row svg {
+  width: 13px;
+  height: 13px;
+  color: var(--text-secondary);
+}
+
+.cert-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--border-color);
+  padding-top: 10px;
+  margin-top: 10px;
+}
+
+.cert-verify-link {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--secondary);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.cert-verify-link:hover {
+  color: var(--primary);
+}
+
+.cert-verify-link svg {
+  width: 12px;
+  height: 12px;
+}
+
+/* DRAG & DROP CERTIFICATE UPLOADER */
+.cert-file-uploader-box {
+  border: 2px dashed rgba(108, 99, 255, 0.3);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  text-align: center;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.2);
+  transition: all var(--transition-normal);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.cert-file-uploader-box:hover,
+.cert-file-uploader-box.dragover {
+  border-color: var(--primary);
+  background: rgba(108, 99, 255, 0.05);
+  box-shadow: 0 0 10px rgba(108, 99, 255, 0.08);
+}
+
+.cert-file-uploader-box svg {
+  color: var(--primary);
+  margin-bottom: 4px;
+}
+

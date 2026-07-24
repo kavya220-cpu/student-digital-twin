@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NexusED – AI Mock Interview</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- CDNs -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap-grid.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap-utilities.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="assets/css/variables.css">
+  <link rel="stylesheet" href="assets/css/theme.css">
+  <link rel="stylesheet" href="assets/css/animations.css">
+  <link rel="stylesheet" href="assets/css/buttons.css">
+  <link rel="stylesheet" href="assets/css/forms.css">
+  <link rel="stylesheet" href="assets/css/dashboard.css">
+  <link rel="stylesheet" href="assets/css/mock-interview.css">
+  <link rel="stylesheet" href="assets/css/sidebar.css">
+</head>
+<body>
+
+  <!-- Ambient Glow Backgrounds -->
+  <div class="cursor-glow"></div>
+  <div class="bg-blobs">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+
+  <!-- Shared Sidebar Menu -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-icon-wrapper">
+        <i data-lucide="layers"></i>
+      </div>
+      <span class="brand-name">NexusED</span>
+    </div>
+    
+    <nav class="sidebar-menu">
+      <a href="dashboard.html" class="sidebar-item" id="nav-dashboard">
+        <i data-lucide="layout-dashboard"></i>
+        <span>Dashboard</span>
+      </a>
+      <a href="roadmap.html" class="sidebar-item" id="nav-roadmap">
+        <i data-lucide="compass"></i>
+        <span>Roadmap</span>
+      </a>
+      <a href="skills.html" class="sidebar-item" id="nav-skills">
+        <i data-lucide="award"></i>
+        <span>Skill Tracker</span>
+      </a>
+      <a href="projects.html" class="sidebar-item" id="nav-projects">
+        <i data-lucide="folder-git-2"></i>
+        <span>Projects</span>
+      </a>
+      <a href="certificates.html" class="sidebar-item" id="nav-certificates">
+        <i data-lucide="check-square"></i>
+        <span>Certificates</span>
+      </a>
+      <a href="resume-builder.html" class="sidebar-item" id="nav-resume-builder">
+        <i data-lucide="file-text"></i>
+        <span>Resume Builder</span>
+      </a>
+      <a href="resume-analyzer.html" class="sidebar-item" id="nav-resume-analyzer">
+        <i data-lucide="bar-chart-3"></i>
+        <span>Resume Analyzer</span>
+      </a>
+      <a href="interview.html" class="sidebar-item" id="nav-interview">
+        <i data-lucide="help-circle"></i>
+        <span>Interview Prep</span>
+      </a>
+      <a href="mock-interview.html" class="sidebar-item" id="nav-mock-interview">
+        <i data-lucide="mic"></i>
+        <span>AI Mock Interview</span>
+      </a>
+      <a href="coding-tracker.html" class="sidebar-item" id="nav-coding-tracker">
+        <i data-lucide="code"></i>
+        <span>Coding Tracker</span>
+      </a>
+      <a href="career-readiness.html" class="sidebar-item" id="nav-career-readiness">
+        <i data-lucide="trending-up"></i>
+        <span>Career Readiness</span>
+      </a>
+      <a href="recommendations.html" class="sidebar-item" id="nav-recommendations">
+        <i data-lucide="sparkles"></i>
+        <span>Recommendations</span>
+      </a>
+      <a href="daily-goals.html" class="sidebar-item" id="nav-daily-goals">
+        <i data-lucide="list-todo"></i>
+        <span>Daily Goals</span>
+      </a>
+      <a href="analytics.html" class="sidebar-item" id="nav-analytics">
+        <i data-lucide="pie-chart"></i>
+        <span>Analytics</span>
+      </a>
+    </nav>
+    
+    <div class="sidebar-user mt-auto">
+      <div class="user-avatar" id="sidebar-user-avatar">
+        <!-- Render base64 image or initials dynamically -->
+      </div>
+      <div class="user-info">
+        <span class="user-name text-truncate" id="sidebar-user-name">Loading...</span>
+        <span class="user-role text-truncate" id="sidebar-user-career">Calibration Loading</span>
+      </div>
+      <button type="button" class="logout-btn ms-auto" id="logout-trigger" aria-label="Sign out">
+        <i data-lucide="log-out"></i>
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main Content Space -->
+  <main class="dashboard-main">
+    
+    <!-- LOBBY SCREEN (VISIBLE BY DEFAULT) -->
+    <div id="interview-lobby-view">
+      <!-- Top Header Bar -->
+      <header class="d-flex align-items-center justify-content-between mb-5 animate__animated animate__fadeIn">
+        <div class="header-left">
+          <h1 class="welcome-heading">Rule-Based Mock Interview Engine</h1>
+          <p class="text-muted">Simulate timed interviews, practice keyword alignment, and get instant technical & communication feedback.</p>
+        </div>
+      </header>
+
+      <!-- Selection Cards Grid -->
+      <section class="row g-4 mb-5" id="tracks-cards-feed">
+        
+        <!-- Track 1: HR Interview -->
+        <div class="col-lg-4 col-md-6 col-12 animate__animated animate__fadeInUp" style="animation-delay: 0.1s;">
+          <div class="track-select-card" data-track="HR">
+            <div class="track-icon-wrapper track-hr"><i data-lucide="user-check"></i></div>
+            <h3 class="track-title-text mt-3">HR Interview</h3>
+            <p class="track-desc-text mt-2">Self-introductions, weakness assessments, strengths, and five-year career projections.</p>
+            <div class="track-meta mt-3">
+              <span><i data-lucide="clock"></i> 15 Mins</span>
+              <span class="difficulty-tag easy">Easy</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Track 2: Technical Interview -->
+        <div class="col-lg-4 col-md-6 col-12 animate__animated animate__fadeInUp" style="animation-delay: 0.15s;">
+          <div class="track-select-card" data-track="Technical">
+            <div class="track-icon-wrapper track-tech"><i data-lucide="code-2"></i></div>
+            <h3 class="track-title-text mt-3">Technical Interview</h3>
+            <p class="track-desc-text mt-2">Java architecture, Python GIL structures, DBMS properties, paging loops, joins, and sorting algorithms.</p>
+            <div class="track-meta mt-3">
+              <span><i data-lucide="clock"></i> 25 Mins</span>
+              <span class="difficulty-tag hard">Hard</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Track 3: Behavioral Interview -->
+        <div class="col-lg-4 col-md-6 col-12 animate__animated animate__fadeInUp" style="animation-delay: 0.2s;">
+          <div class="track-select-card" data-track="Behavioral">
+            <div class="track-icon-wrapper track-behavioral"><i data-lucide="sparkles"></i></div>
+            <h3 class="track-title-text mt-3">Behavioral Interview</h3>
+            <p class="track-desc-text mt-2">Conflict resolution models, leadership guidelines, teamwork STAR patterns, and simplifying concepts.</p>
+            <div class="track-meta mt-3">
+              <span><i data-lucide="clock"></i> 20 Mins</span>
+              <span class="difficulty-tag medium">Medium</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Track 4: Aptitude -->
+        <div class="col-lg-4 col-md-6 col-12 animate__animated animate__fadeInUp" style="animation-delay: 0.25s;">
+          <div class="track-select-card" data-track="Aptitude">
+            <div class="track-icon-wrapper track-aptitude"><i data-lucide="brain"></i></div>
+            <h3 class="track-title-text mt-3">Aptitude & Logic</h3>
+            <p class="track-desc-text mt-2">Analytical reasoning, pattern puzzles, arithmetic operations, and sequential troubleshooting.</p>
+            <div class="track-meta mt-3">
+              <span><i data-lucide="clock"></i> 10 Mins</span>
+              <span class="difficulty-tag medium">Medium</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Track 5: Group Discussion -->
+        <div class="col-lg-4 col-md-6 col-12 animate__animated animate__fadeInUp" style="animation-delay: 0.3s;">
+          <div class="track-select-card" data-track="GD">
+            <div class="track-icon-wrapper track-gd"><i data-lucide="users-2"></i></div>
+            <h3 class="track-title-text mt-3">Group Discussion (GD)</h3>
+            <p class="track-desc-text mt-2">AI workforce impacts, hybrid workplace cultures, decentralization networks, and gig markets.</p>
+            <div class="track-meta mt-3">
+              <span><i data-lucide="clock"></i> 15 Mins</span>
+              <span class="difficulty-tag easy">Easy</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Track 6: Coding Interview -->
+        <div class="col-lg-4 col-md-6 col-12 animate__animated animate__fadeInUp" style="animation-delay: 0.35s;">
+          <div class="track-select-card" data-track="Coding">
+            <div class="track-icon-wrapper track-coding"><i data-lucide="binary"></i></div>
+            <h3 class="track-title-text mt-3">Coding Interview</h3>
+            <p class="track-desc-text mt-2">Writing pseudo-code blocks, dynamic programming equations, array searches, and index lookups.</p>
+            <div class="track-meta mt-3">
+              <span><i data-lucide="clock"></i> 30 Mins</span>
+              <span class="difficulty-tag hard">Hard</span>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- Dashboard History & Analytics Summary -->
+      <section class="dash-panel animate__animated animate__fadeIn" style="animation-delay: 0.4s;">
+        <h3 class="panel-title mb-4">Practice Analytics Overview</h3>
+        <div class="row g-4 align-items-center">
+          
+          <!-- circular progress representation -->
+          <div class="col-md-4 col-12 text-center">
+            <div class="circular-progress-wrapper mb-2" style="margin:0 auto;">
+              <svg class="progress-ring-svg" width="130" height="130">
+                <circle class="progress-ring-track" cx="65" cy="65" r="52" stroke-width="8"></circle>
+                <circle class="progress-ring-bar" id="ring-analytics-average" cx="65" cy="65" r="52" stroke-width="8" style="stroke: var(--primary);"></circle>
+              </svg>
+              <div class="progress-ring-percentage" style="font-size: 1.3rem; font-weight:800;" id="text-analytics-average">0%</div>
+            </div>
+            <span class="text-muted fs-xs fw-semibold">Average Interview Score</span>
+          </div>
+
+          <!-- stats list columns -->
+          <div class="col-md-8 col-12">
+            <div class="row g-3">
+              <div class="col-6">
+                <div class="metric-card bg-glass-card">
+                  <div class="metric-info">
+                    <span class="metric-title fs-xs text-muted">Sessions Completed</span>
+                    <span class="metric-value fs-md" id="stat-sessions-count">0</span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="metric-card bg-glass-card">
+                  <div class="metric-info">
+                    <span class="metric-title fs-xs text-muted">Highest Score Achieved</span>
+                    <span class="metric-value fs-md text-success" id="stat-highest-score">0%</span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="metric-card bg-glass-card">
+                  <div class="metric-info">
+                    <span class="metric-title fs-xs text-muted">Time Practicing</span>
+                    <span class="metric-value fs-md" id="stat-total-time">0 Mins</span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="metric-card bg-glass-card">
+                  <div class="metric-info">
+                    <span class="metric-title fs-xs text-muted">Recent Path</span>
+                    <span class="metric-value fs-md text-primary" id="stat-recent-path">None</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+    </div>
+
+    <!-- ACTIVE SIMULATOR SCREEN (HIDDEN BY DEFAULT) -->
+    <div id="interview-active-view" style="display:none;">
+      
+      <!-- Top header with active track name and status timer -->
+      <header class="d-flex align-items-center justify-content-between mb-4">
+        <div class="header-left">
+          <span class="badge-level level-expert" id="active-track-badge">Technical Round</span>
+          <h2 class="welcome-heading mt-1" id="active-question-counter">Question 1 of 5</h2>
+        </div>
+        <div class="header-right text-end">
+          <div class="timer-display-box" id="active-timer-box">
+            <i data-lucide="timer" class="text-danger animate-pulse"></i>
+            <span id="active-timer-text">00:00</span>
+          </div>
+          <p class="text-muted fs-xs mt-1">Optimal question limit: <span id="optimal-time-text">3 mins</span></p>
+        </div>
+      </header>
+
+      <!-- Simulator row -->
+      <div class="row g-4">
+        
+        <!-- Left Side: Navigation Checklist & Instructions (4 cols) -->
+        <div class="col-xl-3 col-md-4 col-12">
+          <div class="dash-panel mb-4">
+            <h3 class="panel-title fs-xs mb-3">Interview Checklist</h3>
+            <div class="progress-bar-container mb-3">
+              <div class="progress-bar-fill" id="active-progress-fill" style="width: 20%; background:var(--primary);"></div>
+            </div>
+            
+            <div class="questions-navigation-list" id="active-questions-checkpoints" style="display:flex; flex-direction:column; gap:8px;">
+              <!-- Dynamic populated buttons checklists -->
+            </div>
+          </div>
+
+          <div class="dash-panel">
+            <h4 class="panel-title fs-xs text-primary mb-2 uppercase">Evaluation Rules</h4>
+            <ul class="fs-xs text-muted ps-3 mb-0" style="display:flex; flex-direction:column; gap:8px;">
+              <li><strong>Min Length</strong>: Write at least 30 words to achieve average points.</li>
+              <li><strong>Keywords</strong>: Evaluator scans answers for core industry parameters.</li>
+              <li><strong>Timing</strong>: Answers submitted too fast reduce confidence marks.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Right Side: Webcam Feed, High-Tech HUD Face Tracking & Live Transcripts (9 cols) -->
+        <div class="col-xl-9 col-md-8 col-12">
+          <div class="dash-panel d-flex flex-column h-100 justify-content-between">
+            
+            <!-- Question text card -->
+            <div class="active-question-card mb-4">
+              <p class="text-muted fs-xs uppercase fw-bold tracking-wider mb-1" id="active-question-subject">OOP concepts</p>
+              <h3 class="fs-md text-main fw-bold" id="active-question-text">Explain Object-Oriented Programming (OOP) and its core pillars.</h3>
+            </div>
+
+            <!-- Video Workspace Split Pane -->
+            <div class="row g-3 mb-4" style="flex:1;">
+              
+              <!-- Left Sub-Pane: Camera Viewport (7 cols) -->
+              <div class="col-lg-7 col-12">
+                <div class="webcam-viewport-container">
+                  <!-- Hardware Video stream -->
+                  <video id="active-webcam-feed" autoplay playsinline muted></video>
+                  
+                  <!-- HUD Face Tracker Mesh overlay -->
+                  <canvas id="active-hud-canvas"></canvas>
+
+                  <!-- Bounding Scan Line -->
+                  <div class="scanning-laser-line"></div>
+
+                  <!-- Overlay recording indicator -->
+                  <div class="rec-status-indicator" id="active-rec-indicator" style="display:none;">
+                    <span class="pulse-red-dot"></span>
+                    <span>REC</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Right Sub-Pane: Live Speech Transcript & Expression HUD (5 cols) -->
+              <div class="col-lg-5 col-12 d-flex flex-column gap-3">
+                
+                <!-- Face Cues HUD Panel -->
+                <div class="hud-metrics-glass-box">
+                  <h4 class="fs-xs fw-bold text-primary mb-3 uppercase tracking-wider">HUD Expression Gaze</h4>
+                  <div class="hud-metric-row">
+                    <span>Eye Contact Gaze:</span>
+                    <span id="hud-eye-contact" class="text-success fw-semibold">Gaze Locked</span>
+                  </div>
+                  <div class="hud-metric-row">
+                    <span>Posture/Stability:</span>
+                    <span id="hud-posture" class="text-success fw-semibold">Stable</span>
+                  </div>
+                  <div class="hud-metric-row">
+                    <span>Smile Frequency:</span>
+                    <span id="hud-smile" class="text-muted">Neutral</span>
+                  </div>
+                </div>
+
+                <!-- Speech Transcript Box -->
+                <div class="speech-transcript-wrap flex-1 d-flex flex-column" style="min-height: 180px;">
+                  <h4 class="fs-xs fw-bold text-muted mb-2 uppercase tracking-wider">Spoken Transcript</h4>
+                  <textarea id="active-answer-textarea" class="transcript-textarea flex-1" placeholder="Tapping 'Start Recording' will open speech-to-text translators..."></textarea>
+                </div>
+
+              </div>
+
+            </div>
+
+            <!-- COLLAPSIBLE INSTANT EVALUATION PANEL -->
+            <div class="active-feedback-card mb-4" id="active-feedback-panel" style="display:none;">
+              <h3 class="fs-sm fw-bold text-primary mb-3 uppercase tracking-wider d-flex align-items-center gap-2">
+                <i data-lucide="line-chart"></i>
+                <span>Question Assessment & AI Analysis</span>
+              </h3>
+
+              <div class="row g-3">
+                <!-- Spoken Answer & Keywords Columns -->
+                <div class="col-md-7 col-12">
+                  <div class="feedback-sub-box">
+                    <h4 class="fs-xs fw-bold text-muted mb-2 uppercase">Transcribed Answer Output</h4>
+                    <p class="fs-xs text-main mb-3 italic" id="feedback-transcription-text">"Sample answer text..."</p>
+                    
+                    <h4 class="fs-xs fw-bold text-muted mb-2 uppercase">Keyword Matching Verification</h4>
+                    <div class="mb-2">
+                      <span class="fs-xs text-muted">Matched:</span>
+                      <div class="d-flex flex-wrap gap-1 mt-1" id="feedback-matched-keywords">
+                        <!-- green badges -->
+                      </div>
+                    </div>
+                    <div>
+                      <span class="fs-xs text-muted">Missing Keywords:</span>
+                      <div class="d-flex flex-wrap gap-1 mt-1" id="feedback-missing-keywords">
+                        <!-- red/gray badges -->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Facial Cues & Pointers Columns -->
+                <div class="col-md-5 col-12">
+                  <div class="feedback-sub-box">
+                    <h4 class="fs-xs fw-bold text-muted mb-3 uppercase">Facial Expressions Evaluation</h4>
+                    
+                    <!-- Eye Gaze metric bar -->
+                    <div class="mb-2">
+                      <div class="d-flex justify-content-between fs-xs text-muted mb-1">
+                        <span>Eye Contact Gaze</span>
+                        <strong id="bar-text-eye">0%</strong>
+                      </div>
+                      <div class="progress-bar-container" style="height: 6px;">
+                        <div class="progress-bar-fill" id="bar-fill-eye" style="width: 0%; background: var(--success);"></div>
+                      </div>
+                    </div>
+
+                    <!-- Posture stability metric bar -->
+                    <div class="mb-2">
+                      <div class="d-flex justify-content-between fs-xs text-muted mb-1">
+                        <span>Posture Stability</span>
+                        <strong id="bar-text-posture">0%</strong>
+                      </div>
+                      <div class="progress-bar-container" style="height: 6px;">
+                        <div class="progress-bar-fill" id="bar-fill-posture" style="width: 0%; background: var(--primary);"></div>
+                      </div>
+                    </div>
+
+                    <!-- Smile metric bar -->
+                    <div class="mb-3">
+                      <div class="d-flex justify-content-between fs-xs text-muted mb-1">
+                        <span>Positive Expression / Smile</span>
+                        <strong id="bar-text-smile">0%</strong>
+                      </div>
+                      <div class="progress-bar-container" style="height: 6px;">
+                        <div class="progress-bar-fill" id="bar-fill-smile" style="width: 0%; background: #EC4899;"></div>
+                      </div>
+                    </div>
+
+                    <h4 class="fs-xs fw-bold text-muted mb-2 uppercase">Improvement Suggestions</h4>
+                    <ul class="fs-xs text-muted ps-3 mb-0" id="feedback-suggestions-list" style="display:flex; flex-direction:column; gap:5px;">
+                      <!-- suggestions -->
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Counters and actions row -->
+            <div class="d-flex justify-content-between align-items-center border-top-style pt-3 mt-2">
+              <div class="d-flex align-items-center gap-3">
+                <button type="button" class="btn-premium btn-record-toggle btn-rec-inactive" id="btn-record-toggle">
+                  <i data-lucide="video" class="rec-icon"></i>
+                  <span>Start Recording</span>
+                </button>
+                <div class="d-flex gap-3 fs-xs text-muted">
+                  <span>Words: <strong id="counter-word">0</strong></span>
+                  <span>Characters: <strong id="counter-char">0</strong></span>
+                </div>
+              </div>
+              
+              <div class="d-flex gap-2">
+                <button type="button" class="btn-premium btn-premium-secondary" id="btn-active-prev" style="padding: 8px 16px;">
+                  <i data-lucide="chevron-left"></i>
+                  <span>Back</span>
+                </button>
+                <button type="button" class="btn-premium btn-premium-primary" id="btn-active-next" style="padding: 8px 16px;">
+                  <span>Next Question</span>
+                  <i data-lucide="chevron-right"></i>
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- GLASSMORPHIC MODAL: INSTRUCTIONS OVERLAY (HIDDEN BY DEFAULT) -->
+  <div class="glass-modal-overlay" id="instructions-modal-overlay" style="display: none;">
+    <div class="glass-modal-card animate__animated" id="instructions-modal-card">
+      <header class="modal-header d-flex justify-content-between align-items-center mb-4">
+        <h3 class="modal-title" id="instructions-modal-title">HR Interview Instructions</h3>
+        <button type="button" class="modal-close-btn" id="btn-modal-close" aria-label="Close modal">&times;</button>
+      </header>
+      
+      <div class="modal-body mb-4">
+        <p class="text-muted fs-xs mb-3">Please review the rules before initiating the timed evaluation simulation:</p>
+        <ul class="modal-rules-list ps-3" style="display:flex; flex-direction:column; gap:10px; font-size:0.8rem; color:var(--text-secondary);">
+          <li>✔ <strong>Take your time</strong>: Read questions carefully. Timer starts immediately after clicking Begin.</li>
+          <li>✔ <strong>Answer honestly & professionally</strong>: Frame answers detailing real project coordinates.</li>
+          <li>✔ <strong>Word counts weight scores</strong>: Aim for 30–80 words (average) or >80 words (strong).</li>
+          <li>✔ <strong>Keyword matching</strong>: Technical and domain keywords improve overall rankings.</li>
+          <li>✔ <strong>No external AI APIs</strong>: Evaluator calculations run locally inside the Digital Twin engine.</li>
+        </ul>
+      </div>
+
+      <footer class="modal-footer d-flex justify-content-end gap-3">
+        <button type="button" class="btn-premium btn-premium-secondary" id="btn-modal-cancel">Cancel</button>
+        <button type="button" class="btn-premium btn-premium-primary" id="btn-modal-begin">
+          <span>Begin Interview</span>
+          <i data-lucide="check" class="arrow-icon"></i>
+        </button>
+      </footer>
+    </div>
+  </div>
+
+  <!-- FULL SCREEN SCLY PROCESSING LOADER OVERLAY (HIDDEN BY DEFAULT) -->
+  <div class="glass-modal-overlay" id="evaluator-scan-overlay" style="display:none; z-index: 2000; background: rgba(0,0,0,0.85);">
+    <div class="text-center">
+      <div class="spinner mb-4" style="margin: 0 auto; width: 60px; height: 60px; border-width: 5px;"></div>
+      <h3 class="fs-md fw-bold text-primary animate-pulse mb-2">Analyzing Mock Interview Outputs</h3>
+      <p class="text-muted fs-xs">Calculating keyword matches, readability, word limits, and confidence pacing...</p>
+    </div>
+  </div>
+
+  <!-- CDNs JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (typeof lucide !== 'undefined') lucide.createIcons();
+    });
+  </script>
+
+  <!-- Custom Scripts -->
+  <script src="assets/js/toast.js"></script>
+  <script src="assets/js/sidebar.js"></script>
+  <script src="assets/js/mock-interview.js"></script>
+</body>
+</html>
+

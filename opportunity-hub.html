@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NexusED – Opportunity Hub</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- CDNs -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap-grid.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap-utilities.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="assets/css/variables.css">
+  <link rel="stylesheet" href="assets/css/theme.css">
+  <link rel="stylesheet" href="assets/css/animations.css">
+  <link rel="stylesheet" href="assets/css/buttons.css">
+  <link rel="stylesheet" href="assets/css/dashboard.css">
+  <link rel="stylesheet" href="assets/css/sidebar.css">
+  <link rel="stylesheet" href="assets/css/opportunity-hub.css">
+</head>
+<body>
+
+  <!-- Ambient Glow Backgrounds -->
+  <div class="cursor-glow"></div>
+  <div class="bg-blobs">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+
+  <!-- Shared Sidebar Menu -->
+  <aside class="sidebar"></aside>
+
+  <!-- Main Viewport -->
+  <main class="dashboard-main animate__animated animate__fadeIn">
+    
+    <!-- Top Bar Controls -->
+    <header class="dashboard-header d-flex align-items-center justify-content-between mb-5 flex-wrap gap-3">
+      <div>
+        <h1 class="page-title mb-1">Opportunity Hub</h1>
+        <p class="page-subtitle text-muted">Sync live hackathons, contests, workshops, and placement drives</p>
+      </div>
+
+      <!-- Sync Info Pill -->
+      <div class="sync-status-pill" id="sync-pill">
+        <i data-lucide="refresh-cw" class="spinning-icon" id="sync-icon"></i>
+        <span id="sync-text">Locating device...</span>
+      </div>
+    </header>
+
+    <!-- Location & Search Controls -->
+    <section class="dash-panel mb-5">
+      <div class="row g-3 align-items-center">
+        <!-- Search -->
+        <div class="col-md-5">
+          <div class="search-input-wrapper">
+            <i data-lucide="search" class="search-icon"></i>
+            <input type="text" id="search-box" class="search-field" placeholder="Search by name, technology, or company...">
+          </div>
+        </div>
+
+        <!-- Location Resolver -->
+        <div class="col-md-4">
+          <div class="location-select-wrapper d-flex gap-2">
+            <div class="city-selector-box flex-grow-1">
+              <i data-lucide="map-pin" class="pin-icon"></i>
+              <select id="location-select" class="city-select">
+                <option value="">Detecting Geolocation...</option>
+                <option value="Bangalore">Bangalore, India</option>
+                <option value="Silicon Valley">Silicon Valley, CA</option>
+                <option value="Mumbai">Mumbai, India</option>
+                <option value="New York">New York, NY</option>
+                <option value="London">London, UK</option>
+              </select>
+            </div>
+            <button type="button" class="btn-gps-trigger" id="gps-btn" title="Detect current GPS location">
+              <i data-lucide="navigation"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Tabs switcher -->
+        <div class="col-md-3">
+          <div class="tab-pill-group">
+            <button type="button" class="tab-pill active" id="tab-all">🌐 Live</button>
+            <button type="button" class="tab-pill" id="tab-saved">🔖 Saved</button>
+            <button type="button" class="tab-pill" id="tab-registered">📝 Registered</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Advanced Expandable Filters -->
+      <div class="filters-collapsible-wrapper mt-3 pt-3 border-top-style">
+        <div class="row g-3">
+          <!-- Type Filter -->
+          <div class="col-6 col-sm-3 col-md-2">
+            <label class="filter-label">Event Type</label>
+            <select id="filter-type" class="filter-select">
+              <option value="">All Types</option>
+              <option value="Hackathon">Hackathon</option>
+              <option value="Workshop">Workshop</option>
+              <option value="Conference">Conference</option>
+              <option value="Bootcamp">Bootcamp</option>
+              <option value="Internship">Internship</option>
+              <option value="Coding Contest">Coding Contest</option>
+              <option value="Webinar">Webinar</option>
+              <option value="Tech Meetup">Tech Meetup</option>
+            </select>
+          </div>
+
+          <!-- Mode Filter -->
+          <div class="col-6 col-sm-3 col-md-2">
+            <label class="filter-label">Format Mode</label>
+            <select id="filter-mode" class="filter-select">
+              <option value="">All Formats</option>
+              <option value="Online">Online</option>
+              <option value="Offline">Offline</option>
+              <option value="Hybrid">Hybrid</option>
+            </select>
+          </div>
+
+          <!-- Difficulty -->
+          <div class="col-6 col-sm-3 col-md-2">
+            <label class="filter-label">Difficulty</label>
+            <select id="filter-difficulty" class="filter-select">
+              <option value="">All Levels</option>
+              <option value="Beginner">Beginner</option>
+              <option value="Intermediate">Intermediate</option>
+              <option value="Advanced">Advanced</option>
+            </select>
+          </div>
+
+          <!-- Fee Filter -->
+          <div class="col-6 col-sm-3 col-md-2">
+            <label class="filter-label">Pricing</label>
+            <select id="filter-fee" class="filter-select">
+              <option value="">All pricing</option>
+              <option value="free">Free</option>
+              <option value="paid">Paid</option>
+            </select>
+          </div>
+
+          <!-- Date Filter -->
+          <div class="col-12 col-sm-6 col-md-4">
+            <label class="filter-label">Schedule Range</label>
+            <select id="filter-date" class="filter-select">
+              <option value="">All Future Events</option>
+              <option value="today">Today</option>
+              <option value="week">This Week</option>
+              <option value="month">This Month</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Personalized Recommendations Section -->
+    <section class="recommendations-section mb-5" id="rec-section">
+      <div class="d-flex align-items-center gap-2 mb-4">
+        <i data-lucide="sparkles" class="text-warning"></i>
+        <h2 class="section-title m-0">Recommended for You</h2>
+      </div>
+      <div class="row g-4" id="recommendations-grid">
+        <!-- Dynamic Recommendation Cards Injected Here -->
+      </div>
+    </section>
+
+    <!-- Main Opportunities Feed Grid -->
+    <section class="feed-section">
+      <div class="d-flex align-items-center justify-content-between mb-4">
+        <div class="d-flex align-items-center gap-2">
+          <i data-lucide="compass" class="text-primary"></i>
+          <h2 class="section-title m-0" id="feed-title">All Opportunities</h2>
+        </div>
+        <span class="results-counter text-muted" id="results-count">0 items found</span>
+      </div>
+
+      <!-- Skeleton Loaders -->
+      <div class="row g-4 d-none" id="skeletons-container">
+        <div class="col-md-6 col-lg-4">
+          <div class="skeleton-card">
+            <div class="skeleton skeleton-banner"></div>
+            <div class="skeleton skeleton-title"></div>
+            <div class="skeleton skeleton-text"></div>
+            <div class="skeleton skeleton-btn"></div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <div class="skeleton-card">
+            <div class="skeleton skeleton-banner"></div>
+            <div class="skeleton skeleton-title"></div>
+            <div class="skeleton skeleton-text"></div>
+            <div class="skeleton skeleton-btn"></div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <div class="skeleton-card">
+            <div class="skeleton skeleton-banner"></div>
+            <div class="skeleton skeleton-title"></div>
+            <div class="skeleton skeleton-text"></div>
+            <div class="skeleton skeleton-btn"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Opportunities Cards Grid -->
+      <div class="row g-4" id="opportunities-grid">
+        <!-- Dynamic Cards Injected Here -->
+      </div>
+
+      <!-- Empty State Wrapper -->
+      <div class="empty-state-wrapper d-none text-center py-5" id="empty-state">
+        <div class="empty-state-icon mb-4">
+          <i data-lucide="calendar-off" class="mx-auto" style="width:64px; height:64px; opacity:0.3;"></i>
+        </div>
+        <h3 class="mb-2">No Opportunities Found</h3>
+        <p class="text-muted mb-4">Try relaxing your search terms or choosing a different city.</p>
+        <button type="button" class="btn-premium btn-premium-primary" id="btn-reset-filters">Reset Filters</button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Details Overlay Modal -->
+  <div class="details-modal-overlay" id="details-modal">
+    <div class="details-modal-content animate__animated animate__zoomIn">
+      <button type="button" class="modal-close-trigger" id="modal-close-btn" aria-label="Close details">
+        <i data-lucide="x"></i>
+      </button>
+
+      <!-- Banner image -->
+      <div class="modal-banner-image" id="modal-banner" style="background-image: url('assets/images/hackathon-banner.jpg');">
+        <div class="modal-banner-shading"></div>
+        <div class="modal-banner-badge" id="modal-category">Hackathon</div>
+      </div>
+
+      <!-- Main Layout Details -->
+      <div class="modal-body-wrapper p-4 p-md-5">
+        <div class="row g-4">
+          
+          <!-- Column 1: Info -->
+          <div class="col-md-7">
+            <h2 class="modal-title mb-2" id="modal-title">Event Title</h2>
+            
+            <div class="organizer-host-row d-flex align-items-center gap-2 mb-4">
+              <div class="organizer-avatar-logo" id="modal-company-logo">O</div>
+              <div>
+                <span class="organizer-name d-block" id="modal-organizer">Host Company</span>
+                <span class="organizer-details text-muted" id="modal-difficulty">Intermediate Level</span>
+              </div>
+            </div>
+
+            <h4 class="meta-section-title mb-2">Description</h4>
+            <p class="event-desc text-muted mb-4" id="modal-description">Full descriptions</p>
+
+            <h4 class="meta-section-title mb-2">Agenda</h4>
+            <div class="agenda-items-list mb-4" id="modal-agenda">
+              <!-- Injected checks -->
+            </div>
+
+            <h4 class="meta-section-title mb-2">Eligibility</h4>
+            <p class="text-muted mb-4" id="modal-eligibility">Eligibility details</p>
+          </div>
+
+          <!-- Column 2: Meta panels -->
+          <div class="col-md-5">
+            <div class="meta-card-info p-4 mb-4">
+              <div class="meta-item-row d-flex align-items-start gap-3 mb-3">
+                <i data-lucide="calendar" class="text-primary mt-1"></i>
+                <div>
+                  <span class="meta-item-label d-block">Date & Time</span>
+                  <span class="meta-item-val" id="modal-date">August 25, 2026</span>
+                </div>
+              </div>
+
+              <div class="meta-item-row d-flex align-items-start gap-3 mb-3">
+                <i data-lucide="hourglass" class="text-warning mt-1"></i>
+                <div>
+                  <span class="meta-item-label d-block">Registration Deadline</span>
+                  <span class="meta-item-val text-danger" id="modal-deadline">August 20, 2026</span>
+                </div>
+              </div>
+
+              <div class="meta-item-row d-flex align-items-start gap-3 mb-3">
+                <i data-lucide="map-pin" class="text-success mt-1"></i>
+                <div>
+                  <span class="meta-item-label d-block">Location & Format</span>
+                  <span class="meta-item-val" id="modal-venue">Bangalore (Offline)</span>
+                </div>
+              </div>
+
+              <div class="meta-item-row d-flex align-items-start gap-3 mb-3">
+                <i data-lucide="credit-card" class="text-info mt-1"></i>
+                <div>
+                  <span class="meta-item-label d-block">Registration Fee</span>
+                  <span class="meta-item-val" id="modal-fee">Free</span>
+                </div>
+              </div>
+
+              <div class="meta-item-row d-flex align-items-start gap-3">
+                <i data-lucide="award" class="text-warning mt-1"></i>
+                <div>
+                  <span class="meta-item-label d-block">Credentials</span>
+                  <span class="meta-item-val" id="modal-certificate">Certificate Included</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Skills Tags -->
+            <div class="meta-card-info p-4 mb-4">
+              <h4 class="meta-section-title mb-3">Skills Required</h4>
+              <div class="skills-tags-wrap d-flex flex-wrap gap-2" id="modal-skills">
+                <!-- Tags -->
+              </div>
+            </div>
+
+            <!-- Map Iframe/Section -->
+            <div class="meta-card-info p-0 overflow-hidden mb-4" style="height: 180px; border-radius: var(--radius-lg);">
+              <iframe 
+                id="modal-map-iframe"
+                width="100%" 
+                height="100%" 
+                style="border:0;" 
+                allowfullscreen="" 
+                loading="lazy" 
+                referrerpolicy="no-referrer-when-downgrade">
+              </iframe>
+            </div>
+
+            <!-- Dynamic Actions -->
+            <div class="modal-actions-wrap d-flex gap-2">
+              <button type="button" class="btn-premium btn-premium-primary flex-grow-1" id="modal-register-btn">Register Now</button>
+              <button type="button" class="btn-modal-bookmark" id="modal-bookmark-btn" title="Bookmark event">
+                <i data-lucide="bookmark"></i>
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- CDNs JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (typeof lucide !== 'undefined') lucide.createIcons();
+    });
+  </script>
+
+  <!-- Custom Scripts -->
+  <script src="assets/js/toast.js"></script>
+  <script src="assets/js/sidebar.js"></script>
+  <script src="assets/js/opportunity-hub.js"></script>
+</body>
+</html>
+

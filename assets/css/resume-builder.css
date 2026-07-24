@@ -1,0 +1,292 @@
+/* resume-builder.css */
+
+/* MAIN SCREEN SCALING & SCROLLING */
+.builder-forms-wrap {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  box-shadow: var(--glass-shadow);
+  backdrop-filter: var(--glass-backdrop-blur);
+  -webkit-backdrop-filter: var(--glass-backdrop-blur);
+  max-height: calc(100vh - 160px);
+  overflow-y: auto;
+}
+
+/* Accordion Layout */
+.builder-accordion {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.accordion-item {
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.1);
+  transition: all var(--transition-normal);
+}
+
+.accordion-item.active {
+  border-color: var(--primary);
+  background: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 4px 12px rgba(108, 99, 255, 0.05);
+}
+
+.accordion-header {
+  padding: 16px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+  font-weight: 600;
+  color: var(--text-main);
+  transition: background var(--transition-fast);
+}
+
+.accordion-header:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.header-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.header-label svg {
+  width: 18px;
+  height: 18px;
+  color: var(--primary);
+}
+
+.accordion-chevron {
+  width: 16px;
+  height: 16px;
+  transition: transform var(--transition-normal);
+  color: var(--text-secondary);
+}
+
+.accordion-item.active .accordion-chevron {
+  transform: rotate(180deg);
+  color: var(--primary);
+}
+
+.accordion-body {
+  padding: 20px;
+  border-top: 1px solid var(--border-color);
+  display: none;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.accordion-item.active .accordion-body {
+  display: block;
+}
+
+/* Entry Rows (For Education, Projects, Experience, Certs, Achievements) */
+.entry-card-row {
+  border: 1px dashed var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.05);
+  position: relative;
+  transition: all var(--transition-fast);
+}
+
+.entry-card-row:hover {
+  border-color: var(--primary);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.btn-remove-entry {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 50%;
+  transition: all var(--transition-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-remove-entry:hover {
+  color: var(--danger);
+  background: rgba(239, 68, 68, 0.08);
+}
+
+/* PREVIEW WORKSPACE */
+.preview-panel-wrap {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 160px);
+}
+
+.btn-template-select {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  color: var(--text-secondary);
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.78rem;
+  font-weight: 600;
+  transition: all var(--transition-fast);
+}
+
+.btn-template-select:hover,
+.btn-template-select.active {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+  box-shadow: 0 4px 10px rgba(108, 99, 255, 0.2);
+}
+
+.a4-sheet-container {
+  flex: 1;
+  background: rgba(0, 0, 0, 0.08);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  overflow-y: auto;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  border: 1px solid var(--glass-border);
+}
+
+.resume-preview-sheet {
+  background: #ffffff;
+  color: #333333;
+  width: 100%;
+  max-width: 595px; /* A4 aspect width scaled */
+  min-height: 842px; /* A4 aspect height scaled */
+  padding: 40px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 0.82rem;
+  line-height: 1.4;
+  text-align: left;
+}
+
+/* TEMPLATE 1: MODERN */
+.template-modern .preview-header {
+  border-bottom: 3px solid #6C63FF;
+  padding-bottom: 12px;
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+.template-modern .preview-name { font-size: 1.8rem; font-weight: 800; color: #1F2937; margin: 0; }
+.template-modern .preview-title { font-size: 1rem; color: #6C63FF; font-weight: 600; margin-top: 4px; }
+.template-modern .preview-contact { font-size: 0.72rem; color: #6B7280; text-align: right; line-height: 1.3; }
+.template-modern .preview-section-title { font-size: 0.95rem; font-weight: 700; color: #1F2937; text-transform: uppercase; letter-spacing: 0.8px; margin-top: 18px; margin-bottom: 8px; border-bottom: 1px solid #E5E7EB; padding-bottom: 4px; }
+.template-modern .preview-item { margin-bottom: 10px; }
+.template-modern .preview-item-header { display: flex; justify-content: space-between; font-weight: 700; color: #374151; font-size: 0.8rem; }
+.template-modern .preview-item-sub { color: #6C63FF; font-weight: 600; font-size: 0.75rem; margin-top: 2px; }
+.template-modern .preview-item-desc { font-size: 0.75rem; color: #4B5563; margin-top: 4px; }
+
+/* TEMPLATE 2: PROFESSIONAL */
+.template-professional { font-family: 'Georgia', serif; }
+.template-professional .preview-header { text-align: center; border-bottom: 1px double #333333; padding-bottom: 14px; margin-bottom: 16px; }
+.template-professional .preview-name { font-size: 1.9rem; font-weight: bold; color: #111111; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 1px; }
+.template-professional .preview-title { font-size: 0.88rem; font-style: italic; color: #555555; margin-bottom: 6px; }
+.template-professional .preview-contact { font-size: 0.75rem; color: #444444; word-spacing: 2px; }
+.template-professional .preview-section-title { font-size: 0.9rem; font-weight: bold; color: #111111; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid #333333; padding-bottom: 2px; margin-top: 16px; margin-bottom: 8px; text-align: center; }
+.template-professional .preview-item { margin-bottom: 10px; }
+.template-professional .preview-item-header { display: flex; justify-content: space-between; font-weight: bold; color: #222222; font-size: 0.8rem; }
+.template-professional .preview-item-sub { font-style: italic; color: #555555; font-size: 0.78rem; margin-top: 2px; }
+.template-professional .preview-item-desc { font-size: 0.78rem; color: #333333; margin-top: 3px; line-height: 1.4; }
+
+/* TEMPLATE 3: MINIMAL */
+.template-minimal { font-family: system-ui, -apple-system, sans-serif; font-size: 0.78rem; }
+.template-minimal .preview-header { margin-bottom: 20px; }
+.template-minimal .preview-name { font-size: 1.6rem; font-weight: 700; color: #111827; }
+.template-minimal .preview-title { font-size: 0.9rem; color: #4B5563; font-weight: 500; margin-top: 2px; }
+.template-minimal .preview-contact { font-size: 0.7rem; color: #9CA3AF; margin-top: 4px; display: flex; gap: 8px; flex-wrap: wrap; }
+.template-minimal .preview-section-title { font-size: 0.82rem; font-weight: 700; color: #9CA3AF; text-transform: uppercase; letter-spacing: 1px; margin-top: 18px; margin-bottom: 6px; }
+.template-minimal .preview-item { margin-bottom: 8px; padding-left: 8px; border-left: 2px solid #F3F4F6; }
+.template-minimal .preview-item-header { display: flex; justify-content: space-between; font-weight: 600; color: #111827; }
+.template-minimal .preview-item-sub { color: #4B5563; font-size: 0.75rem; }
+.template-minimal .preview-item-desc { font-size: 0.75rem; color: #6B7280; margin-top: 2px; }
+
+/* TEMPLATE 4: CREATIVE */
+.template-creative .preview-header { background: linear-gradient(135deg, #8B5CF6 0%, #EC4899 100%); margin: -40px -40px 20px -40px; padding: 30px 40px; color: #ffffff; border-radius: 4px 4px 0 0; }
+.template-creative .preview-name { font-size: 1.8rem; font-weight: 800; color: #ffffff; }
+.template-creative .preview-title { font-size: 0.95rem; color: rgba(255, 255, 255, 0.9); font-weight: 500; margin-top: 2px; }
+.template-creative .preview-contact { font-size: 0.72rem; color: rgba(255, 255, 255, 0.8); margin-top: 6px; }
+.template-creative .preview-section-title { font-size: 0.88rem; font-weight: 700; color: #EC4899; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid #8B5CF6; padding-bottom: 2px; margin-top: 14px; margin-bottom: 8px; width: fit-content; }
+.template-creative .preview-item { margin-bottom: 8px; }
+.template-creative .preview-item-header { display: flex; justify-content: space-between; font-weight: 700; color: #374151; }
+.template-creative .preview-item-sub { color: #8B5CF6; font-weight: 600; font-size: 0.75rem; }
+.template-creative .preview-item-desc { font-size: 0.75rem; color: #4B5563; margin-top: 2px; }
+
+/* TEMPLATE 5: ATS-FRIENDLY */
+.template-ats { font-family: 'Arial', sans-serif; line-height: 1.3; }
+.template-ats .preview-header { border-bottom: 1.5px solid #000000; padding-bottom: 6px; margin-bottom: 12px; }
+.template-ats .preview-name { font-size: 1.5rem; font-weight: bold; color: #000000; margin: 0; }
+.template-ats .preview-title { font-size: 0.85rem; font-weight: bold; color: #000000; margin-top: 2px; }
+.template-ats .preview-contact { font-size: 0.72rem; color: #000000; margin-top: 2px; }
+.template-ats .preview-section-title { font-size: 0.85rem; font-weight: bold; color: #000000; text-transform: uppercase; border-bottom: 1px solid #000000; margin-top: 14px; margin-bottom: 6px; padding-bottom: 1px; }
+.template-ats .preview-item { margin-bottom: 6px; }
+.template-ats .preview-item-header { display: flex; justify-content: space-between; font-weight: bold; color: #000000; font-size: 0.76rem; }
+.template-ats .preview-item-sub { font-weight: normal; color: #000000; font-size: 0.76rem; }
+.template-ats .preview-item-desc { font-size: 0.74rem; color: #000000; margin-top: 1px; }
+
+/* PRINT MEDIA STYLES */
+@media print {
+  body {
+    background: #ffffff !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  
+  .sidebar,
+  .bg-blobs,
+  .cursor-glow,
+  header,
+  .builder-forms-wrap,
+  .preview-controls-bar {
+    display: none !important;
+  }
+  
+  .dashboard-main {
+    margin-left: 0 !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+  }
+  
+  .row {
+    display: block !important;
+  }
+  
+  .col-xl-6 {
+    width: 100% !important;
+    display: block !important;
+  }
+  
+  .a4-sheet-container {
+    background: none !important;
+    padding: 0 !important;
+    border: none !important;
+    overflow: visible !important;
+    display: block !important;
+  }
+  
+  .resume-preview-sheet {
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: 100% !important;
+    min-height: auto !important;
+    border-radius: 0 !important;
+    page-break-after: avoid;
+  }
+}

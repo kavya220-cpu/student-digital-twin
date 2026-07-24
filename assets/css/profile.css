@@ -1,0 +1,373 @@
+/* profile.css */
+
+/* STEP PROGRESS BAR INDICATOR */
+.step-progress-indicator {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 35px;
+  position: relative;
+}
+
+.step-progress-line {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--border-color);
+  transform: translateY(-50%);
+  z-index: 1;
+}
+
+.step-progress-fill {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+  transform: translateY(-50%);
+  z-index: 1;
+  transition: width var(--transition-normal);
+}
+
+.step-indicator-node {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--bg-app);
+  border: 2px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  z-index: 2;
+  position: relative;
+  transition: all var(--transition-normal);
+}
+
+.step-indicator-node.active {
+  border-color: var(--primary);
+  color: var(--primary);
+  background: white;
+  box-shadow: var(--shadow-glow);
+}
+
+.step-indicator-node.completed {
+  border-color: var(--success);
+  background: var(--success);
+  color: white;
+}
+
+.profile-card-container {
+  z-index: 10;
+  position: relative;
+}
+
+.profile-card {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-xl);
+  padding: 40px;
+  box-shadow: var(--glass-shadow);
+  backdrop-filter: var(--glass-backdrop-blur);
+  -webkit-backdrop-filter: var(--glass-backdrop-blur);
+  overflow: hidden;
+  position: relative;
+}
+
+.profile-logo {
+  width: 54px;
+  height: 54px;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+  border-radius: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-glow);
+  color: white;
+}
+
+.profile-logo svg {
+  width: 24px;
+  height: 24px;
+}
+
+.profile-header h2 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  margin-bottom: 8px;
+}
+
+.profile-step {
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+.profile-navigation {
+  display: flex;
+  gap: 15px;
+}
+
+/* Custom Select Dropdown Position */
+.select-chevron {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+}
+
+.select-chevron svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Drag & Drop Avatar Uploader */
+.avatar-drag-drop {
+  border: 2px dashed var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 30px 20px;
+  text-align: center;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.2);
+  transition: all var(--transition-normal);
+  position: relative;
+  min-height: 158px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar-drag-drop:hover,
+.avatar-drag-drop.dragover {
+  border-color: var(--primary);
+  background: rgba(108, 99, 255, 0.05);
+  box-shadow: inset 0 0 10px rgba(108, 99, 255, 0.05);
+}
+
+.avatar-upload-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.avatar-upload-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(108, 99, 255, 0.1);
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+  transition: transform var(--transition-normal);
+}
+
+.avatar-drag-drop:hover .avatar-upload-icon {
+  transform: scale(1.1) rotate(5deg);
+}
+
+.avatar-preview-wrapper {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: 0 auto;
+  border: 3px solid white;
+  box-shadow: var(--shadow-md), var(--shadow-glow);
+  display: none; /* Hidden by default */
+  position: relative;
+}
+
+.avatar-preview-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.avatar-remove-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: var(--danger);
+  color: white;
+  border: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  box-shadow: var(--shadow-sm);
+  z-index: 10;
+  transition: transform var(--transition-fast);
+}
+
+.avatar-remove-btn:hover {
+  transform: scale(1.1);
+}
+
+/* PDF Drag-and-Drop Zone */
+.pdf-drag-drop {
+  border: 2px dashed var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 30px 16px;
+  text-align: center;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.2);
+  transition: all var(--transition-normal);
+  position: relative;
+  min-height: 158px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.pdf-drag-drop:hover,
+.pdf-drag-drop.dragover {
+  border-color: var(--secondary);
+  background: rgba(139, 92, 246, 0.05);
+}
+
+.pdf-upload-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.pdf-upload-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(139, 92, 246, 0.1);
+  color: var(--secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+  transition: transform var(--transition-normal);
+}
+
+.pdf-drag-drop:hover .pdf-upload-icon {
+  transform: scale(1.1) rotate(-5deg);
+}
+
+.upload-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-main);
+  margin-bottom: 4px;
+}
+
+.upload-limit {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.upload-label {
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+/* PDF Details Preview Badge */
+.pdf-preview-wrapper {
+  width: 100%;
+  position: relative;
+}
+
+.pdf-info-badge {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid var(--border-color);
+  padding: 14px;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  width: 100%;
+}
+
+.pdf-info-badge svg {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.pdf-details {
+  flex: 1;
+  text-align: left;
+}
+
+.pdf-filename {
+  font-size: 0.82rem;
+  color: var(--text-main);
+}
+
+.pdf-filesize {
+  font-size: 0.7rem;
+}
+
+.pdf-remove-btn {
+  position: absolute;
+  top: -12px;
+  right: -6px;
+  background: var(--danger);
+  color: white;
+  border: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  box-shadow: var(--shadow-sm);
+  z-index: 10;
+  transition: transform var(--transition-fast);
+}
+
+.pdf-remove-btn:hover {
+  transform: scale(1.1);
+}
+
+/* Forms adjustments for profile fields */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Custom Success Animation */
+.profile-card.setup-completed {
+  min-height: 380px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Responsive Overrides */
+@media (max-width: 576px) {
+  .profile-card {
+    padding: 24px 16px;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+  }
+}

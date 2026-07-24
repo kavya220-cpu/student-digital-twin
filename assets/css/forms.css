@@ -1,0 +1,211 @@
+/* assets/css/forms.css */
+
+.form-group {
+  position: relative;
+  margin-bottom: 24px;
+}
+
+/* Base Input styling */
+.form-input {
+  width: 100%;
+  padding: 16px;
+  font-family: var(--font-family);
+  font-size: 0.95rem;
+  color: var(--text-main);
+  background: rgba(255, 255, 255, 0.4);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  outline: none;
+  transition: all var(--transition-normal);
+  backdrop-filter: blur(5px);
+}
+
+/* Light focus state */
+.form-input:focus {
+  background: #ffffff;
+  border-color: var(--primary);
+  box-shadow: var(--shadow-glow);
+}
+
+/* Input floating label interaction */
+.form-label {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  pointer-events: none;
+  transition: all var(--transition-normal);
+  background: transparent;
+  padding: 0 4px;
+}
+
+/* Float logic */
+.form-input:focus ~ .form-label,
+.form-input:not(:placeholder-shown) ~ .form-label {
+  top: 0;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--primary);
+  background: #ffffff;
+  border-radius: 4px;
+  padding: 0 8px;
+}
+
+/* Password Toggle Icon placement */
+.password-toggle-btn {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color var(--transition-fast);
+  z-index: 10;
+}
+
+.password-toggle-btn:hover {
+  color: var(--primary);
+}
+
+/* Validation Indicator Icons */
+.validation-badge {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  font-size: 1.1rem;
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+}
+
+.password-toggle-active ~ .validation-badge {
+  right: 48px; /* Offset if password toggle is present */
+}
+
+/* Validation Status Classes */
+.form-input.is-valid {
+  border-color: var(--success);
+}
+
+.form-input.is-valid:focus {
+  box-shadow: 0 0 15px rgba(34, 197, 94, 0.15);
+}
+
+.form-input.is-invalid {
+  border-color: var(--danger);
+  animation: shake 0.4s ease-in-out;
+}
+
+.form-input.is-invalid:focus {
+  box-shadow: 0 0 15px rgba(239, 68, 68, 0.15);
+}
+
+/* Invalid shake animation */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  75% { transform: translateX(6px); }
+}
+
+/* Input Error Message */
+.error-msg {
+  font-size: 0.78rem;
+  color: var(--danger);
+  margin-top: 4px;
+  display: block;
+  font-weight: 500;
+  opacity: 0;
+  height: 0;
+  overflow: hidden;
+  transition: all var(--transition-fast);
+}
+
+.error-msg.active {
+  opacity: 1;
+  height: auto;
+  margin-top: 6px;
+}
+
+/* Custom Checkbox/Radio */
+.custom-control {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.custom-control-input {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 1.5px solid var(--border-color);
+  border-radius: 4px;
+  outline: none;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  background: white;
+  position: relative;
+}
+
+.custom-control-input:checked {
+  background: var(--primary);
+  border-color: var(--primary);
+}
+
+.custom-control-input:checked::before {
+  content: "✓";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -52%);
+  color: white;
+  font-size: 11px;
+  font-weight: bold;
+}
+
+.custom-control-input:focus {
+  box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.15);
+}
+
+/* Password Strength Meter */
+.strength-meter-container {
+  margin-top: -12px;
+  margin-bottom: 20px;
+}
+
+.strength-meter-bars {
+  display: flex;
+  gap: 4px;
+  height: 4px;
+  margin-top: 8px;
+}
+
+.strength-bar {
+  flex: 1;
+  background: var(--border-color);
+  border-radius: var(--radius-full);
+  transition: background var(--transition-normal);
+}
+
+.strength-text {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.strength-bar.weak { background: var(--danger); }
+.strength-bar.medium { background: var(--warning); }
+.strength-bar.strong { background: var(--success); }

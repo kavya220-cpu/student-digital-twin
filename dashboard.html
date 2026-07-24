@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NexusED – Student Dashboard</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- CDNs -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap-grid.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap-utilities.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="assets/css/variables.css">
+  <link rel="stylesheet" href="assets/css/theme.css">
+  <link rel="stylesheet" href="assets/css/animations.css">
+  <link rel="stylesheet" href="assets/css/buttons.css">
+  <link rel="stylesheet" href="assets/css/dashboard.css">
+  <link rel="stylesheet" href="assets/css/sidebar.css">
+</head>
+<body>
+
+  <!-- Ambient Glow Backgrounds -->
+  <div class="cursor-glow"></div>
+  <div class="bg-blobs">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+
+  <!-- Shared Sidebar Menu -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-icon-wrapper">
+        <i data-lucide="layers"></i>
+      </div>
+      <span class="brand-name">NexusED</span>
+    </div>
+    
+    <nav class="sidebar-menu">
+      <a href="dashboard.html" class="sidebar-item active" id="nav-dashboard">
+        <i data-lucide="layout-dashboard"></i>
+        <span>Dashboard</span>
+      </a>
+      <a href="roadmap.html" class="sidebar-item" id="nav-roadmap">
+        <i data-lucide="compass"></i>
+        <span>Roadmap</span>
+      </a>
+      <a href="skills.html" class="sidebar-item" id="nav-skills">
+        <i data-lucide="award"></i>
+        <span>Skill Tracker</span>
+      </a>
+      <a href="projects.html" class="sidebar-item" id="nav-projects">
+        <i data-lucide="folder-git-2"></i>
+        <span>Projects</span>
+      </a>
+      <a href="certificates.html" class="sidebar-item" id="nav-certificates">
+        <i data-lucide="check-square"></i>
+        <span>Certificates</span>
+      </a>
+      <a href="resume-builder.html" class="sidebar-item" id="nav-resume-builder">
+        <i data-lucide="file-text"></i>
+        <span>Resume Builder</span>
+      </a>
+      <a href="resume-analyzer.html" class="sidebar-item" id="nav-resume-analyzer">
+        <i data-lucide="bar-chart-3"></i>
+        <span>Resume Analyzer</span>
+      </a>
+      <a href="interview.html" class="sidebar-item" id="nav-interview">
+        <i data-lucide="help-circle"></i>
+        <span>Interview Prep</span>
+      </a>
+      <a href="mock-interview.html" class="sidebar-item" id="nav-mock-interview">
+        <i data-lucide="mic"></i>
+        <span>AI Mock Interview</span>
+      </a>
+      <a href="coding-tracker.html" class="sidebar-item" id="nav-coding-tracker">
+        <i data-lucide="code"></i>
+        <span>Coding Tracker</span>
+      </a>
+      <a href="career-readiness.html" class="sidebar-item" id="nav-career-readiness">
+        <i data-lucide="trending-up"></i>
+        <span>Career Readiness</span>
+      </a>
+      <a href="recommendations.html" class="sidebar-item" id="nav-recommendations">
+        <i data-lucide="sparkles"></i>
+        <span>Recommendations</span>
+      </a>
+      <a href="daily-goals.html" class="sidebar-item" id="nav-daily-goals">
+        <i data-lucide="list-todo"></i>
+        <span>Daily Goals</span>
+      </a>
+      <a href="analytics.html" class="sidebar-item" id="nav-analytics">
+        <i data-lucide="pie-chart"></i>
+        <span>Analytics</span>
+      </a>
+    </nav>
+    
+    <div class="sidebar-user mt-auto">
+      <div class="user-avatar" id="sidebar-user-avatar">
+        <!-- Render base64 image or initials dynamically -->
+      </div>
+      <div class="user-info">
+        <span class="user-name text-truncate" id="sidebar-user-name">Loading...</span>
+        <span class="user-role text-truncate" id="sidebar-user-career">Calibration Loading</span>
+      </div>
+      <button type="button" class="logout-btn ms-auto" id="logout-trigger" aria-label="Sign out">
+        <i data-lucide="log-out"></i>
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main Content Space -->
+  <main class="dashboard-main">
+    
+    <!-- Dashboard Top Header Bar -->
+    <header class="d-flex align-items-center justify-content-between mb-5 animate__animated animate__fadeIn">
+      <div class="header-left">
+        <h1 class="welcome-heading">Welcome Back, <span id="dash-student-name">Student</span> 👋</h1>
+        <p class="text-muted">Analyzing your Digital Twin data parameters for targeted career roadmap syncs.</p>
+      </div>
+      <div class="header-right">
+        <div class="status-indicator-badge">
+          <div class="pulse-indicator"></div>
+          <span>Digital Twin Sync Live</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Metrics Summary Cards Grid -->
+    <section class="row g-4 mb-5">
+      <!-- Card 1: Skills Count -->
+      <div class="col-md-4 col-12 animate__animated animate__fadeInUp" style="animation-delay: 0.1s;">
+        <article class="metric-card">
+          <div class="metric-icon-box skills-color">
+            <i data-lucide="award"></i>
+          </div>
+          <div class="metric-info">
+            <span class="metric-title">Skills Registered</span>
+            <span class="metric-value" id="dash-skills-count">0</span>
+          </div>
+        </article>
+      </div>
+      
+      <!-- Card 2: Projects Count -->
+      <div class="col-md-4 col-12 animate__animated animate__fadeInUp" style="animation-delay: 0.15s;">
+        <article class="metric-card">
+          <div class="metric-icon-box projects-color">
+            <i data-lucide="folder-git-2"></i>
+          </div>
+          <div class="metric-info">
+            <span class="metric-title">Completed Projects</span>
+            <span class="metric-value" id="dash-projects-count">0</span>
+          </div>
+        </article>
+      </div>
+      
+      <!-- Card 3: Certificates Count -->
+      <div class="col-md-4 col-12 animate__animated animate__fadeInUp" style="animation-delay: 0.2s;">
+        <article class="metric-card">
+          <div class="metric-icon-box certs-color">
+            <i data-lucide="check-square"></i>
+          </div>
+          <div class="metric-info">
+            <span class="metric-title">Verified Certifications</span>
+            <span class="metric-value" id="dash-certs-count">0</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Main Analytical Layout -->
+    <div class="row g-4">
+      
+      <!-- Left Column: Circular Progress & Linear Skill bars -->
+      <div class="col-xl-6 col-12">
+        <section class="row g-4">
+          <!-- Circular Progress Ring Card -->
+          <div class="col-12 animate__animated animate__fadeInLeft" style="animation-delay: 0.25s;">
+            <article class="dash-panel text-center py-5 d-flex flex-column align-items-center justify-content-center">
+              <h3 class="panel-title mb-4">Overall Twin Synchronization</h3>
+              
+              <!-- Circular Progress Ring SVG -->
+              <div class="circular-progress-wrapper mb-3">
+                <svg class="progress-ring-svg" width="180" height="180">
+                  <circle class="progress-ring-track" cx="90" cy="90" r="76" stroke-width="12"></circle>
+                  <circle class="progress-ring-bar" id="dash-progress-ring-bar" cx="90" cy="90" r="76" stroke-width="12"></circle>
+                </svg>
+                <div class="progress-ring-percentage">
+                  <span id="dash-progress-ring-text">0%</span>
+                  <span class="progress-ring-label">Sync Rate</span>
+                </div>
+              </div>
+              <p class="text-muted" style="max-width: 320px; font-size: 0.8rem;">Average score based on skill metrics, project status, and verified certification parameters.</p>
+            </article>
+          </div>
+
+          <!-- Linear progress bars card -->
+          <div class="col-12 animate__animated animate__fadeInLeft" style="animation-delay: 0.3s;">
+            <article class="dash-panel">
+              <h3 class="panel-title mb-4">Target Core Learning Progress</h3>
+              <div class="linear-progress-list" id="dash-linear-progress-list">
+                <!-- Dynamically populated or mock elements -->
+              </div>
+            </article>
+          </div>
+        </section>
+      </div>
+
+      <!-- Right Column: Profile details HUD card -->
+      <div class="col-xl-6 col-12 animate__animated animate__fadeInRight" style="animation-delay: 0.25s;">
+        <section class="dash-panel h-100">
+          <h3 class="panel-title mb-4">Digital Twin Calibration HUD</h3>
+          
+          <div class="hud-profile-grid">
+            <div class="hud-profile-header text-center mb-4 pb-4 border-bottom-style">
+              <div class="hud-avatar-box mx-auto mb-3" id="hud-avatar-box">
+                <!-- Circular Profile Photo -->
+              </div>
+              <h4 class="hud-name" id="hud-profile-name">Student Name</h4>
+              <p class="hud-career text-primary fw-semibold" id="hud-profile-career">AI Trajectory</p>
+            </div>
+            
+            <div class="row g-3 hud-details-rows">
+              <div class="col-6">
+                <div class="hud-data-group">
+                  <span class="hud-data-label">College Name</span>
+                  <span class="hud-data-val text-truncate" id="hud-college">Not Linked</span>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="hud-data-group">
+                  <span class="hud-data-label">Branch/Specialization</span>
+                  <span class="hud-data-val text-truncate" id="hud-branch">Not Linked</span>
+                </div>
+              </div>
+              
+              <div class="col-4">
+                <div class="hud-data-group">
+                  <span class="hud-data-label">Semester / Year</span>
+                  <span class="hud-data-val" id="hud-sem-year">-</span>
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="hud-data-group">
+                  <span class="hud-data-label">Roll Number</span>
+                  <span class="hud-data-val text-truncate" id="hud-roll">-</span>
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="hud-data-group">
+                  <span class="hud-data-label">Current CGPA</span>
+                  <span class="hud-data-val text-success fw-bold" id="hud-cgpa">-</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Resume Download Link -->
+            <div class="hud-resume-row mt-4 pt-4 border-top-style text-center" id="hud-resume-wrapper">
+              <a href="#" class="btn-premium btn-premium-secondary d-inline-flex" id="hud-resume-link" download>
+                <i data-lucide="file-down"></i>
+                <span>Download Linked Resume</span>
+              </a>
+            </div>
+          </div>
+        </section>
+      </div>
+
+    </div>
+
+    <!-- Opportunity Hub Widget -->
+    <section class="row g-4 mt-4 animate__animated animate__fadeInUp" style="animation-delay: 0.35s;">
+      <div class="col-12">
+        <article class="dash-panel">
+          <div class="d-flex align-items-center justify-content-between mb-4 flex-wrap gap-2">
+            <div class="d-flex align-items-center gap-2">
+              <i data-lucide="compass" class="text-primary" style="width: 22px; height: 22px;"></i>
+              <h3 class="panel-title m-0">Career Opportunities & Hackathons</h3>
+            </div>
+            <a href="opportunity-hub.html" class="btn-premium btn-premium-secondary py-2 px-3 text-decoration-none d-inline-flex align-items-center gap-2" style="font-size: 0.8rem; font-weight:600;">
+              <span>Explore Opportunity Hub</span>
+              <i data-lucide="arrow-right" style="width: 14px; height: 14px;"></i>
+            </a>
+          </div>
+
+          <!-- Cards Row -->
+          <div class="row g-3" id="dash-opportunities-list">
+            <!-- Dynamically populated dashboard opportunity cards -->
+          </div>
+        </article>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- CDNs JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (typeof lucide !== 'undefined') lucide.createIcons();
+    });
+  </script>
+
+  <!-- Custom Scripts -->
+  <script src="assets/js/toast.js"></script>
+  <script src="assets/js/sidebar.js"></script>
+  <script src="assets/js/dashboard.js"></script>
+</body>
+</html>
+

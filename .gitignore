@@ -1,0 +1,5 @@
+# Ignore compiled Java class files
+*.class
+
+# Ignore private configuration properties containing secret API keys
+src/config.properties

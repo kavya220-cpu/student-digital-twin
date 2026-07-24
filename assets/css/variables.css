@@ -1,0 +1,83 @@
+/* assets/css/variables.css */
+
+:root {
+  /* Brand Colors */
+  --primary: #6C63FF;
+  --primary-hover: #5A52E6;
+  --secondary: #8B5CF6;
+  --accent: #A855F7;
+  
+  /* Status Colors */
+  --success: #22C55E;
+  --warning: #F59E0B;
+  --danger: #EF4444;
+  --info: #3B82F6;
+
+  /* Neutrals - Light Theme (Default) */
+  --bg-app: #F8FAFC;
+  --bg-card: rgba(255, 255, 255, 0.75);
+  --bg-card-solid: #FFFFFF;
+  --border-color: rgba(226, 232, 240, 0.8);
+  --border-focus: rgba(108, 99, 255, 0.4);
+  
+  --text-main: #1F2937;
+  --text-secondary: #6B7280;
+  --text-muted: #9CA3AF;
+  --text-light: #FFFFFF;
+
+  /* Left Panel (Deep Dark Theme for high contrast WOW factor) */
+  --bg-dark-panel: #111827;
+  --bg-dark-panel-gradient: linear-gradient(135deg, #111827 0%, #0F172A 100%);
+  --text-dark-panel: #F9FAFB;
+  --text-dark-panel-muted: #9CA3AF;
+  
+  /* Fonts */
+  --font-family: 'Poppins', system-ui, -apple-system, sans-serif;
+
+  /* Borders & Radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-xl: 30px;
+  --radius-full: 9999px;
+  
+  /* Glassmorphism Styles */
+  --glass-bg: rgba(255, 255, 255, 0.75);
+  --glass-border: rgba(255, 255, 255, 0.5);
+  --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.08);
+  --glass-backdrop-blur: blur(16px);
+  
+  --glass-dark-bg: rgba(17, 24, 39, 0.7);
+  --glass-dark-border: rgba(255, 255, 255, 0.08);
+  --glass-dark-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+
+  /* Shadows */
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.02);
+  --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.03);
+  --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --shadow-glow: 0 0 20px rgba(108, 99, 255, 0.25);
+  --shadow-glow-success: 0 0 20px rgba(34, 197, 94, 0.25);
+
+  /* Transitions */
+  --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-bounce: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Dark Mode Overrides (Optional / Future expansion support) */
+[data-theme="dark"] {
+  --bg-app: #0B0F19;
+  --bg-card: rgba(17, 24, 39, 0.75);
+  --bg-card-solid: #111827;
+  --border-color: rgba(37, 47, 63, 0.8);
+  --border-focus: rgba(139, 92, 246, 0.4);
+  
+  --text-main: #F9FAFB;
+  --text-secondary: #9CA3AF;
+  --text-muted: #6B7280;
+  
+  --glass-bg: rgba(17, 24, 39, 0.75);
+  --glass-border: rgba(255, 255, 255, 0.05);
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+}

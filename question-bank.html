@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NexusED – Question Bank</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- CDNs -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap-grid.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap-utilities.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="assets/css/variables.css">
+  <link rel="stylesheet" href="assets/css/theme.css">
+  <link rel="stylesheet" href="assets/css/animations.css">
+  <link rel="stylesheet" href="assets/css/buttons.css">
+  <link rel="stylesheet" href="assets/css/forms.css">
+  <link rel="stylesheet" href="assets/css/dashboard.css">
+  <link rel="stylesheet" href="assets/css/question-bank.css">
+  <link rel="stylesheet" href="assets/css/sidebar.css">
+</head>
+<body>
+
+  <!-- Ambient Glow Backgrounds -->
+  <div class="cursor-glow"></div>
+  <div class="bg-blobs">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+
+  <!-- Shared Sidebar Menu -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-icon-wrapper">
+        <i data-lucide="layers"></i>
+      </div>
+      <span class="brand-name">NexusED</span>
+    </div>
+    
+    <nav class="sidebar-menu">
+      <a href="dashboard.html" class="sidebar-item" id="nav-dashboard">
+        <i data-lucide="layout-dashboard"></i>
+        <span>Dashboard</span>
+      </a>
+      <a href="roadmap.html" class="sidebar-item" id="nav-roadmap">
+        <i data-lucide="compass"></i>
+        <span>Roadmap</span>
+      </a>
+      <a href="skills.html" class="sidebar-item" id="nav-skills">
+        <i data-lucide="award"></i>
+        <span>Skill Tracker</span>
+      </a>
+      <a href="projects.html" class="sidebar-item" id="nav-projects">
+        <i data-lucide="folder-git-2"></i>
+        <span>Projects</span>
+      </a>
+      <a href="certificates.html" class="sidebar-item" id="nav-certificates">
+        <i data-lucide="check-square"></i>
+        <span>Certificates</span>
+      </a>
+      <a href="resume-builder.html" class="sidebar-item" id="nav-resume-builder">
+        <i data-lucide="file-text"></i>
+        <span>Resume Builder</span>
+      </a>
+      <a href="resume-analyzer.html" class="sidebar-item" id="nav-resume-analyzer">
+        <i data-lucide="bar-chart-3"></i>
+        <span>Resume Analyzer</span>
+      </a>
+      <a href="interview.html" class="sidebar-item" id="nav-interview">
+        <i data-lucide="help-circle"></i>
+        <span>Interview Prep</span>
+      </a>
+      <a href="mock-interview.html" class="sidebar-item" id="nav-mock-interview">
+        <i data-lucide="mic"></i>
+        <span>AI Mock Interview</span>
+      </a>
+      <a href="coding-tracker.html" class="sidebar-item" id="nav-coding-tracker">
+        <i data-lucide="code"></i>
+        <span>Coding Tracker</span>
+      </a>
+      <a href="career-readiness.html" class="sidebar-item" id="nav-career-readiness">
+        <i data-lucide="trending-up"></i>
+        <span>Career Readiness</span>
+      </a>
+      <a href="recommendations.html" class="sidebar-item" id="nav-recommendations">
+        <i data-lucide="sparkles"></i>
+        <span>Recommendations</span>
+      </a>
+      <a href="daily-goals.html" class="sidebar-item" id="nav-daily-goals">
+        <i data-lucide="list-todo"></i>
+        <span>Daily Goals</span>
+      </a>
+      <a href="analytics.html" class="sidebar-item" id="nav-analytics">
+        <i data-lucide="pie-chart"></i>
+        <span>Analytics</span>
+      </a>
+    </nav>
+    
+    <div class="sidebar-user mt-auto">
+      <div class="user-avatar" id="sidebar-user-avatar">
+        <!-- Render base64 image or initials dynamically -->
+      </div>
+      <div class="user-info">
+        <span class="user-name text-truncate" id="sidebar-user-name">Loading...</span>
+        <span class="user-role text-truncate" id="sidebar-user-career">Calibration Loading</span>
+      </div>
+      <button type="button" class="logout-btn ms-auto" id="logout-trigger" aria-label="Sign out">
+        <i data-lucide="log-out"></i>
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main Content Space -->
+  <main class="dashboard-main">
+    
+    <!-- Top Header Bar -->
+    <header class="d-flex align-items-center justify-content-between mb-4 animate__animated animate__fadeIn">
+      <div class="header-left">
+        <h1 class="welcome-heading">Conceptual Question Bank</h1>
+        <p class="text-muted">Explore high-quality subject concepts and check off topics as you practice.</p>
+      </div>
+      <div class="header-right">
+        <a href="interview.html" class="btn-premium btn-premium-secondary">
+          <i data-lucide="arrow-left"></i>
+          <span>Back to Preparations</span>
+        </a>
+      </div>
+    </header>
+
+    <!-- Main Explorer Layout -->
+    <div class="row g-4">
+      
+      <!-- Left Column: Subjects Menu List (4 cols) -->
+      <div class="col-xl-3 col-md-4 col-12 animate__animated animate__fadeInLeft">
+        <div class="subjects-menu-wrap">
+          <h3 class="fs-xs fw-bold text-muted uppercase tracking-wider mb-3">Technical Subjects</h3>
+          <div class="subjects-list mb-4" id="list-tech-subjects">
+            <!-- Dynamic populated technical categories -->
+          </div>
+
+          <h3 class="fs-xs fw-bold text-muted uppercase tracking-wider mb-3">HR & Personal</h3>
+          <div class="subjects-list mb-4" id="list-hr-subjects">
+            <!-- Dynamic populated HR categories -->
+          </div>
+
+          <h3 class="fs-xs fw-bold text-muted uppercase tracking-wider mb-3">Group Discussions</h3>
+          <div class="subjects-list mb-4" id="list-gd-subjects">
+            <!-- Dynamic populated GD categories -->
+          </div>
+
+          <h3 class="fs-xs fw-bold text-muted uppercase tracking-wider mb-3">Aptitude & Reasoning</h3>
+          <div class="subjects-list" id="list-aptitude-subjects">
+            <!-- Dynamic populated Aptitude categories -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Question Explorer & Filters (9 cols) -->
+      <div class="col-xl-9 col-md-8 col-12">
+        <section class="row g-4">
+          
+          <!-- Filters Toolbar -->
+          <div class="col-12 animate__animated animate__fadeIn" style="animation-delay: 0.1s;">
+            <div class="controls-bar">
+              <div class="row g-3">
+                <div class="col-md-7 col-12">
+                  <div class="search-input-wrapper">
+                    <i data-lucide="search" class="search-icon"></i>
+                    <input type="text" id="q-search-input" class="search-field" placeholder="Search questions, core topics, answers...">
+                  </div>
+                </div>
+                <div class="col-md-5 col-12">
+                  <div class="filter-dropdown-wrapper">
+                    <select id="q-difficulty-filter" class="filter-dropdown">
+                      <option value="all">All Difficulty Levels</option>
+                      <option value="Easy">Easy</option>
+                      <option value="Medium">Medium</option>
+                      <option value="Hard">Hard</option>
+                    </select>
+                    <div class="filter-chevron"><i data-lucide="chevron-down"></i></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Questions Grid Feed -->
+          <div class="col-12">
+            <div class="questions-list-feed d-flex flex-column gap-3" id="questions-feed-box">
+              <!-- Dynamic populated question cards -->
+            </div>
+          </div>
+
+        </section>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- CDNs JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (typeof lucide !== 'undefined') lucide.createIcons();
+    });
+  </script>
+
+  <!-- Custom Scripts -->
+  <script src="assets/js/toast.js"></script>
+  <script src="assets/js/sidebar.js"></script>
+  <script src="assets/js/question-bank.js"></script>
+</body>
+</html>
+

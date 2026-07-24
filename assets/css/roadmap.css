@@ -1,0 +1,259 @@
+/* roadmap.css */
+
+.roadmap-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px 0;
+}
+
+/* Timeline Central Guide Line */
+.roadmap-timeline-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 4px;
+  background: linear-gradient(to bottom, var(--primary) 0%, var(--secondary) 50%, var(--accent) 100%);
+  transform: translateX(-50%);
+  z-index: 1;
+  border-radius: var(--radius-full);
+}
+
+.roadmap-timeline-nodes {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+/* Timeline Card Wrapper */
+.roadmap-step-card {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-xl);
+  padding: 24px;
+  width: calc(50% - 30px);
+  box-shadow: var(--glass-shadow);
+  backdrop-filter: var(--glass-backdrop-blur);
+  -webkit-backdrop-filter: var(--glass-backdrop-blur);
+  position: relative;
+  transition: all var(--transition-normal);
+  text-align: left;
+}
+
+.roadmap-step-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--primary);
+  box-shadow: 0 15px 30px rgba(108, 99, 255, 0.1), var(--shadow-glow);
+}
+
+/* Connection node circle */
+.roadmap-step-card::before {
+  content: '';
+  position: absolute;
+  top: 30px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: white;
+  border: 4px solid var(--primary);
+  z-index: 5;
+  box-shadow: 0 0 10px var(--primary);
+}
+
+/* Alternate Left / Right alignment */
+.roadmap-timeline-nodes .roadmap-step-card:nth-child(odd) {
+  align-self: flex-start;
+}
+.roadmap-timeline-nodes .roadmap-step-card:nth-child(odd)::before {
+  right: -39px;
+}
+
+.roadmap-timeline-nodes .roadmap-step-card:nth-child(even) {
+  align-self: flex-end;
+}
+.roadmap-timeline-nodes .roadmap-step-card:nth-child(even)::before {
+  left: -39px;
+}
+
+/* Card Elements Layout */
+.card-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.card-title-group h3 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin: 0;
+}
+
+.card-title-group .milestone-index {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 2px;
+  display: block;
+}
+
+/* Status Badges */
+.status-badge {
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  font-size: 0.72rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.status-badge.not-started {
+  background: rgba(156, 163, 175, 0.1);
+  color: var(--text-secondary);
+  border: 1px solid rgba(156, 163, 175, 0.2);
+}
+
+.status-badge.in-progress {
+  background: rgba(108, 99, 255, 0.1);
+  color: var(--primary);
+  border: 1px solid rgba(108, 99, 255, 0.2);
+}
+
+.status-badge.completed {
+  background: rgba(34, 197, 94, 0.1);
+  color: var(--success);
+  border: 1px solid rgba(34, 197, 94, 0.2);
+}
+
+.card-desc {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  line-height: 1.45;
+  margin-bottom: 16px;
+}
+
+/* Internal Progress bar */
+.card-progress-section {
+  margin-bottom: 16px;
+}
+
+.card-progress-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.card-progress-bar-track {
+  height: 6px;
+  background: var(--border-color);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.card-progress-bar-fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+  width: 0%;
+  transition: width 0.8s ease-in-out;
+}
+
+/* Metadata Rows: deadlines & resource pills */
+.card-metadata {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  border-top: 1px solid var(--border-color);
+  padding-top: 14px;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.meta-item svg {
+  width: 14px;
+  height: 14px;
+  color: var(--primary);
+}
+
+.resource-badge {
+  background: rgba(139, 92, 246, 0.08);
+  color: var(--secondary);
+  border: 1px solid rgba(139, 92, 246, 0.15);
+  padding: 2px 8px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all var(--transition-fast);
+}
+
+.resource-badge:hover {
+  background: var(--secondary);
+  color: white;
+}
+
+/* Quick Status Toggle Button */
+.card-actions-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 14px;
+}
+
+.btn-toggle-status {
+  background: none;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 6px 12px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all var(--transition-fast);
+}
+
+.btn-toggle-status:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+  background: rgba(108, 99, 255, 0.03);
+}
+
+/* RESPONSIVE LAYOUT */
+@media (max-width: 768px) {
+  .roadmap-timeline-line {
+    left: 20px;
+    transform: none;
+  }
+
+  .roadmap-timeline-nodes {
+    gap: 30px;
+  }
+
+  .roadmap-step-card {
+    width: calc(100% - 40px) !important;
+    align-self: flex-start !important;
+    margin-left: 40px !important;
+  }
+
+  .roadmap-step-card::before {
+    left: -31px !important;
+    right: auto !important;
+  }
+}

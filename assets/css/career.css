@@ -1,0 +1,308 @@
+/* career.css */
+
+.career-icon {
+  width: 54px;
+  height: 54px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--glass-shadow);
+  color: var(--primary);
+  margin-bottom: 16px;
+}
+
+.career-icon svg {
+  width: 24px;
+  height: 24px;
+}
+
+.career-title {
+  font-size: 2.2rem;
+  font-weight: 800;
+  letter-spacing: -1px;
+}
+
+/* Nine Career Options Card */
+.career-card {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: 30px 24px;
+  box-shadow: var(--glass-shadow);
+  backdrop-filter: var(--glass-backdrop-blur);
+  -webkit-backdrop-filter: var(--glass-backdrop-blur);
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.career-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  border-color: var(--primary);
+  box-shadow: 0 20px 40px rgba(108, 99, 255, 0.12), var(--shadow-glow);
+}
+
+.career-card-badge {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid var(--border-color);
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  font-size: 0.72rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--text-secondary);
+  transition: all var(--transition-fast);
+}
+
+.career-card-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  color: white;
+  transition: transform var(--transition-normal);
+}
+
+.career-card:hover .career-card-icon {
+  transform: scale(1.1) rotate(3deg);
+}
+
+.career-card-icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+/* Distinct icon gradients for high-fidelity SaaS look */
+.career-card-icon.robot { background: linear-gradient(135deg, #6C63FF 0%, #A855F7 100%); }
+.career-card-icon.scientist { background: linear-gradient(135deg, #10B981 0%, #059669 100%); }
+.career-card-icon.engineer { background: linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%); }
+.career-card-icon.java-dev { background: linear-gradient(135deg, #EF4444 0%, #D97706 100%); }
+.career-card-icon.full-stack { background: linear-gradient(135deg, #8B5CF6 0%, #EC4899 100%); }
+.career-card-icon.cloud { background: linear-gradient(135deg, #06B6D4 0%, #2563EB 100%); }
+.career-card-icon.cyber { background: linear-gradient(135deg, #F59E0B 0%, #DC2626 100%); }
+.career-card-icon.devops { background: linear-gradient(135deg, #111827 0%, #4B5563 100%); }
+.career-card-icon.mobile { background: linear-gradient(135deg, #EC4899 0%, #F43F5E 100%); }
+
+.career-card-name {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: var(--text-main);
+  transition: color var(--transition-fast);
+}
+
+.career-card-desc {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* SELECTED STATE CARD */
+.career-card.selected {
+  border-color: var(--primary);
+  background: linear-gradient(135deg, rgba(108, 99, 255, 0.05) 0%, rgba(139, 92, 246, 0.05) 100%);
+  box-shadow: 0 10px 30px rgba(108, 99, 255, 0.15), var(--shadow-glow);
+}
+
+.career-card.selected .career-card-name {
+  color: var(--primary);
+}
+
+.career-card.selected .career-card-badge {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+
+
+/* ROADMAP TIMELINE DRAWING */
+.roadmap-section {
+  width: 100%;
+  max-width: 600px;
+  margin: 60px auto 0;
+}
+
+.roadmap-canvas-wrapper {
+  position: relative;
+  width: 100%;
+  padding: 20px 0;
+}
+
+/* Connecting line path */
+.roadmap-canvas-wrapper::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 4px;
+  background: linear-gradient(to bottom, var(--primary) 0%, var(--secondary) 50%, var(--accent) 100%);
+  transform: translateX(-50%);
+  z-index: 1;
+  border-radius: var(--radius-full);
+  box-shadow: 0 0 10px rgba(108, 99, 255, 0.15);
+}
+
+.roadmap-node-container {
+  position: relative;
+  z-index: 2;
+}
+
+/* Roadmap Card Component */
+.roadmap-node-card {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  width: 100%;
+  max-width: 380px;
+  box-shadow: var(--glass-shadow);
+  backdrop-filter: var(--glass-backdrop-blur);
+  -webkit-backdrop-filter: var(--glass-backdrop-blur);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  position: relative;
+  transition: all var(--transition-normal);
+  text-align: left;
+}
+
+.roadmap-node-card:hover {
+  transform: translateY(-3px) scale(1.02);
+  border-color: var(--secondary);
+  box-shadow: 0 10px 20px rgba(139, 92, 246, 0.08);
+}
+
+/* Node indicator sphere */
+.roadmap-node-card::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: white;
+  border: 3px solid var(--primary);
+  z-index: 5;
+  box-shadow: 0 0 8px var(--primary);
+  transform: translateY(-50%);
+}
+
+/* Alternate Left / Right connection alignments */
+.roadmap-node-container .roadmap-node-card:nth-child(odd) {
+  align-self: flex-start;
+  margin-left: 20px;
+}
+.roadmap-node-container .roadmap-node-card:nth-child(odd)::before {
+  right: -36px;
+}
+
+.roadmap-node-container .roadmap-node-card:nth-child(even) {
+  align-self: flex-end;
+  margin-right: 20px;
+}
+.roadmap-node-container .roadmap-node-card:nth-child(even)::before {
+  left: -36px;
+}
+
+.roadmap-node-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: rgba(108, 99, 255, 0.1);
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.roadmap-node-icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.roadmap-node-details h4 {
+  font-size: 0.88rem;
+  font-weight: 700;
+  margin: 0 0 2px 0;
+  color: var(--text-main);
+}
+
+.roadmap-node-details p {
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+  margin: 0;
+  line-height: 1.35;
+}
+
+/* Connection arrow spacer */
+.roadmap-node-arrow {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--bg-card-solid);
+  border: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  box-shadow: var(--shadow-sm);
+  margin: 14px 0;
+  z-index: 3;
+}
+
+.roadmap-node-arrow svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* Responsive Overrides */
+@media (max-width: 991px) {
+  .roadmap-canvas-wrapper::before {
+    left: 20px;
+    transform: none;
+  }
+  
+  .roadmap-node-container {
+    align-items: flex-start !important;
+    padding-left: 45px;
+  }
+
+  .roadmap-node-card {
+    align-self: flex-start !important;
+    max-width: 100% !important;
+    margin: 0 0 16px 0 !important;
+  }
+
+  .roadmap-node-card::before {
+    left: -33px !important;
+    right: auto !important;
+  }
+
+  .roadmap-node-arrow {
+    align-self: flex-start !important;
+    margin: 0 0 16px 8px !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .career-title {
+    font-size: 1.8rem;
+  }
+}

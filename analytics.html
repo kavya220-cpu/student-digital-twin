@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NexusED – Analytics Intelligence Dashboard</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- CDNs -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap-grid.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap-utilities.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="assets/css/variables.css">
+  <link rel="stylesheet" href="assets/css/theme.css">
+  <link rel="stylesheet" href="assets/css/animations.css">
+  <link rel="stylesheet" href="assets/css/buttons.css">
+  <link rel="stylesheet" href="assets/css/dashboard.css">
+  <link rel="stylesheet" href="assets/css/analytics.css">
+  <link rel="stylesheet" href="assets/css/sidebar.css">
+</head>
+<body>
+
+  <!-- Ambient Glow Backgrounds -->
+  <div class="cursor-glow"></div>
+  <div class="bg-blobs">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+
+  <!-- Shared Sidebar Menu -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-icon-wrapper">
+        <i data-lucide="layers"></i>
+      </div>
+      <span class="brand-name">NexusED</span>
+    </div>
+    
+    <nav class="sidebar-menu">
+      <a href="dashboard.html" class="sidebar-item" id="nav-dashboard">
+        <i data-lucide="layout-dashboard"></i>
+        <span>Dashboard</span>
+      </a>
+      <a href="roadmap.html" class="sidebar-item" id="nav-roadmap">
+        <i data-lucide="compass"></i>
+        <span>Roadmap</span>
+      </a>
+      <a href="skills.html" class="sidebar-item" id="nav-skills">
+        <i data-lucide="award"></i>
+        <span>Skill Tracker</span>
+      </a>
+      <a href="projects.html" class="sidebar-item" id="nav-projects">
+        <i data-lucide="folder-git-2"></i>
+        <span>Projects</span>
+      </a>
+      <a href="certificates.html" class="sidebar-item" id="nav-certificates">
+        <i data-lucide="check-square"></i>
+        <span>Certificates</span>
+      </a>
+      <a href="resume-builder.html" class="sidebar-item" id="nav-resume-builder">
+        <i data-lucide="file-text"></i>
+        <span>Resume Builder</span>
+      </a>
+      <a href="resume-analyzer.html" class="sidebar-item" id="nav-resume-analyzer">
+        <i data-lucide="bar-chart-3"></i>
+        <span>Resume Analyzer</span>
+      </a>
+      <a href="interview.html" class="sidebar-item" id="nav-interview">
+        <i data-lucide="help-circle"></i>
+        <span>Interview Prep</span>
+      </a>
+      <a href="mock-interview.html" class="sidebar-item" id="nav-mock-interview">
+        <i data-lucide="mic"></i>
+        <span>AI Mock Interview</span>
+      </a>
+      <a href="coding-tracker.html" class="sidebar-item" id="nav-coding-tracker">
+        <i data-lucide="code"></i>
+        <span>Coding Tracker</span>
+      </a>
+      <a href="career-readiness.html" class="sidebar-item" id="nav-career-readiness">
+        <i data-lucide="trending-up"></i>
+        <span>Career Readiness</span>
+      </a>
+      <a href="recommendations.html" class="sidebar-item" id="nav-recommendations">
+        <i data-lucide="sparkles"></i>
+        <span>Recommendations</span>
+      </a>
+      <a href="daily-goals.html" class="sidebar-item" id="nav-daily-goals">
+        <i data-lucide="list-todo"></i>
+        <span>Daily Goals</span>
+      </a>
+      <a href="analytics.html" class="sidebar-item active" id="nav-analytics">
+        <i data-lucide="pie-chart"></i>
+        <span>Analytics</span>
+      </a>
+    </nav>
+    
+    <div class="sidebar-user mt-auto">
+      <div class="user-avatar" id="sidebar-user-avatar">
+        <!-- Initials -->
+      </div>
+      <div class="user-info">
+        <span class="user-name text-truncate" id="sidebar-user-name">Loading...</span>
+        <span class="user-role text-truncate" id="sidebar-user-career">AI Student</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Viewport -->
+  <main class="dashboard-main">
+    <header class="d-flex align-items-center justify-content-between mb-4 animate__animated animate__fadeIn">
+      <div>
+        <h1 class="welcome-heading">Growth Analytics</h1>
+        <p class="text-muted">Real-time charts illustrating academic trends, credentials growth, and readiness metrics.</p>
+      </div>
+    </header>
+
+    <div class="row g-4">
+      
+      <!-- Card 1: CGPA Trend (Semester SGPA line chart) -->
+      <div class="col-lg-8 col-12 animate__animated animate__fadeInUp">
+        <div class="dash-panel">
+          <h3 class="panel-title mb-3">Academic Performance & CGPA Trend</h3>
+          <div class="chart-container">
+            <svg viewBox="0 0 500 220" id="cgpa-trend-svg" class="w-100 h-100">
+              <!-- Grid lines -->
+              <line x1="50" y1="30" x2="470" y2="30" stroke="rgba(255, 255, 255, 0.05)" />
+              <line x1="50" y1="80" x2="470" y2="80" stroke="rgba(255, 255, 255, 0.05)" />
+              <line x1="50" y1="130" x2="470" y2="130" stroke="rgba(255, 255, 255, 0.05)" />
+              <line x1="50" y1="180" x2="470" y2="180" stroke="rgba(255, 255, 255, 0.1)" />
+              <!-- Y Axis labels -->
+              <text x="25" y="35" fill="#9CA3AF" font-size="9">10.0</text>
+              <text x="25" y="85" fill="#9CA3AF" font-size="9">8.0</text>
+              <text x="25" y="135" fill="#9CA3AF" font-size="9">6.0</text>
+              <text x="25" y="185" fill="#9CA3AF" font-size="9">4.0</text>
+              
+              <!-- Trend Line will be injected here -->
+              <path id="trend-line-path" d="" fill="none" stroke="var(--primary)" stroke-width="3" stroke-linecap="round" />
+              <!-- Points will be injected here -->
+              <g id="trend-points-group"></g>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2: Career Readiness Breakdown (Donut Chart) -->
+      <div class="col-lg-4 col-12 animate__animated animate__fadeInUp" style="animation-delay: 0.1s;">
+        <div class="dash-panel d-flex flex-column align-items-center justify-content-center text-center">
+          <h3 class="panel-title mb-3 w-100 text-start">Career Readiness Distribution</h3>
+          <div class="donut-chart-box">
+            <svg viewBox="0 0 200 200" style="width: 140px; height: 140px;">
+              <circle cx="100" cy="100" r="70" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="20" />
+              <circle id="readiness-donut" cx="100" cy="100" r="70" fill="none" stroke="url(#donut-grad)" stroke-width="20" 
+                      stroke-dasharray="440" stroke-dashoffset="440" stroke-linecap="round" transform="rotate(-90 100 100)" />
+              <defs>
+                <linearGradient id="donut-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="var(--primary)" />
+                  <stop offset="100%" stop-color="#8B5CF6" />
+                </linearGradient>
+              </defs>
+            </svg>
+            <div class="donut-label">
+              <span id="readiness-percent-text">0%</span>
+              <small>Readiness</small>
+            </div>
+          </div>
+          <span id="readiness-badge" class="badge-stage-tag mt-3 foundation">Stage Loading</span>
+        </div>
+      </div>
+
+      <!-- Card 3: Skills, Certifications & Projects stats -->
+      <div class="col-md-6 col-12 animate__animated animate__fadeInUp" style="animation-delay: 0.15s;">
+        <div class="dash-panel">
+          <h3 class="panel-title mb-3">Skills Completion Rate</h3>
+          
+          <div class="d-flex align-items-center justify-content-between mb-2">
+            <span class="text-secondary font-sm">Overall skill mastery progress</span>
+            <span id="skills-progress-label" class="fw-semibold text-primary">0%</span>
+          </div>
+          <div class="progress-bar-container mb-4" style="height: 12px; background: rgba(255,255,255,0.05); border-radius: 8px; overflow:hidden;">
+            <div id="skills-progress-bar" class="progress-bar-fill" style="width: 0%; height:100%; background: linear-gradient(90deg, #10B981, #34D399);"></div>
+          </div>
+
+          <div class="row text-center mt-3 g-2">
+            <div class="col-4">
+              <div class="stat-box-small py-3">
+                <h4 id="stat-skills-count" class="mb-1 text-white">0</h4>
+                <p class="text-muted font-xs mb-0">Total Skills</p>
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="stat-box-small py-3">
+                <h4 id="stat-certs-count" class="mb-1 text-white">0</h4>
+                <p class="text-muted font-xs mb-0">Certificates</p>
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="stat-box-small py-3">
+                <h4 id="stat-projects-count" class="mb-1 text-white">0</h4>
+                <p class="text-muted font-xs mb-0">Projects</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 4: Resume & Mock Interview Scores comparison -->
+      <div class="col-md-6 col-12 animate__animated animate__fadeInUp" style="animation-delay: 0.2s;">
+        <div class="dash-panel">
+          <h3 class="panel-title mb-3">Profile Assessment Ratings</h3>
+          
+          <div class="mb-3">
+            <div class="d-flex justify-content-between mb-1">
+              <span class="text-secondary font-sm">Resume ATS Score</span>
+              <span id="rate-resume-score" class="fw-semibold text-primary">0/100</span>
+            </div>
+            <div class="progress-bar-container" style="height: 8px; background: rgba(255,255,255,0.05); border-radius: 6px; overflow:hidden;">
+              <div id="rate-resume-bar" class="progress-bar-fill" style="width: 0%; height:100%; background: var(--primary);"></div>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <div class="d-flex justify-content-between mb-1">
+              <span class="text-secondary font-sm">Mock Interview Score</span>
+              <span id="rate-interview-score" class="fw-semibold text-accent">0/100</span>
+            </div>
+            <div class="progress-bar-container" style="height: 8px; background: rgba(255,255,255,0.05); border-radius: 6px; overflow:hidden;">
+              <div id="rate-interview-bar" class="progress-bar-fill" style="width: 0%; height:100%; background: var(--accent);"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- CDNs JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (typeof lucide !== 'undefined') lucide.createIcons();
+    });
+  </script>
+
+  <!-- Custom Scripts -->
+  <script src="assets/js/toast.js"></script>
+  <script src="assets/js/sidebar.js"></script>
+  <script src="assets/js/analytics.js"></script>
+</body>
+</html>
+

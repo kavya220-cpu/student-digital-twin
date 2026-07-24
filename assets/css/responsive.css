@@ -1,0 +1,163 @@
+/* assets/css/responsive.css */
+
+/* Extra Large Screens & Desktops (Default values handle this) */
+
+/* Laptops & Small Desktops (max-width: 1200px) */
+@media (max-width: 1200px) {
+  .left-headline {
+    font-size: 2.2rem;
+  }
+  
+  .auth-left-panel {
+    padding: 40px;
+  }
+  
+  .auth-right-panel {
+    padding: 30px;
+  }
+
+  .left-branding-content {
+    margin: 40px 0;
+  }
+}
+
+/* Tablets (max-width: 991px) */
+@media (max-width: 991px) {
+  .auth-wrapper {
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  /* Split layout collapses to stacked layout */
+  .auth-left-panel {
+    flex: none;
+    padding: 40px 30px;
+    align-items: center;
+    text-align: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .auth-right-panel {
+    flex: 1;
+    padding: 50px 20px;
+    background: radial-gradient(circle at top, rgba(139, 92, 246, 0.05) 0%, transparent 70%);
+  }
+
+  .left-brand {
+    justify-content: center;
+  }
+
+  .left-branding-content {
+    margin: 24px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .left-subheading {
+    margin: 0 auto;
+  }
+
+  .left-student-bg-container,
+  .left-features-list {
+    display: none; /* Hide visual assets on tablet/mobile to keep focus on form */
+  }
+
+  .decor-object {
+    display: none; /* Hide floating decorative vectors */
+  }
+
+  .auth-card {
+    padding: 30px 24px;
+    border-radius: var(--radius-lg);
+  }
+}
+
+/* Mobile Devices (max-width: 576px) */
+@media (max-width: 576px) {
+  body {
+    background-color: var(--bg-app);
+  }
+
+  .auth-left-panel {
+    padding: 30px 20px 20px;
+  }
+
+  .left-headline {
+    font-size: 1.8rem;
+  }
+
+  .left-subheading {
+    font-size: 0.95rem;
+  }
+
+  .auth-right-panel {
+    padding: 20px 12px 40px;
+    align-items: flex-start;
+  }
+
+  .auth-cards-container {
+    max-width: 100%;
+  }
+
+  .auth-card {
+    padding: 24px 16px;
+    border-radius: var(--radius-md);
+    box-shadow: none;
+    background: transparent;
+    border: none;
+    backdrop-filter: none;
+  }
+
+  /* Forms adjustments for mobile */
+  .form-input {
+    padding: 14px;
+  }
+
+  .form-label {
+    left: 14px;
+  }
+
+  .form-input:focus ~ .form-label,
+  .form-input:not(:placeholder-shown) ~ .form-label {
+    transform: translateY(-5px) scale(0.9);
+    background: var(--bg-app);
+  }
+
+  .otp-input {
+    width: 44px;
+    height: 50px;
+    font-size: 1.25rem;
+  }
+
+  .interest-tag-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+}
+
+/* Heights check (very small height screens) */
+@media (max-height: 700px) and (min-width: 992px) {
+  .auth-left-panel {
+    padding: 30px;
+  }
+  .left-branding-content {
+    margin: 20px 0;
+  }
+  .left-headline {
+    font-size: 1.8rem;
+    margin-bottom: 6px;
+  }
+  .left-subheading {
+    font-size: 0.95rem;
+  }
+  .left-student-bg-container {
+    top: 180px; /* Adjust top starting position for short viewports */
+  }
+  .left-features-list {
+    transform: scale(0.85);
+    transform-origin: top center;
+    margin-top: 10px;
+    gap: 10px; /* Reduce gap to fit screen */
+  }
+}

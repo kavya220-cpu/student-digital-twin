@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NexusED – Student Profile Setup</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- CDNs -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap-grid.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap-utilities.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="assets/css/variables.css">
+  <link rel="stylesheet" href="assets/css/theme.css">
+  <link rel="stylesheet" href="assets/css/animations.css">
+  <link rel="stylesheet" href="assets/css/buttons.css">
+  <link rel="stylesheet" href="assets/css/forms.css">
+  <link rel="stylesheet" href="assets/css/profile.css">
+</head>
+<body>
+
+  <!-- Ambient Glow Backgrounds -->
+  <div class="cursor-glow"></div>
+  <div class="bg-blobs">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+
+  <div class="container d-flex align-items-center justify-content-center min-vh-100 py-5" style="position: relative; z-index: 2;">
+    <div class="profile-card-container w-100" style="max-width: 620px;">
+      
+      <!-- Premium Glass Card -->
+      <main class="profile-card animate__animated animate__fadeIn">
+        
+        <!-- Header -->
+        <header class="profile-header text-center mb-4">
+          <div class="profile-logo mb-3">
+            <i data-lucide="user-cog"></i>
+          </div>
+          <h2>Student Profile Setup</h2>
+          <p class="text-muted">Calibrate your profile to synchronize academic data with your growth engine.</p>
+        </header>
+
+        <!-- Stepper Indicator -->
+        <nav class="step-progress-indicator mb-4" aria-label="Setup steps">
+          <div class="step-progress-line">
+            <div class="step-progress-fill" id="profile-progress-fill" style="width: 0%;"></div>
+          </div>
+          <div class="step-indicator-node active" data-step="1">1</div>
+          <div class="step-indicator-node" data-step="2">2</div>
+          <div class="step-indicator-node" data-step="3">3</div>
+        </nav>
+
+        <!-- Form Container -->
+        <form id="profile-setup-form" onsubmit="return false;" autocomplete="on">
+          
+          <!-- STEP 1: Basic Information -->
+          <fieldset class="profile-step active" id="profile-step-1" aria-labelledby="step1-title">
+            <legend class="sr-only" id="step1-title">Step 1: Personal Details</legend>
+            <div class="form-group">
+              <input type="text" id="prof-name" name="fullname" class="form-input focus-glow-transition" placeholder=" " required autocomplete="name">
+              <label for="prof-name" class="form-label">Full Name</label>
+              <span class="error-msg" id="prof-name-error" aria-live="polite"></span>
+            </div>
+
+            <div class="form-group">
+              <input type="email" id="prof-email" name="email" class="form-input focus-glow-transition" placeholder=" " required autocomplete="email">
+              <label for="prof-email" class="form-label">Email Address</label>
+              <span class="error-msg" id="prof-email-error" aria-live="polite"></span>
+            </div>
+          </fieldset>
+
+          <!-- STEP 2: Academic Details -->
+          <fieldset class="profile-step" id="profile-step-2" aria-labelledby="step2-title" style="display: none;">
+            <legend class="sr-only" id="step2-title">Step 2: Academic Credentials</legend>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <input type="text" id="prof-college" name="college" class="form-input focus-glow-transition" placeholder=" " required>
+                  <label for="prof-college" class="form-label">College Name</label>
+                  <span class="error-msg" id="prof-college-error" aria-live="polite"></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 col-12">
+                <div class="form-group">
+                  <input type="text" id="prof-branch" name="branch" class="form-input focus-glow-transition" placeholder=" " required>
+                  <label for="prof-branch" class="form-label">Branch/Specialization</label>
+                  <span class="error-msg" id="prof-branch-error" aria-live="polite"></span>
+                </div>
+              </div>
+              <div class="col-md-6 col-12">
+                <div class="form-group">
+                  <input type="text" id="prof-roll" name="roll" class="form-input focus-glow-transition" placeholder=" " required>
+                  <label for="prof-roll" class="form-label">Roll Number</label>
+                  <span class="error-msg" id="prof-roll-error" aria-live="polite"></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-4 col-12">
+                <div class="form-group">
+                  <select id="prof-year" name="year" class="form-input focus-glow-transition" style="appearance: none; cursor: pointer; padding-right: 30px;" required>
+                    <option value="" disabled selected hidden></option>
+                    <option value="1">1st Year</option>
+                    <option value="2">2nd Year</option>
+                    <option value="3">3rd Year</option>
+                    <option value="4">4th Year</option>
+                  </select>
+                  <label for="prof-year" class="form-label">Year of Study</label>
+                  <div class="select-chevron">
+                    <i data-lucide="chevron-down"></i>
+                  </div>
+                  <span class="error-msg" id="prof-year-error" aria-live="polite"></span>
+                </div>
+              </div>
+              <div class="col-md-4 col-12">
+                <div class="form-group">
+                  <select id="prof-semester" name="semester" class="form-input focus-glow-transition" style="appearance: none; cursor: pointer; padding-right: 30px;" required>
+                    <option value="" disabled selected hidden></option>
+                    <option value="1">Sem 1</option>
+                    <option value="2">Sem 2</option>
+                    <option value="3">Sem 3</option>
+                    <option value="4">Sem 4</option>
+                    <option value="5">Sem 5</option>
+                    <option value="6">Sem 6</option>
+                    <option value="7">Sem 7</option>
+                    <option value="8">Sem 8</option>
+                  </select>
+                  <label for="prof-semester" class="form-label">Semester</label>
+                  <div class="select-chevron">
+                    <i data-lucide="chevron-down"></i>
+                  </div>
+                  <span class="error-msg" id="prof-semester-error" aria-live="polite"></span>
+                </div>
+              </div>
+              <div class="col-md-4 col-12">
+                <div class="form-group">
+                  <input type="number" id="prof-cgpa" name="cgpa" step="0.01" min="0" max="10" class="form-input focus-glow-transition" placeholder=" " required>
+                  <label for="prof-cgpa" class="form-label">Current CGPA</label>
+                  <span class="error-msg" id="prof-cgpa-error" aria-live="polite"></span>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+
+          <!-- STEP 3: Assets Upload (Photo & Resume PDF) -->
+          <fieldset class="profile-step" id="profile-step-3" aria-labelledby="step3-title" style="display: none;">
+            <legend class="sr-only" id="step3-title">Step 3: Document Uploads</legend>
+            <div class="row g-4">
+              <!-- Profile Photo -->
+              <div class="col-md-6 col-12">
+                <label class="upload-label mb-2 d-block">Profile Photo</label>
+                <div class="avatar-drag-drop" id="prof-photo-zone">
+                  <input type="file" id="prof-photo-input" name="photo" accept="image/*" class="d-none">
+                  
+                  <div class="avatar-upload-placeholder" id="photo-placeholder">
+                    <div class="avatar-upload-icon">
+                      <i data-lucide="camera"></i>
+                    </div>
+                    <span class="upload-title">Drop Photo</span>
+                    <span class="upload-limit">PNG/JPG up to 2MB</span>
+                  </div>
+
+                  <div class="avatar-preview-wrapper" id="photo-preview-wrap">
+                    <button type="button" class="avatar-remove-btn" id="photo-remove-btn" aria-label="Remove photo">×</button>
+                    <img src="" alt="Profile Preview" class="avatar-preview-img" id="photo-preview">
+                  </div>
+                </div>
+              </div>
+
+              <!-- Resume PDF -->
+              <div class="col-md-6 col-12">
+                <label class="upload-label mb-2 d-block">Resume (PDF)</label>
+                <div class="pdf-drag-drop" id="prof-resume-zone">
+                  <input type="file" id="prof-resume-input" name="resume" accept="application/pdf" class="d-none">
+                  
+                  <div class="pdf-upload-placeholder" id="resume-placeholder">
+                    <div class="pdf-upload-icon">
+                      <i data-lucide="file-text"></i>
+                    </div>
+                    <span class="upload-title">Drop PDF</span>
+                    <span class="upload-limit">PDF up to 5MB</span>
+                  </div>
+
+                  <div class="pdf-preview-wrapper" id="resume-preview-wrap" style="display: none;">
+                    <button type="button" class="pdf-remove-btn" id="resume-remove-btn" aria-label="Remove resume">×</button>
+                    <div class="pdf-info-badge">
+                      <i data-lucide="file-check" class="text-success"></i>
+                      <div class="pdf-details text-truncate">
+                        <span class="pdf-filename d-block text-truncate fw-semibold" id="resume-filename">resume.pdf</span>
+                        <span class="pdf-filesize text-muted" id="resume-filesize">0 KB</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+
+          <!-- Stepper Buttons -->
+          <footer class="profile-navigation mt-4">
+            <button type="button" class="btn-premium btn-premium-secondary" id="profile-prev" style="visibility: hidden;">
+              <i data-lucide="arrow-left"></i>
+              <span>Back</span>
+            </button>
+            <button type="button" class="btn-premium btn-premium-primary" id="profile-next">
+              <span>Next Step</span>
+              <i data-lucide="arrow-right" class="arrow-icon"></i>
+            </button>
+          </footer>
+
+        </form>
+      </main>
+
+    </div>
+  </div>
+
+  <!-- CDNs JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (typeof lucide !== 'undefined') lucide.createIcons();
+    });
+  </script>
+
+  <!-- Custom Scripts -->
+  <script src="assets/js/toast.js"></script>
+  <script src="assets/js/validation.js"></script>
+  <script src="assets/js/profile.js"></script>
+</body>
+</html>
+
