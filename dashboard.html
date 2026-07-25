@@ -124,7 +124,11 @@
         <h1 class="welcome-heading">Welcome Back, <span id="dash-student-name">Student</span> 👋</h1>
         <p class="text-muted">Analyzing your Digital Twin data parameters for targeted career roadmap syncs.</p>
       </div>
-      <div class="header-right">
+      <div class="header-right d-flex align-items-center gap-3">
+        <button class="theme-toggle-btn" id="theme-btn" style="background: none; border: none; color: var(--text-secondary); cursor: pointer; padding: 8px; display: flex; align-items: center; justify-content: center;">
+          <i data-lucide="sun" class="sun-icon"></i>
+          <i data-lucide="moon" class="moon-icon" style="display: none;"></i>
+        </button>
         <div class="status-indicator-badge">
           <div class="pulse-indicator"></div>
           <span>Digital Twin Sync Live</span>

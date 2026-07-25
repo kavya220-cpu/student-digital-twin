@@ -271,4 +271,47 @@ document.addEventListener('DOMContentLoaded', () => {
       }, 1500);
     });
   }
+
+  // 5. Global Theme Toggler Logic (Auto-attaches to theme-btn on any page)
+  const initThemeToggle = () => {
+    const themeBtn = document.getElementById('theme-btn');
+    const htmlEl = document.documentElement;
+
+    // Load active theme from localStorage, default to light
+    const savedTheme = localStorage.getItem('nexusED_theme') || 'light';
+    htmlEl.setAttribute('data-theme', savedTheme);
+    updateThemeIcon(savedTheme);
+
+    if (themeBtn) {
+      themeBtn.addEventListener('click', () => {
+        const currentTheme = htmlEl.getAttribute('data-theme') || 'light';
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+        
+        htmlEl.setAttribute('data-theme', newTheme);
+        localStorage.setItem('nexusED_theme', newTheme);
+        updateThemeIcon(newTheme);
+        
+        if (window.toast) {
+          window.toast.show('info', 'Theme Updated', `Switched to ${newTheme} mode.`, 1500);
+        }
+      });
+    }
+  };
+
+  const updateThemeIcon = (theme) => {
+    const sunIcon = document.querySelector('.sun-icon');
+    const moonIcon = document.querySelector('.moon-icon');
+    if (!sunIcon || !moonIcon) return;
+
+    if (theme === 'dark') {
+      sunIcon.style.display = 'none';
+      moonIcon.style.display = 'inline-block';
+    } else {
+      sunIcon.style.display = 'inline-block';
+      moonIcon.style.display = 'none';
+    }
+  };
+
+  // Run theme toggler on startup
+  initThemeToggle();
 });
