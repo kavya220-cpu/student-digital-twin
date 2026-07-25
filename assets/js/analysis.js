@@ -52,6 +52,22 @@ document.addEventListener('DOMContentLoaded', () => {
     return window.location.port === '5500' ? 'http://localhost:8080' : '';
   };
 
+  // Helper: Read API key from config.properties dynamically on client side
+  const getApiKey = async () => {
+    try {
+      const res = await fetch('src/config.properties');
+      if (!res.ok) throw new Error("Could not load config file");
+      const text = await res.text();
+      const match = text.match(/gemini\.api\.key\s*=\s*(.+)/);
+      if (match && match[1]) {
+        return match[1].trim();
+      }
+    } catch (e) {
+      console.error("Failed to read local API key:", e);
+    }
+    return null;
+  };
+
   // 1. Fetch Analysis details
   const fetchAnalysisDetails = () => {
     fetch(`${getBaseUrl()}/api/study/analysis?id=${docId}`)
@@ -65,6 +81,15 @@ document.addEventListener('DOMContentLoaded', () => {
       })
       .catch(err => {
         console.error('Fetch analysis failed:', err);
+        // Look up localStorage first if docId starts with doc_local_
+        if (docId && docId.startsWith('doc_local_')) {
+          const localData = JSON.parse(localStorage.getItem(docId));
+          if (localData) {
+            documentMetadata = localData;
+            renderAnalysisPage(localData);
+            return;
+          }
+        }
         // Fallback to static mock CNN analysis data
         const mockData = getMockDataFallback(docId);
         documentMetadata = mockData;
@@ -88,7 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
     summaryPoints.innerHTML = '';
     const points = data.summary.split('\n');
     points.forEach(pt => {
-      if (pt.trim().isEmpty || pt.trim() === '') return;
+      if (!pt.trim() || pt.trim() === '') return;
       const cleanPt = pt.replace(/^[0-9]+\.\s*/, ''); // Remove numbering if duplicate
       const item = document.createElement('div');
       item.className = 'summary-point-item';
@@ -179,71 +204,74 @@ document.addEventListener('DOMContentLoaded', () => {
       const selectedOpt = userAnswers[idx];
       const correctOpt = mcq.correct_answer.trim().toUpperCase();
 
-      card.querySelectorAll('.mcq-option-label').forEach(opt => {
-        opt.classList.remove('correct', 'wrong');
-        const val = opt.dataset.value;
-        
-        if (val === correctOpt) {
-          opt.classList.add('correct'); // Highlight correct answer green
-        }
-        if (val === selectedOpt && val !== correctOpt) {
-          opt.classList.add('wrong'); // Highlight incorrect user selection red
-        }
+      // Clear previous status style classes
+      card.querySelectorAll('.mcq-option-label').forEach(o => {
+        o.classList.remove('correct', 'incorrect');
       });
 
       if (selectedOpt === correctOpt) {
         score++;
+        card.querySelector(`.mcq-option-label[data-value="${selectedOpt}"]`).classList.add('correct');
+      } else {
+        if (selectedOpt) {
+          card.querySelector(`.mcq-option-label[data-value="${selectedOpt}"]`).classList.add('incorrect');
+        }
+        card.querySelector(`.mcq-option-label[data-value="${correctOpt}"]`).classList.add('correct');
       }
     });
 
-    // Render score banner
-    quizScoreBanner.style.display = 'block';
-    scoreText.textContent = `${score}/${mcqData.length}`;
+    // Score display
+    scoreText.textContent = `${score} / ${mcqData.length}`;
+    quizScoreBanner.style.display = 'flex';
+    quizScoreBanner.className = 'quiz-banner animate__animated animate__zoomIn';
     
-    const percentage = (score / mcqData.length) * 100;
-    const scoreComment = document.getElementById('score-comment');
-    if (percentage >= 80) scoreComment.textContent = "Outstanding! You have mastered these study concepts!";
-    else if (percentage >= 50) scoreComment.textContent = "Good attempt! Review the corrected answers above.";
-    else scoreComment.textContent = "Keep practicing! Review your notes and try again.";
-
-    // Smooth scroll to score banner
+    // Auto scroll to banner
     quizScoreBanner.scrollIntoView({ behavior: 'smooth', block: 'center' });
   });
 
-  // 3. 3D Flashcard Animation & Carousel
+  // 3. 3D Flashcard Deck Controls
   const renderFlashcard = (idx) => {
-    if (!flashcardData || flashcardData.length === 0) return;
+    if (flashcardData.length === 0) {
+      currentFlashcard.style.display = 'none';
+      fcIndicator.textContent = "0/0";
+      return;
+    }
 
-    // Reset rotation before editing content
-    currentFlashcard.classList.remove('flipped');
+    currentFlashcard.style.display = 'block';
+    currentFlashcard.classList.remove('flipped'); // Reset flip state on change
     
-    setTimeout(() => {
-      fcIndex.textContent = `Card ${idx + 1} of ${flashcardData.length}`;
-      fcQuestion.textContent = flashcardData[idx].question;
-      fcAnswer.textContent = flashcardData[idx].answer;
-      fcIndicator.textContent = `Card ${idx + 1}/${flashcardData.length}`;
-    }, 150);
+    const fc = flashcardData[idx];
+    fcIndex.textContent = `Card ${idx + 1}`;
+    fcQuestion.textContent = fc.question;
+    fcAnswer.textContent = fc.answer;
+    fcIndicator.textContent = `${idx + 1} / ${flashcardData.length}`;
+
+    // Disabled styles
+    fcPrevBtn.disabled = idx === 0;
+    fcNextBtn.disabled = idx === flashcardData.length - 1;
   };
 
   currentFlashcard.addEventListener('click', () => {
     currentFlashcard.classList.toggle('flipped');
   });
 
-  fcPrevBtn.addEventListener('click', () => {
+  fcPrevBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
     if (currentFlashcardIndex > 0) {
       currentFlashcardIndex--;
       renderFlashcard(currentFlashcardIndex);
     }
   });
 
-  fcNextBtn.addEventListener('click', () => {
+  fcNextBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
     if (currentFlashcardIndex < flashcardData.length - 1) {
       currentFlashcardIndex++;
       renderFlashcard(currentFlashcardIndex);
     }
   });
 
-  // 4. Interview & Viva Accordions
+  // 4. Accordions Questions
   const renderQuestions = (qs) => {
     techQsList.innerHTML = '';
     hrVivaQsList.innerHTML = '';
@@ -321,18 +349,14 @@ document.addEventListener('DOMContentLoaded', () => {
         typingBubble.remove();
         if (data.status === 'success') {
           appendChatMessage('ai', data.reply);
-          // Keep sliding history cache
           conversationHistory += `User: ${query}\nAI: ${data.reply}\n`;
         } else {
           appendChatMessage('ai', 'Error generating response: ' + data.message);
         }
       })
       .catch(() => {
-        typingBubble.remove();
-        // Fallback simulate tutoring replies offline
-        const reply = simulateTutoringReply(query);
-        appendChatMessage('ai', reply);
-        conversationHistory += `User: ${query}\nAI: ${reply}\n`;
+        // Fallback to query Gemini directly on the client side when offline
+        simulateTutoringReply(query, typingBubble);
       });
   });
 
@@ -355,9 +379,44 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.download-trigger').forEach(btn => {
     btn.addEventListener('click', () => {
       const type = btn.dataset.type;
+      
+      // If it is a local offline upload, generate text file directly in browser for download!
+      if (docId && docId.startsWith('doc_local_')) {
+        generateLocalDownload(type);
+        return;
+      }
+      
       window.location.href = `${getBaseUrl()}/api/study/download?id=${docId}&type=${type}`;
     });
   });
+
+  const generateLocalDownload = (type) => {
+    if (!documentMetadata) return;
+    let fileContent = "";
+    let filename = `${type}_${documentMetadata.filename || 'study_notes'}.txt`;
+
+    if (type === 'notes') {
+      fileContent = `========== CORE TOPICS & SUMMARY ==========\n${documentMetadata.summary}\n\n========== DETAILED STUDY NOTES ==========\n${documentMetadata.notes}`;
+    } else if (type === 'mcqs') {
+      fileContent = "========== MULTIPLE CHOICE QUESTIONS (MCQs) ==========\n\n";
+      documentMetadata.mcqs.forEach((m, idx) => {
+        fileContent += `${idx + 1}. ${m.question}\n   A) ${m.option_a}\n   B) ${m.option_b}\n   C) ${m.option_c}\n   D) ${m.option_d}\n   Correct Answer: ${m.correct_answer}\n\n`;
+      });
+    } else if (type === 'flashcards') {
+      fileContent = "========== STUDY FLASHCARDS ==========\n\n";
+      documentMetadata.flashcards.forEach((f, idx) => {
+        fileContent += `Card ${idx + 1}\nQuestion: ${f.question}\nAnswer: ${f.answer}\n\n`;
+      });
+    }
+
+    const blob = new Blob([fileContent], { type: 'text/plain;charset=utf-8' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = filename;
+    link.click();
+    URL.revokeObjectURL(link.href);
+    showToast('success', 'Download Started', `Your local export for ${type} is ready.`);
+  };
 
   analysisBookmarkBtn.addEventListener('click', () => {
     isBookmarkedState = !isBookmarkedState;
@@ -378,15 +437,62 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  // Tutoring responses fallback simulation
-  const simulateTutoringReply = (q) => {
+  // Dynamic chatbot tutor logic querying Gemini directly in browser
+  const simulateTutoringReply = async (q, typingBubble) => {
+    try {
+      const apiKey = await getApiKey();
+      if (!apiKey) throw new Error("No API key available");
+
+      const docContext = documentMetadata 
+        ? `Document Name: "${documentMetadata.filename}"\nSummary: ${documentMetadata.summary}\nTopics: ${documentMetadata.topics}\nStudy Notes Outline: ${documentMetadata.notes.substring(0, 4000)}` 
+        : '';
+
+      const prompt = `You are an AI Study Tutor for the Student Growth Platform NexusED.
+Answer the student's question about their document contents. Use the document summary/notes outline context below.
+Be concise, smart, and helpful.
+
+Document Context:
+${docContext}
+
+Conversation History:
+${conversationHistory}
+
+Student Question: ${q}`;
+
+      const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [{ parts: [{ text: prompt }] }]
+        })
+      });
+
+      if (!res.ok) throw new Error("Gemini query failed");
+      const resultJson = await res.json();
+      const reply = resultJson.candidates[0].content.parts[0].text;
+
+      typingBubble.remove();
+      appendChatMessage('ai', reply);
+      conversationHistory += `User: ${q}\nAI: ${reply}\n`;
+
+    } catch (e) {
+      console.error("Gemini tutoring query failed:", e);
+      typingBubble.remove();
+      const reply = simulateTutoringReplyStatic(q);
+      appendChatMessage('ai', reply);
+      conversationHistory += `User: ${q}\nAI: ${reply}\n`;
+    }
+  };
+
+  // Static tutoring response backup
+  const simulateTutoringReplyStatic = (q) => {
     const ql = q.toLowerCase();
     if (ql.includes("dbms") || ql.includes("normalization")) {
       return "DBMS Normalization is the systematic process of reducing redundancy and dependency. For example, in 3NF, every non-prime attribute must depend only on the primary key (no transitive dependency). A real-world example is an Order table: instead of storing customer names directly, store a CustomerID that references a separate Customers table.";
     } else if (ql.includes("cnn") || ql.includes("convolution")) {
       return "A Convolutional Neural Network (CNN) acts like a visual scanner. The convolutional layers slide filters (kernels) across pixel matrices to extract spatial features (like lines, circles, and borders). These feature maps are then compressed using pooling layers before classification.";
     }
-    return "Great question! Based on your uploaded document, this topic refers to the core architectural parameters designed to optimize dynamic data flow. Let me know if you would like me to compile more MCQs or explain this in a simpler analogy!";
+    return "Great question! Based on your uploaded document, this topic refers to the core parameters designed to optimize dynamic flow. Let me know if you would like me to compile more MCQs or explain this in a simpler analogy!";
   };
 
   // Static Fallback Builder
@@ -415,6 +521,15 @@ document.addEventListener('DOMContentLoaded', () => {
         { question: "Explain the mathematical difference between convolution and correlation.", question_type: "Viva", answer_outline: "Convolution involves flipping the kernel matrix before sliding, while cross-correlation slides the kernel directly without flipping." }
       ]
     };
+  };
+
+  // Toast Helper
+  const showToast = (type, title, message) => {
+    if (window.toast) {
+      window.toast.show(type, title, message, 3000);
+    } else {
+      alert(`${title}: ${message}`);
+    }
   };
 
   // Run start fetch
