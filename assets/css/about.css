@@ -7,15 +7,15 @@
   position: relative;
   z-index: 10;
   font-family: 'Plus Jakarta Sans', sans-serif;
-  color: var(--text-primary);
-  background-color: #0B1020 !important;
+  color: var(--text-main);
+  background-color: var(--bg-app) !important;
 }
 
 /* Ambient glow bubbles */
 .ambient-glow-circle {
   position: absolute;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(108, 99, 255, 0.08) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(108, 99, 255, 0.04) 0%, transparent 70%);
   filter: blur(40px);
   pointer-events: none;
   z-index: 0;
@@ -35,7 +35,7 @@
   font-size: 2.25rem;
   font-weight: 800;
   line-height: 1.25;
-  color: white;
+  color: var(--text-main);
   margin-bottom: 12px;
 }
 
@@ -59,8 +59,8 @@
 /* Glow Cards Styling */
 .glow-card {
   position: relative;
-  background: rgba(255, 255, 255, 0.015);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
   backdrop-filter: blur(16px);
   transition: border-color 0.4s ease, transform 0.4s ease;
   overflow: hidden;
@@ -76,7 +76,7 @@
   border-radius: inherit;
   background: radial-gradient(
     300px circle at var(--mouse-x, 0px) var(--mouse-y, 0px),
-    rgba(108, 99, 255, 0.08),
+    rgba(108, 99, 255, 0.05),
     transparent 80%
   );
   z-index: 0;
@@ -84,8 +84,9 @@
 }
 
 .glow-card:hover {
-  border-color: rgba(108, 99, 255, 0.25);
+  border-color: rgba(108, 99, 255, 0.35);
   transform: translateY(-4px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.03);
 }
 
 /* Text Gradient Highlight */
@@ -145,7 +146,7 @@
   font-size: clamp(2.25rem, 5vw, 3.75rem);
   font-weight: 800;
   line-height: 1.15;
-  color: white;
+  color: var(--text-main);
 }
 
 .hero-desc {
@@ -182,8 +183,8 @@
 }
 
 .btn-secondary-about {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--bg-card-solid);
+  border: 1px solid var(--border-color);
   color: var(--text-secondary);
   padding: 12px 28px;
   border-radius: 12px;
@@ -196,9 +197,9 @@
 }
 
 .btn-secondary-about:hover {
-  border-color: rgba(255, 255, 255, 0.25);
-  color: white;
-  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(108, 99, 255, 0.3);
+  color: var(--text-main);
+  background: #FFFFFF;
 }
 
 /* Hero 3D Illustration Panel */
@@ -223,7 +224,7 @@
   margin: 0 auto;
   border-radius: 50%;
   background: radial-gradient(circle, rgba(108, 99, 255, 0.08) 0%, rgba(255, 255, 255, 0.005) 100%);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-color);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -235,17 +236,17 @@
   width: 140px;
   height: 140px;
   border-radius: 50%;
-  background: rgba(11, 16, 32, 0.9);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #FFFFFF;
+  border: 1px solid var(--border-color);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.8);
+  box-shadow: 0 8px 24px rgba(108, 99, 255, 0.1);
 }
 
 .tech-sphere-core i {
   color: var(--primary);
-  filter: drop-shadow(0 0 10px rgba(108, 99, 255, 0.5));
+  filter: drop-shadow(0 0 5px rgba(108, 99, 255, 0.3));
 }
 
 /* Floating widget placements */
@@ -253,7 +254,7 @@
   position: absolute;
   padding: 16px;
   border-radius: 20px;
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+  box-shadow: var(--glass-shadow);
   z-index: 20;
 }
 
@@ -312,7 +313,7 @@
 .widget-progress-bg {
   width: 100%;
   height: 6px;
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(0, 0, 0, 0.05);
   border-radius: 10px;
   overflow: hidden;
   margin-top: 8px;
@@ -435,7 +436,7 @@
 }
 
 .bento-card-bg-gradient {
-  background: rgba(255, 255, 255, 0.015);
+  background: var(--bg-card);
 }
 
 .bento-icon-box {
@@ -485,8 +486,8 @@
 
 /* ================= SECTION 5: STATS PANEL ================= */
 .stats-panel-wrapper {
-  background: rgba(11, 16, 32, 0.5);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
   border-radius: 28px;
   padding: 48px 32px;
 }
@@ -505,7 +506,7 @@
 }
 
 .stats-item:not(:first-child) {
-  border-left: 1px solid rgba(255, 255, 255, 0.05);
+  border-left: 1px solid var(--border-color);
 }
 
 @media (max-width: 768px) {
@@ -550,12 +551,12 @@
   width: 96px;
   height: 96px;
   border-radius: 24px;
-  background: #0E1428;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #FFFFFF;
+  border: 1px solid var(--border-color);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.05);
   position: relative;
   z-index: 10;
   overflow: hidden;
@@ -575,12 +576,12 @@
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: rgba(11, 16, 32, 0.95);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #FFFFFF;
+  border: 1px solid var(--border-color);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
 }
 
 .orbit-node-top-left {
@@ -670,8 +671,8 @@
   font-size: 0.65rem;
   padding: 3px 8px;
   border-radius: 50px;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(0, 0, 0, 0.02);
+  border: 1px solid var(--border-color);
   color: var(--text-secondary);
 }
 
@@ -695,7 +696,7 @@
 
 /* ================= SECTION 9: FOOTER ================= */
 .about-footer {
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  border-top: 1px solid var(--border-color);
   padding-top: 32px;
   display: flex;
   flex-direction: row;
@@ -730,8 +731,8 @@
 .social-btn {
   padding: 8px;
   border-radius: 8px;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: #FFFFFF;
+  border: 1px solid var(--border-color);
   color: var(--text-secondary);
   display: flex;
   align-items: center;
@@ -740,9 +741,9 @@
 }
 
 .social-btn:hover {
-  border-color: rgba(255, 255, 255, 0.15);
-  color: white;
-  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(108, 99, 255, 0.2);
+  color: var(--primary);
+  background: #FFFFFF;
 }
 
 @media (max-width: 768px) {
