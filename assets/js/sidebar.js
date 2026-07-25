@@ -109,6 +109,10 @@ document.addEventListener('DOMContentLoaded', () => {
         <i data-lucide="pie-chart"></i>
         <span>Analytics</span>
       </a>
+      <a href="about.html" class="sidebar-item" id="nav-about">
+        <i data-lucide="info"></i>
+        <span>About NexusED</span>
+      </a>
     </nav>
 
     <div class="sidebar-user mt-auto">
@@ -226,7 +230,8 @@ document.addEventListener('DOMContentLoaded', () => {
     'career-readiness.html': '#nav-career-readiness',
     'recommendations.html': '#nav-recommendations',
     'daily-goals.html': '#nav-daily-goals',
-    'analytics.html': '#nav-analytics'
+    'analytics.html': '#nav-analytics',
+    'about.html': '#nav-about'
   };
 
   const activeId = activeSelectors[page];

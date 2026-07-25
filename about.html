@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NexusED – About Us</title>
+  
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <!-- CDNs -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap-grid.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap-utilities.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Local Stylesheets -->
+  <link rel="stylesheet" href="assets/css/variables.css">
+  <link rel="stylesheet" href="assets/css/theme.css">
+  <link rel="stylesheet" href="assets/css/animations.css">
+  <link rel="stylesheet" href="assets/css/buttons.css">
+  <link rel="stylesheet" href="assets/css/dashboard.css">
+  <link rel="stylesheet" href="assets/css/sidebar.css">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              dark: '#0B1020',
+              primary: '#6C63FF',
+              secondary: '#4D44E6',
+              glow: 'rgba(108, 99, 255, 0.15)',
+              accentBlue: '#00F2FE',
+              accentPurple: '#9B51E0'
+            }
+          },
+          borderRadius: {
+            '2xl': '20px',
+            '3xl': '28px'
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Glow Cards Styling */
+    .glow-card {
+      position: relative;
+      background: rgba(255, 255, 255, 0.015);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(16px);
+      transition: border-color 0.4s ease, transform 0.4s ease;
+    }
+    .glow-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border-radius: inherit;
+      background: radial-gradient(
+        300px circle at var(--mouse-x, 0px) var(--mouse-y, 0px),
+        rgba(108, 99, 255, 0.08),
+        transparent 80%
+      );
+      z-index: 0;
+      pointer-events: none;
+    }
+    .glow-card:hover {
+      border-color: rgba(108, 99, 255, 0.25);
+      transform: translateY(-4px);
+    }
+    
+    /* Premium Gradient Highlights */
+    .text-gradient {
+      background: linear-gradient(135deg, #00F2FE 0%, #4D44E6 50%, #9B51E0 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    /* Button Ripple elements */
+    .ripple-btn {
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-ripple-span {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      transform: scale(0);
+      animation: ripple-animation 0.6s linear;
+      pointer-events: none;
+    }
+    @keyframes ripple-animation {
+      to {
+        transform: scale(4);
+        opacity: 0;
+      }
+    }
+    
+    /* Circle Step cards mission */
+    .mission-circle {
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      background: radial-gradient(100% 100% at 50% 0%, rgba(108, 99, 255, 0.05) 0%, rgba(255, 255, 255, 0.005) 100%);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+      transition: all 0.4s ease;
+    }
+    .mission-circle:hover {
+      border-color: rgba(108, 99, 255, 0.35);
+      transform: translateY(-6px);
+      box-shadow: 0 12px 40px rgba(108, 99, 255, 0.15);
+    }
+
+    /* Override standard dashboard backgrounds to match Tailwind custom styling */
+    .dashboard-main {
+      background-color: #0B1020 !important;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    /* Ambient glow elements */
+    .ambient-glow-circle {
+      position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(108, 99, 255, 0.08) 0%, transparent 70%);
+      filter: blur(40px);
+      pointer-events: none;
+      z-index: 0;
+    }
+  </style>
+</head>
+<body class="bg-[#0B1020]">
+
+  <div class="dashboard-container">
+    <!-- Sidebar navigation (Loaded dynamically via sidebar.js) -->
+    <div class="sidebar"></div>
+
+    <!-- Main Workspace -->
+    <main class="dashboard-main min-h-screen text-slate-200 p-6 md:p-12 overflow-x-hidden relative flex flex-col gap-24 md:gap-32 z-10">
+      
+      <!-- Ambient Glow Overlays -->
+      <div class="ambient-glow-circle w-[500px] h-[500px] -top-32 -right-32"></div>
+      <div class="ambient-glow-circle w-[600px] h-[600px] top-[40%] -left-64"></div>
+      <div class="ambient-glow-circle w-[500px] h-[500px] bottom-10 right-10"></div>
+
+      <!-- ================= SECTION 1: HERO ================= -->
+      <section class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative min-h-[80vh] pt-6 z-10">
+        <div class="lg:col-span-7 flex flex-col gap-6 max-w-2xl">
+          <div class="hero-badge self-start px-3 py-1.5 rounded-full border border-indigo-500/30 bg-indigo-500/10 text-xs font-semibold uppercase tracking-wider text-indigo-400">
+            About NexusED
+          </div>
+          <h1 class="hero-heading text-4xl sm:text-5xl md:text-6xl font-extrabold text-white leading-tight">
+            Empowering Students.<br>
+            <span class="text-gradient">Building Careers.</span><br>
+            Creating Future Leaders.
+          </h1>
+          <p class="hero-desc text-slate-400 text-lg leading-relaxed">
+            NexusED is an AI-powered Student Digital Twin & Growth Intelligence Platform that unifies academics, skills, projects, certifications, career planning, coding practice, resume building, and mock interview preparation into one intelligent ecosystem.
+          </p>
+          <div class="hero-actions flex flex-wrap gap-4 mt-2">
+            <a href="dashboard.html" class="ripple-btn px-6 py-3 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white font-medium shadow-lg shadow-indigo-500/20 transition-all">
+              Explore Features
+            </a>
+            <a href="#mission" class="ripple-btn px-6 py-3 rounded-xl border border-slate-700 hover:border-slate-500 text-slate-300 hover:text-white font-medium bg-slate-900/40 hover:bg-slate-900/60 transition-all">
+              Our Mission
+            </a>
+          </div>
+        </div>
+
+        <!-- 3D Floating Widgets Mockup -->
+        <div class="lg:col-span-5 relative hero-illustration-wrapper flex items-center justify-center min-h-[450px]">
+          <div class="hero-illustration-inner w-full max-w-[400px] relative z-10">
+            
+            <!-- Core Tech Sphere Widget -->
+            <div class="w-[300px] h-[300px] mx-auto rounded-full bg-gradient-to-br from-indigo-500/10 to-purple-500/10 border border-white/5 flex items-center justify-center relative shadow-2xl backdrop-blur-md">
+              <div class="absolute inset-0 bg-[radial-gradient(circle,rgba(108,99,255,0.1)_0%,transparent_70%)] animate-pulse"></div>
+              <div class="w-[140px] h-[140px] rounded-full bg-slate-950/80 border border-white/10 flex items-center justify-center relative shadow-inner">
+                <i data-lucide="cpu" class="w-16 h-16 text-indigo-400 animate-pulse"></i>
+              </div>
+            </div>
+
+            <!-- Floating Widget 1: CGPA Card -->
+            <div class="absolute float-widget-1 top-4 -left-6 glow-card p-4 rounded-2xl w-[170px] shadow-xl">
+              <div class="flex items-center gap-2 mb-2">
+                <div class="p-2 rounded-lg bg-emerald-500/10 border border-emerald-500/20">
+                  <i data-lucide="activity" class="w-5 h-5 text-emerald-400"></i>
+                </div>
+                <span class="text-xs text-slate-400 font-medium">Digital Twin</span>
+              </div>
+              <div class="text-2xl font-bold text-white">9.24 <span class="text-xs text-slate-400 font-normal">CGPA</span></div>
+              <div class="w-full bg-slate-800 h-1.5 rounded-full mt-2 overflow-hidden">
+                <div class="bg-emerald-400 h-full rounded-full" style="width: 92.4%"></div>
+              </div>
+            </div>
+
+            <!-- Floating Widget 2: Skill Tracker -->
+            <div class="absolute float-widget-2 bottom-8 -left-10 glow-card p-4 rounded-2xl w-[190px] shadow-xl">
+              <div class="flex items-center gap-2 mb-2">
+                <div class="p-2 rounded-lg bg-indigo-500/10 border border-indigo-500/20">
+                  <i data-lucide="code" class="w-5 h-5 text-indigo-400"></i>
+                </div>
+                <span class="text-xs text-slate-400 font-medium">Full Stack Track</span>
+              </div>
+              <div class="text-sm font-semibold text-slate-200">Expertise Levels</div>
+              <div class="flex gap-1.5 mt-2.5">
+                <span class="text-[9px] px-2 py-0.5 rounded-full bg-indigo-500/20 border border-indigo-500/30 text-indigo-300 font-medium">CSS3</span>
+                <span class="text-[9px] px-2 py-0.5 rounded-full bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 font-medium">Java</span>
+                <span class="text-[9px] px-2 py-0.5 rounded-full bg-pink-500/20 border border-pink-500/30 text-pink-300 font-medium">SQL</span>
+              </div>
+            </div>
+
+            <!-- Floating Widget 3: Career Readiness -->
+            <div class="absolute float-widget-3 top-10 -right-6 glow-card p-4 rounded-2xl w-[180px] shadow-xl">
+              <div class="flex items-center gap-2 justify-between">
+                <span class="text-xs text-slate-400 font-medium">Career Readiness</span>
+                <span class="text-xs text-indigo-400 font-bold">94%</span>
+              </div>
+              <div class="w-full bg-slate-800 h-2 rounded-full mt-2 overflow-hidden">
+                <div class="bg-gradient-to-r from-indigo-500 to-purple-500 h-full rounded-full" style="width: 94%"></div>
+              </div>
+              <div class="text-[10px] text-slate-500 mt-2 flex items-center justify-between">
+                <span>Placement Fit</span>
+                <span class="text-emerald-400">Excellent</span>
+              </div>
+            </div>
+
+            <!-- Floating Widget 4: Portfolio Stats -->
+            <div class="absolute float-widget-4 bottom-2 -right-8 glow-card p-3 rounded-2xl w-[160px] shadow-xl">
+              <div class="grid grid-cols-2 gap-2 text-center">
+                <div class="border-r border-white/5 pr-1">
+                  <div class="text-lg font-bold text-white">8</div>
+                  <div class="text-[9px] text-slate-400 uppercase tracking-wider font-semibold">Projects</div>
+                </div>
+                <div>
+                  <div class="text-lg font-bold text-indigo-400">87%</div>
+                  <div class="text-[9px] text-slate-400 uppercase tracking-wider font-semibold">ATS Score</div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= SECTION 2: WHO WE ARE ================= -->
+      <section class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center scroll-fade-up z-10">
+        <div class="flex flex-col gap-5">
+          <div class="text-xs font-bold uppercase tracking-wider text-indigo-400">Who We Are</div>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-white leading-tight">
+            More Than Just a Platform—<br>
+            We're Your Growth Partner
+          </h2>
+          <p class="text-slate-400 leading-relaxed text-base">
+            NexusED is engineered to serve as a comprehensive growth intelligence partner for students navigating today's complex academic and professional layouts. Rather than managing fragmented portals for syllabus tracking, resume writing, mock tests, and hackathons, NexusED aggregates your entire evolution into a single, cohesive Student Digital Twin.
+          </p>
+          <p class="text-slate-400 leading-relaxed text-base">
+            By analyzing course marks, active skill lists, project complexities, and interview readiness levels, we formulate data-driven career recommendations and customize templates to unlock high-value student outcomes.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div class="glow-card p-6 rounded-3xl flex flex-col gap-4 hover:border-indigo-500/20 transition-all">
+            <div class="w-10 h-10 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400">
+              <i data-lucide="graduation-cap" class="w-5 h-5"></i>
+            </div>
+            <h3 class="text-base font-bold text-white">Built for Students</h3>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              Tailored directly to academic timelines, dynamic syllabi, and student portfolio goals.
+            </p>
+          </div>
+          
+          <div class="glow-card p-6 rounded-3xl flex flex-col gap-4 hover:border-indigo-500/20 transition-all">
+            <div class="w-10 h-10 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400">
+              <i data-lucide="cpu" class="w-5 h-5"></i>
+            </div>
+            <h3 class="text-base font-bold text-white">AI-Powered Insights</h3>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              Calculates personalized roadmap objectives, skill deficiencies, and mock feedback scores.
+            </p>
+          </div>
+
+          <div class="glow-card p-6 rounded-3xl flex flex-col gap-4 hover:border-indigo-500/20 transition-all">
+            <div class="w-10 h-10 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400">
+              <i data-lucide="shield" class="w-5 h-5"></i>
+            </div>
+            <h3 class="text-base font-bold text-white">Secure & Private</h3>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              Maintains verified databases, encrypted credentials storage, and isolated digital folders.
+            </p>
+          </div>
+
+          <div class="glow-card p-6 rounded-3xl flex flex-col gap-4 hover:border-indigo-500/20 transition-all">
+            <div class="w-10 h-10 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400">
+              <i data-lucide="rocket" class="w-5 h-5"></i>
+            </div>
+            <h3 class="text-base font-bold text-white">Career Focused</h3>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              Prepares profiles for direct placements, high-scoring ATS resume templates, and hackathon matches.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= SECTION 3: OUR MISSION ================= -->
+      <section id="mission" class="flex flex-col gap-12 text-center items-center scroll-fade-up z-10">
+        <div class="max-w-2xl flex flex-col gap-3">
+          <div class="text-xs font-bold uppercase tracking-wider text-indigo-400">Our Mission</div>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-white">Our Mission is Your Success</h2>
+          <p class="text-slate-400">
+            We provide students with the automated diagnostic capabilities, analytical feedback, and career matching indexes needed to stand out and excel.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-5 gap-6 w-full max-w-5xl justify-center">
+          
+          <div class="mission-circle p-6 rounded-full aspect-square flex flex-col items-center justify-center text-center gap-3">
+            <div class="w-12 h-12 rounded-full bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400">
+              <i data-lucide="activity" class="w-6 h-6"></i>
+            </div>
+            <h3 class="text-sm font-bold text-white">Track</h3>
+            <p class="text-[10px] text-slate-400 leading-normal max-w-[110px]">
+              Academics, SGPAs, and attendance logs.
+            </p>
+          </div>
+
+          <div class="mission-circle p-6 rounded-full aspect-square flex flex-col items-center justify-center text-center gap-3">
+            <div class="w-12 h-12 rounded-full bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400">
+              <i data-lucide="book-open" class="w-6 h-6"></i>
+            </div>
+            <h3 class="text-sm font-bold text-white">Learn</h3>
+            <p class="text-[10px] text-slate-400 leading-normal max-w-[110px]">
+              AI study guides, key topics, and MCQs.
+            </p>
+          </div>
+
+          <div class="mission-circle p-6 rounded-full aspect-square flex flex-col items-center justify-center text-center gap-3">
+            <div class="w-12 h-12 rounded-full bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400">
+              <i data-lucide="code" class="w-6 h-6"></i>
+            </div>
+            <h3 class="text-sm font-bold text-white">Build</h3>
+            <p class="text-[10px] text-slate-400 leading-normal max-w-[110px]">
+              Github projects, and certifications.
+            </p>
+          </div>
+
+          <div class="mission-circle p-6 rounded-full aspect-square flex flex-col items-center justify-center text-center gap-3">
+            <div class="w-12 h-12 rounded-full bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400">
+              <i data-lucide="trending-up" class="w-6 h-6"></i>
+            </div>
+            <h3 class="text-sm font-bold text-white">Grow</h3>
+            <p class="text-[10px] text-slate-400 leading-normal max-w-[110px]">
+              ATS resumes and AI mock interviews.
+            </p>
+          </div>
+
+          <div class="mission-circle p-6 rounded-full aspect-square flex flex-col items-center justify-center text-center col-span-2 md:col-span-1 gap-3">
+            <div class="w-12 h-12 rounded-full bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400">
+              <i data-lucide="award" class="w-6 h-6"></i>
+            </div>
+            <h3 class="text-sm font-bold text-white">Succeed</h3>
+            <p class="text-[10px] text-slate-400 leading-normal max-w-[110px]">
+              Secure high-value job placements.
+            </p>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ================= SECTION 4: WHY NEXUSED (BENTO GRID) ================= -->
+      <section class="flex flex-col gap-12 scroll-fade-up z-10">
+        <div class="max-w-2xl flex flex-col gap-3">
+          <div class="text-xs font-bold uppercase tracking-wider text-indigo-400">Why NexusED</div>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-white">The Unified Growth Platform</h2>
+          <p class="text-slate-400">
+            Replaces outdated, disconnected student folders with a unified, responsive SaaS data core.
+          </p>
+        </div>
+
+        <!-- Bento Grid Layout -->
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-6 auto-rows-[160px]">
+          
+          <!-- Card 1: Academic Growth -->
+          <div class="glow-card md:col-span-8 p-6 rounded-3xl flex flex-col justify-between group overflow-hidden relative stagger-card">
+            <div class="absolute -right-6 -bottom-6 w-32 h-32 bg-indigo-500/10 rounded-full blur-xl group-hover:bg-indigo-500/20 transition-all duration-300"></div>
+            <div class="flex justify-between items-start">
+              <div class="p-3 rounded-xl bg-indigo-500/10 border border-indigo-500/25 text-indigo-400">
+                <i data-lucide="bar-chart" class="w-6 h-6"></i>
+              </div>
+              <span class="text-[10px] text-slate-500 uppercase tracking-widest font-bold">Academics</span>
+            </div>
+            <div>
+              <h3 class="text-lg font-bold text-white mb-1">Academic Growth Tracking</h3>
+              <p class="text-xs text-slate-400 leading-relaxed max-w-xl">
+                Visual SGPA progress charts, dynamic mark metrics, and attendance analysis logs to monitor academic health.
+              </p>
+            </div>
+          </div>
+
+          <!-- Card 2: AI Career Guidance -->
+          <div class="glow-card md:col-span-4 p-6 rounded-3xl flex flex-col justify-between group overflow-hidden relative stagger-card">
+            <div class="absolute -right-6 -bottom-6 w-24 h-24 bg-purple-500/10 rounded-full blur-xl group-hover:bg-purple-500/20 transition-all duration-300"></div>
+            <div class="flex justify-between items-start">
+              <div class="p-3 rounded-xl bg-purple-500/10 border border-purple-500/25 text-purple-400">
+                <i data-lucide="cpu" class="w-6 h-6"></i>
+              </div>
+            </div>
+            <div>
+              <h3 class="text-lg font-bold text-white mb-1">AI Career Guidance</h3>
+              <p class="text-xs text-slate-400 leading-relaxed">
+                Personalized roadmap recommendations mapped dynamically to student skill levels.
+              </p>
+            </div>
+          </div>
+
+          <!-- Card 3: Resume Builder -->
+          <div class="glow-card md:col-span-4 p-6 rounded-3xl flex flex-col justify-between group overflow-hidden relative stagger-card">
+            <div class="absolute -right-6 -bottom-6 w-24 h-24 bg-blue-500/10 rounded-full blur-xl group-hover:bg-blue-500/20 transition-all duration-300"></div>
+            <div class="flex justify-between items-start">
+              <div class="p-3 rounded-xl bg-blue-500/10 border border-blue-500/25 text-blue-400">
+                <i data-lucide="file-text" class="w-6 h-6"></i>
+              </div>
+            </div>
+            <div>
+              <h3 class="text-lg font-bold text-white mb-1">ATS Resume Builder</h3>
+              <p class="text-xs text-slate-400 leading-relaxed">
+                Build high-scoring professional resumes matching automated hiring criteria.
+              </p>
+            </div>
+          </div>
+
+          <!-- Card 4: AI Mock Interview -->
+          <div class="glow-card md:col-span-8 p-6 rounded-3xl flex flex-col justify-between group overflow-hidden relative stagger-card">
+            <div class="absolute -right-6 -bottom-6 w-32 h-32 bg-pink-500/10 rounded-full blur-xl group-hover:bg-pink-500/20 transition-all duration-300"></div>
+            <div class="flex justify-between items-start">
+              <div class="p-3 rounded-xl bg-pink-500/10 border border-pink-500/25 text-pink-400">
+                <i data-lucide="mic" class="w-6 h-6"></i>
+              </div>
+              <span class="text-[10px] text-slate-500 uppercase tracking-widest font-bold">Preparation</span>
+            </div>
+            <div>
+              <h3 class="text-lg font-bold text-white mb-1">Interactive Mock Interviews</h3>
+              <p class="text-xs text-slate-400 leading-relaxed max-w-xl">
+                Perform verbal AI-driven simulated interviews. Receives actionable technical evaluation ratings and communication improvements.
+              </p>
+            </div>
+          </div>
+
+          <!-- Card 5: Career Readiness -->
+          <div class="glow-card md:col-span-5 p-6 rounded-3xl flex flex-col justify-between group overflow-hidden relative stagger-card">
+            <div class="absolute -right-6 -bottom-6 w-28 h-28 bg-emerald-500/10 rounded-full blur-xl group-hover:bg-emerald-500/20 transition-all duration-300"></div>
+            <div class="flex justify-between items-start">
+              <div class="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/25 text-emerald-400">
+                <i data-lucide="trending-up" class="w-6 h-6"></i>
+              </div>
+            </div>
+            <div>
+              <h3 class="text-lg font-bold text-white mb-1">Career Readiness Index</h3>
+              <p class="text-xs text-slate-400 leading-relaxed">
+                Aggregated metric measuring real-time alignment with industry-ready benchmarks.
+              </p>
+            </div>
+          </div>
+
+          <!-- Card 6: Skill Tracker -->
+          <div class="glow-card md:col-span-7 p-6 rounded-3xl flex flex-col justify-between group overflow-hidden relative stagger-card">
+            <div class="absolute -right-6 -bottom-6 w-32 h-32 bg-amber-500/10 rounded-full blur-xl group-hover:bg-amber-500/20 transition-all duration-300"></div>
+            <div class="flex justify-between items-start">
+              <div class="p-3 rounded-xl bg-amber-500/10 border border-amber-500/25 text-amber-400">
+                <i data-lucide="award" class="w-6 h-6"></i>
+              </div>
+              <span class="text-[10px] text-slate-500 uppercase tracking-widest font-bold">Skills</span>
+            </div>
+            <div>
+              <h3 class="text-lg font-bold text-white mb-1">Skill Competency Tracker</h3>
+              <p class="text-xs text-slate-400 leading-relaxed">
+                Map expertise across technologies. Progress markers guide you from beginner foundations to expert practical development.
+              </p>
+            </div>
+          </div>
+
+          <!-- Card 7: Projects Portfolio -->
+          <div class="glow-card md:col-span-6 p-6 rounded-3xl flex flex-col justify-between group overflow-hidden relative stagger-card">
+            <div class="absolute -right-6 -bottom-6 w-28 h-28 bg-indigo-500/10 rounded-full blur-xl group-hover:bg-indigo-500/20 transition-all duration-300"></div>
+            <div class="flex justify-between items-start">
+              <div class="p-3 rounded-xl bg-indigo-500/10 border border-indigo-500/25 text-indigo-400">
+                <i data-lucide="folder" class="w-6 h-6"></i>
+              </div>
+            </div>
+            <div>
+              <h3 class="text-lg font-bold text-white mb-1">Projects Portfolio</h3>
+              <p class="text-xs text-slate-400 leading-relaxed">
+                Vault repositories, host deployments, and detail collaborative team contributions.
+              </p>
+            </div>
+          </div>
+
+          <!-- Card 8: Certifications -->
+          <div class="glow-card md:col-span-6 p-6 rounded-3xl flex flex-col justify-between group overflow-hidden relative stagger-card">
+            <div class="absolute -right-6 -bottom-6 w-28 h-28 bg-teal-500/10 rounded-full blur-xl group-hover:bg-teal-500/20 transition-all duration-300"></div>
+            <div class="flex justify-between items-start">
+              <div class="p-3 rounded-xl bg-teal-500/10 border border-teal-500/25 text-teal-400">
+                <i data-lucide="badge-check" class="w-6 h-6"></i>
+              </div>
+            </div>
+            <div>
+              <h3 class="text-lg font-bold text-white mb-1">Certifications Ledger</h3>
+              <p class="text-xs text-slate-400 leading-relaxed">
+                Record and link verified credentials, licensing boards, and dates of issue.
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ================= SECTION 5: PLATFORM STATISTICS ================= -->
+      <section class="scroll-fade-up z-10 bg-slate-950/40 border border-white/5 rounded-3xl py-12 px-6 md:px-12">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-4 text-center">
+          
+          <div class="flex flex-col gap-2">
+            <div class="stat-counter text-4xl sm:text-5xl font-extrabold text-white text-gradient" data-target="19" data-suffix="+">0+</div>
+            <div class="text-xs text-slate-400 uppercase tracking-widest font-semibold">Core Modules</div>
+          </div>
+          
+          <div class="flex flex-col gap-2 border-l border-white/5">
+            <div class="stat-counter text-4xl sm:text-5xl font-extrabold text-white text-gradient" data-target="1" data-suffix="">0</div>
+            <div class="text-xs text-slate-400 uppercase tracking-widest font-semibold">Unified Twin Core</div>
+          </div>
+
+          <div class="flex flex-col gap-2 border-l border-white/5">
+            <div class="stat-counter text-4xl sm:text-5xl font-extrabold text-white text-gradient" data-target="100" data-suffix="%">0%</div>
+            <div class="text-xs text-slate-400 uppercase tracking-widest font-semibold">Career Focused</div>
+          </div>
+
+          <div class="flex flex-col gap-2 border-l border-white/5">
+            <div class="text-4xl sm:text-5xl font-extrabold text-white text-gradient">AI</div>
+            <div class="text-xs text-slate-400 uppercase tracking-widest font-semibold">Growth Intelligence</div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ================= SECTION 6: OUR VISION ================= -->
+      <section class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center scroll-fade-up z-10">
+        
+        <!-- Rotating 3D Vision Logo Left -->
+        <div class="lg:col-span-5 flex items-center justify-center min-h-[350px]">
+          <div class="relative w-[280px] h-[280px] vision-logo-wrapper flex items-center justify-center">
+            
+            <!-- Platform Grid Glow Base -->
+            <div class="absolute w-[240px] h-[240px] rounded-full bg-indigo-500/5 border border-indigo-500/10 blur-xl"></div>
+            
+            <!-- Rotating Outer Ring -->
+            <div class="absolute w-full h-full border border-indigo-500/20 border-dashed rounded-full vision-logo-ring"></div>
+            
+            <!-- Logo Core Cube -->
+            <div class="w-24 h-24 rounded-3xl bg-slate-900 border border-white/10 flex items-center justify-center relative shadow-2xl overflow-hidden group">
+              <div class="absolute inset-0 bg-gradient-to-tr from-indigo-500/20 to-purple-500/20 opacity-50"></div>
+              <i data-lucide="layers" class="w-12 h-12 text-indigo-400 relative z-10"></i>
+            </div>
+            
+            <!-- Small Orbiting Badges -->
+            <div class="absolute top-4 left-4 w-8 h-8 rounded-full bg-slate-950 border border-white/10 flex items-center justify-center text-teal-400 shadow float-widget-2">
+              <i data-lucide="compass" class="w-4 h-4"></i>
+            </div>
+            <div class="absolute bottom-6 right-6 w-8 h-8 rounded-full bg-slate-950 border border-white/10 flex items-center justify-center text-purple-400 shadow float-widget-1">
+              <i data-lucide="award" class="w-4 h-4"></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="lg:col-span-7 flex flex-col gap-5">
+          <div class="text-xs font-bold uppercase tracking-wider text-indigo-400">Our Vision</div>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-white leading-tight">
+            A Future Where Every Student Has<br>
+            the Right Tools to Succeed
+          </h2>
+          <p class="text-slate-400 leading-relaxed text-base">
+            Modern education is transforming from static test evaluations into dynamic capabilities building. NexusED envisions a future where every student, regardless of their background or domain, receives automated personalized mentorship.
+          </p>
+          <p class="text-slate-400 leading-relaxed text-base">
+            By translating everyday coding milestones, project uploads, and academic performance metrics into structured growth metrics, we build a transparent bridge of capability and validation between colleges, students, and employers.
+          </p>
+        </div>
+      </section>
+
+      <!-- ================= SECTION 7: CORE VALUES ================= -->
+      <section class="flex flex-col gap-12 scroll-fade-up z-10">
+        <div class="max-w-2xl flex flex-col gap-3">
+          <div class="text-xs font-bold uppercase tracking-wider text-indigo-400">Core Values</div>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-white">What Drives NexusED</h2>
+          <p class="text-slate-400">
+            The foundation of our platform design, database security, and user experience standards.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          
+          <div class="glow-card p-6 rounded-3xl flex flex-col gap-4 stagger-card">
+            <div class="w-12 h-12 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400">
+              <i data-lucide="sparkles" class="w-6 h-6"></i>
+            </div>
+            <h3 class="text-base font-bold text-white">Innovation</h3>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              Pushing boundaries in student data models and AI diagnostics to optimize learning.
+            </p>
+          </div>
+
+          <div class="glow-card p-6 rounded-3xl flex flex-col gap-4 stagger-card">
+            <div class="w-12 h-12 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400">
+              <i data-lucide="trending-up" class="w-6 h-6"></i>
+            </div>
+            <h3 class="text-base font-bold text-white">Growth</h3>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              Fostering a culture of continuous learning and incremental portfolio advancement.
+            </p>
+          </div>
+
+          <div class="glow-card p-6 rounded-3xl flex flex-col gap-4 stagger-card">
+            <div class="w-12 h-12 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400">
+              <i data-lucide="lock" class="w-6 h-6"></i>
+            </div>
+            <h3 class="text-base font-bold text-white">Trust</h3>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              Maintaining absolute privacy, encrypted databases, and verified profile credentials.
+            </p>
+          </div>
+
+          <div class="glow-card p-6 rounded-3xl flex flex-col gap-4 stagger-card">
+            <div class="w-12 h-12 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400">
+              <i data-lucide="check-circle" class="w-6 h-6"></i>
+            </div>
+            <h3 class="text-base font-bold text-white">Excellence</h3>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              Delivering high-quality UX, low latencies, and reliable diagnostic feedback loops.
+            </p>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ================= SECTION 8: TECHNOLOGY STACK ================= -->
+      <section class="flex flex-col gap-12 scroll-fade-up z-10">
+        <div class="max-w-2xl flex flex-col gap-3">
+          <div class="text-xs font-bold uppercase tracking-wider text-indigo-400">Technology Stack</div>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-white">Engineered for Performance</h2>
+          <p class="text-slate-400">
+            A secure architecture designed with robust enterprise components and rapid AI models.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+          
+          <div class="glow-card p-5 rounded-2xl text-center flex flex-col items-center gap-3 stagger-card">
+            <span class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Frontend</span>
+            <div class="flex gap-2">
+              <span class="text-[10px] px-2 py-0.5 rounded-full bg-slate-900 border border-white/5 text-slate-300">HTML5</span>
+              <span class="text-[10px] px-2 py-0.5 rounded-full bg-slate-900 border border-white/5 text-slate-300">CSS3</span>
+            </div>
+            <span class="text-xs text-indigo-400 font-semibold mt-1">JavaScript</span>
+          </div>
+
+          <div class="glow-card p-5 rounded-2xl text-center flex flex-col items-center gap-3 stagger-card">
+            <span class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Backend</span>
+            <span class="text-sm font-bold text-white">Java EE</span>
+            <div class="flex gap-1.5">
+              <span class="text-[9px] px-2 py-0.5 rounded-full bg-slate-900 border border-white/5 text-slate-300">Servlets</span>
+              <span class="text-[9px] px-2 py-0.5 rounded-full bg-slate-900 border border-white/5 text-slate-300">JDBC</span>
+            </div>
+          </div>
+
+          <div class="glow-card p-5 rounded-2xl text-center flex flex-col items-center gap-3 stagger-card">
+            <span class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Database</span>
+            <div class="p-2 rounded-xl bg-slate-900 border border-white/10 text-indigo-400">
+              <i data-lucide="database" class="w-5 h-5"></i>
+            </div>
+            <span class="text-sm font-extrabold text-white">MySQL 8.0</span>
+          </div>
+
+          <div class="glow-card p-5 rounded-2xl text-center flex flex-col items-center gap-3 stagger-card">
+            <span class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">AI Engine</span>
+            <div class="p-2 rounded-xl bg-slate-900 border border-white/10 text-indigo-400">
+              <i data-lucide="cpu" class="w-5 h-5"></i>
+            </div>
+            <span class="text-xs font-bold text-white">Google Gemini</span>
+          </div>
+
+          <div class="glow-card p-5 rounded-2xl text-center flex flex-col items-center gap-3 stagger-card">
+            <span class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Repository</span>
+            <div class="flex gap-2">
+              <span class="text-[10px] px-2 py-0.5 rounded-full bg-slate-900 border border-white/5 text-slate-300">Git</span>
+              <span class="text-[10px] px-2 py-0.5 rounded-full bg-slate-900 border border-white/5 text-slate-300">GitHub</span>
+            </div>
+            <span class="text-xs text-indigo-400 font-semibold mt-1">Version Control</span>
+          </div>
+
+          <div class="glow-card p-5 rounded-2xl text-center flex flex-col items-center gap-3 stagger-card">
+            <span class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">IDE</span>
+            <div class="p-2 rounded-xl bg-slate-900 border border-white/10 text-indigo-400">
+              <i data-lucide="code" class="w-5 h-5"></i>
+            </div>
+            <span class="text-sm font-extrabold text-white">VS Code</span>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ================= SECTION 9: FOOTER ================= -->
+      <footer class="border-t border-white/5 pt-8 mt-12 flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left z-10 relative">
+        <div class="flex flex-col gap-1">
+          <div class="flex items-center gap-2 justify-center md:justify-start">
+            <div class="w-6 h-6 rounded-lg bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400">
+              <i data-lucide="layers" class="w-3.5 h-3.5"></i>
+            </div>
+            <span class="text-sm font-bold text-white uppercase tracking-wider">NexusED</span>
+          </div>
+          <p class="text-[11px] text-slate-500">Student Digital Twin & Growth Intelligence Platform</p>
+        </div>
+
+        <div class="text-[11px] text-slate-500">
+          <span>Version 2.4.0</span> &bull; <span>&copy; 2026 NexusED. All rights reserved.</span>
+        </div>
+
+        <!-- Social Icons -->
+        <div class="flex gap-4">
+          <a href="https://github.com/kavya220-cpu/student-digital-twin.git" target="_blank" class="p-2 rounded-lg bg-slate-950 border border-white/5 text-slate-500 hover:text-white hover:border-white/10 transition-all">
+            <i data-lucide="github" class="w-4 h-4"></i>
+          </a>
+          <a href="https://linkedin.com" target="_blank" class="p-2 rounded-lg bg-slate-950 border border-white/5 text-slate-500 hover:text-white hover:border-white/10 transition-all">
+            <i data-lucide="linkedin" class="w-4 h-4"></i>
+          </a>
+          <a href="mailto:support@nexused.edu" class="p-2 rounded-lg bg-slate-950 border border-white/5 text-slate-500 hover:text-white hover:border-white/10 transition-all">
+            <i data-lucide="mail" class="w-4 h-4"></i>
+          </a>
+        </div>
+      </footer>
+
+    </main>
+  </div>
+
+  <!-- Toast Notification System container (for global functions reference) -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="assets/js/sidebar.js"></script>
+  <script src="assets/js/about.js"></script>
+</body>
+</html>
