@@ -9,6 +9,22 @@ document.addEventListener('DOMContentLoaded', () => {
     return;
   }
 
+  // Initialize marked parser with highlight.js syntax highlighting
+  if (typeof marked !== 'undefined') {
+    marked.setOptions({
+      highlight: function(code, lang) {
+        if (typeof hljs !== 'undefined') {
+          if (lang && hljs.getLanguage(lang)) {
+            return hljs.highlight(code, { language: lang }).value;
+          }
+          return hljs.highlightAuto(code).value;
+        }
+        return code;
+      },
+      breaks: true
+    });
+  }
+
   // DOM Bindings
   const docTitle = document.getElementById('doc-title');
   const difficultyBadge = document.getElementById('difficulty-badge');
@@ -64,6 +80,21 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     } catch (e) {
       console.error("Failed to read local API key:", e);
+    }
+    return null;
+  };
+
+  const getGroqApiKey = async () => {
+    try {
+      const res = await fetch('src/config.properties');
+      if (!res.ok) throw new Error("Could not load config file");
+      const text = await res.text();
+      const match = text.match(/groq\.api\.key\s*=\s*(.+)/);
+      if (match && match[1]) {
+        return match[1].trim();
+      }
+    } catch (e) {
+      console.error("Failed to read local Groq API key:", e);
     }
     return null;
   };
@@ -363,10 +394,47 @@ document.addEventListener('DOMContentLoaded', () => {
   const appendChatMessage = (sender, text) => {
     const bubble = document.createElement('div');
     bubble.className = `chat-msg ${sender === 'user' ? 'user-msg' : 'ai-msg'}`;
-    bubble.innerHTML = `<p>${text.replace(/\n/g, '<br>')}</p>`;
+    bubble.innerHTML = formatTextContent(text);
     chatMessages.appendChild(bubble);
     chatMessages.scrollTop = chatMessages.scrollHeight;
+
+    // Highlight code blocks
+    if (typeof hljs !== 'undefined') {
+      bubble.querySelectorAll('pre code').forEach(el => hljs.highlightElement(el));
+    }
   };
+
+  function formatTextContent(text) {
+    if (typeof marked === 'undefined') return `<p>${text.replace(/\n/g, '<br>')}</p>`;
+    
+    let rendered = text;
+
+    // Render LaTeX equations Block \[ ... \]
+    rendered = rendered.replace(/\\\[([\s\S]*?)\\\]/g, (match, equation) => {
+      if (typeof katex !== 'undefined') {
+        try {
+          return '<div class="math-block">' + katex.renderToString(equation.trim(), { displayMode: true }) + '</div>';
+        } catch (e) {
+          return match;
+        }
+      }
+      return match;
+    });
+
+    // Render LaTeX equations Inline \( ... \)
+    rendered = rendered.replace(/\\\((.*?)\\\)/g, (match, equation) => {
+      if (typeof katex !== 'undefined') {
+        try {
+          return katex.renderToString(equation.trim(), { displayMode: false });
+        } catch (e) {
+          return match;
+        }
+      }
+      return match;
+    });
+
+    return marked.parse(rendered);
+  }
 
   quickQueryBtns.forEach(btn => {
     btn.addEventListener('click', () => {
@@ -437,46 +505,66 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  // Dynamic chatbot tutor logic querying Gemini directly in browser
+  // Dynamic chatbot tutor logic querying Groq directly in browser when offline
   const simulateTutoringReply = async (q, typingBubble) => {
     try {
-      const apiKey = await getApiKey();
-      if (!apiKey) throw new Error("No API key available");
+      const apiKey = await getGroqApiKey();
+      if (!apiKey) throw new Error("No Groq API key available");
 
       const docContext = documentMetadata 
         ? `Document Name: "${documentMetadata.filename}"\nSummary: ${documentMetadata.summary}\nTopics: ${documentMetadata.topics}\nStudy Notes Outline: ${documentMetadata.notes.substring(0, 4000)}` 
         : '';
 
-      const prompt = `You are an AI Study Tutor for the Student Growth Platform NexusED.
+      const systemPrompt = `You are an AI Study Tutor for the Student Growth Platform NexusED.
 Answer the student's question about their document contents. Use the document summary/notes outline context below.
-Be concise, smart, and helpful.
+Be concise, smart, and helpful. Always format code in standard Markdown blocks.
 
 Document Context:
-${docContext}
+${docContext}`;
 
-Conversation History:
-${conversationHistory}
+      // Build conversation history
+      const messages = [
+        { role: 'system', content: systemPrompt }
+      ];
 
-Student Question: ${q}`;
+      // Parse current conversation history string into message objects
+      if (conversationHistory) {
+        const turns = conversationHistory.split(/\n/);
+        turns.forEach(turn => {
+          if (turn.startsWith('User: ')) {
+            messages.push({ role: 'user', content: turn.substring(6) });
+          } else if (turn.startsWith('AI: ')) {
+            messages.push({ role: 'assistant', content: turn.substring(4) });
+          }
+        });
+      }
 
-      const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
+      // Add current question
+      messages.push({ role: 'user', content: q });
+
+      const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${apiKey}`
+        },
         body: JSON.stringify({
-          contents: [{ parts: [{ text: prompt }] }]
+          model: 'llama3-8b-8192',
+          messages: messages,
+          temperature: 0.7
         })
       });
 
-      if (!res.ok) throw new Error("Gemini query failed");
+      if (!res.ok) throw new Error(`Groq API returned status ${res.status}`);
       const resultJson = await res.json();
-      const reply = resultJson.candidates[0].content.parts[0].text;
+      const reply = resultJson.choices[0].message.content;
 
       typingBubble.remove();
       appendChatMessage('ai', reply);
       conversationHistory += `User: ${q}\nAI: ${reply}\n`;
 
     } catch (e) {
-      console.error("Gemini tutoring query failed:", e);
+      console.error("Groq tutoring query failed:", e);
       typingBubble.remove();
       const reply = simulateTutoringReplyStatic(q);
       appendChatMessage('ai', reply);
