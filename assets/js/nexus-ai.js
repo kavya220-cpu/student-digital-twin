@@ -90,7 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // Add user message
       addMessageToDOM('user', item.user_message || item.user_message, false);
       // Add assistant message
-      addMessageToDOM('assistant', item.ai_response || item.ai_response, false);
+      addMessageToDOM('assistant', item.ai_response || item.ai_response, false, false, item.isDocMode || false);
       
       // Build memory history array
       chatHistory.push({ role: 'user', content: item.user_message });
@@ -138,6 +138,67 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  // Client-side document routing heuristic helper
+  function checkDocumentRoute(query) {
+    const localUploads = JSON.parse(localStorage.getItem('local_uploads') || '[]');
+    if (localUploads.length === 0) {
+      return { isDocMode: false, context: null };
+    }
+    
+    const lastDoc = localUploads[0];
+    const analysisData = JSON.parse(localStorage.getItem(lastDoc.id) || 'null');
+    if (!analysisData) {
+      return { isDocMode: false, context: null };
+    }
+    
+    const q = query.toLowerCase();
+    
+    // Explicit file references
+    const mentionsDoc = q.includes("this document") || q.includes("the document") || q.includes("uploaded document") ||
+        q.includes("my document") || q.includes("this pdf") || q.includes("the pdf") ||
+        q.includes("uploaded pdf") || q.includes("my pdf") || q.includes("this file") ||
+        q.includes("the file") || q.includes("uploaded file") || q.includes("my file") ||
+        q.includes("summarize") || q.includes("summary") || q.includes("mcqs") ||
+        q.includes("flashcards") || q.includes("chapter") || q.includes("study guide");
+        
+    if (mentionsDoc) {
+      return { isDocMode: true, filename: lastDoc.filename, context: analysisData };
+    }
+    
+    // Check filename terms
+    if (lastDoc.filename) {
+      const cleanName = lastDoc.filename.toLowerCase().replace(/\.[^.]+$/, "");
+      const nameParts = cleanName.split(/[\s_.-]+/);
+      for (let part of nameParts) {
+        if (part.length > 2 && q.includes(part)) {
+          return { isDocMode: true, filename: lastDoc.filename, context: analysisData };
+        }
+      }
+    }
+    
+    // Check topics matching
+    if (analysisData.topics) {
+      const topicParts = analysisData.topics.toLowerCase().split(/[\s,]+/);
+      for (let part of topicParts) {
+        if (part.length > 3 && q.includes(part)) {
+          return { isDocMode: true, filename: lastDoc.filename, context: analysisData };
+        }
+      }
+    }
+    
+    // Check keywords matching
+    if (analysisData.keywords) {
+      const kwParts = analysisData.keywords.toLowerCase().split(/[\s,]+/);
+      for (let part of kwParts) {
+        if (part.length > 3 && q.includes(part)) {
+          return { isDocMode: true, filename: lastDoc.filename, context: analysisData };
+        }
+      }
+    }
+    
+    return { isDocMode: false, context: null };
+  }
+
   // Submit Query to Groq Backend (Dual-mode: servlet attempt with direct Groq API client fallback)
   async function submitQuery(query) {
     if (chatWelcomeScreen) chatWelcomeScreen.style.display = 'none';
@@ -176,15 +237,16 @@ document.addEventListener('DOMContentLoaded', () => {
       thinkingIndicator.remove();
       isGenerating = false;
       const responseText = data.response;
+      const isDocMode = data.isDocMode || false;
       
       // Save offline fallback history copy locally
-      saveLocalOfflineHistory(query, responseText);
+      saveLocalOfflineHistory(query, responseText, isDocMode);
 
       // Push assistant response to local memory
       chatHistory.push({ role: 'assistant', content: responseText });
       
       // Render assistant message to DOM with simulated streaming effect
-      addMessageToDOM('assistant', responseText, true);
+      addMessageToDOM('assistant', responseText, true, false, isDocMode);
 
     } catch (servletErr) {
       console.warn("[NexusAI] Servlet offline. Initiating direct client-side Groq fallback query...", servletErr);
@@ -196,9 +258,46 @@ document.addEventListener('DOMContentLoaded', () => {
           throw new Error("Groq API Key not found in config.properties");
         }
 
-        const systemPrompt = "You are NexusAI, a highly intelligent and helpful personal AI assistant inside the NexusED learning platform. "
-            + "You behave like ChatGPT and can answer almost any question naturally including study doubts, ML, DSA, resume guidance, writing help, and general knowledge. "
-            + "Always format code in standard Markdown blocks, use mathematical expressions in LaTeX if needed, and structure tables, numbered lists, or bullet points clearly.";
+        // Run client routing check
+        const route = checkDocumentRoute(query);
+        const isDocMode = route.isDocMode;
+
+        let systemPrompt = "You are NexusAI,\nthe AI assistant for NexusED.\n\n"
+            + "You are an intelligent AI assistant capable of answering\n"
+            + "• Study Questions\n"
+            + "• Programming\n"
+            + "• Mathematics\n"
+            + "• Artificial Intelligence\n"
+            + "• Machine Learning\n"
+            + "• Cloud Computing\n"
+            + "• DBMS\n"
+            + "• Java\n"
+            + "• Python\n"
+            + "• SQL\n"
+            + "• Resume\n"
+            + "• Career Guidance\n"
+            + "• Interview Preparation\n"
+            + "• General Knowledge\n"
+            + "• Writing Assistance\n"
+            + "• Productivity\n\n"
+            + "If an uploaded document exists,\n"
+            + "use it ONLY when the user's question refers to that document.\n"
+            + "If the question is unrelated,\n"
+            + "ignore the document and answer using your own knowledge.\n\n"
+            + "Never reply with\n"
+            + "\"Based on your uploaded document\"\n"
+            + "unless the question is actually about the uploaded file.\n\n"
+            + "Always answer naturally like ChatGPT.";
+
+        if (isDocMode && route.context) {
+          systemPrompt += "\n\n=== Document Study Context ===\n"
+              + "Filename: " + route.filename + "\n"
+              + "Topics Covered: " + route.context.topics + "\n"
+              + "Summary:\n" + route.context.summary + "\n"
+              + "Detailed Notes Outline:\n" + route.context.notes + "\n"
+              + "==============================\n\n"
+              + "Remember: The user's question is about this document. Answer it using the context provided above.";
+        }
 
         // Build message payload
         const messages = [{ role: 'system', content: systemPrompt }];
@@ -228,13 +327,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const responseText = resultJson.choices[0].message.content;
 
         // Save offline fallback history copy locally
-        saveLocalOfflineHistory(query, responseText);
+        saveLocalOfflineHistory(query, responseText, isDocMode);
 
         // Push assistant response to local memory
         chatHistory.push({ role: 'assistant', content: responseText });
         
         // Render assistant message to DOM with simulated streaming effect
-        addMessageToDOM('assistant', responseText, true);
+        addMessageToDOM('assistant', responseText, true, false, isDocMode);
 
       } catch (directErr) {
         isGenerating = false;
@@ -250,13 +349,14 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Helper: Save copy of chat history to LocalStorage
-  function saveLocalOfflineHistory(userMsg, aiMsg) {
+  function saveLocalOfflineHistory(userMsg, aiMsg, isDocMode) {
     try {
       const localHistoryStr = localStorage.getItem('nexusED_chat_history') || '[]';
       const historyArr = JSON.parse(localHistoryStr);
       historyArr.push({
         user_message: userMsg,
         ai_response: aiMsg,
+        isDocMode: isDocMode,
         created_at: new Date().toLocaleTimeString()
       });
       localStorage.setItem('nexusED_chat_history', JSON.stringify(historyArr));
@@ -266,13 +366,20 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Render Message Bubble to DOM
-  function addMessageToDOM(sender, text, animate = false, isError = false) {
+  function addMessageToDOM(sender, text, animate = false, isError = false, isDocMode = false) {
     const bubble = document.createElement('div');
     bubble.className = `message-bubble ${sender}`;
     
     const timestamp = getFormattedTimestamp();
+    let badgeHtml = '';
+    if (sender === 'assistant' && !isError) {
+      badgeHtml = `<span class="mode-badge ${isDocMode ? 'doc-mode' : 'general-mode'}">
+        ${isDocMode ? '📄 Using Uploaded Document' : '🤖 General AI Mode'}
+      </span>`;
+    }
     const metaHtml = `<div class="message-meta">
       <span class="sender-name">${sender === 'user' ? 'You' : 'NexusAI'}</span>
+      ${badgeHtml}
       <span class="message-time">${timestamp}</span>
     </div>`;
     

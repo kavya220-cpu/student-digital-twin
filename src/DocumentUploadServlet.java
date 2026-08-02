@@ -196,8 +196,26 @@ public class DocumentUploadServlet extends HttpServlet {
                     return;
                 }
 
+                Map<String, Object> analysis = DocumentRepository.getDocumentAnalysis(docId);
+                String topics = (String) analysis.getOrDefault("topics", "");
+                String keywords = (String) analysis.getOrDefault("keywords", "");
+                
+                String filename = "";
+                try {
+                    java.util.List<Map<String, Object>> recentDocs = DocumentRepository.getRecentDocuments(1);
+                    for (Map<String, Object> d : recentDocs) {
+                        if (docId.equals(d.get("id"))) {
+                            filename = (String) d.get("filename");
+                            break;
+                        }
+                    }
+                } catch (Exception e) {
+                    System.err.println("[DocumentUploadServlet] Error resolving filename for routing: " + e.getMessage());
+                }
+                
+                boolean isDocMode = GroqService.referencesDocument(message, filename, topics, keywords);
                 String reply = ChatAssistant.askQuestion(docId, message, history);
-                writeJson(resp, "{\"status\":\"success\",\"reply\":\"" + escapeJson(reply) + "\"}");
+                writeJson(resp, "{\"status\":\"success\",\"reply\":\"" + escapeJson(reply) + "\",\"isDocMode\":" + isDocMode + "}");
             } catch (Exception e) {
                 sendError(resp, 500, "Chat Assistant error: " + e.getMessage());
             }

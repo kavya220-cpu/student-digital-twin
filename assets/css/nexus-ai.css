@@ -549,3 +549,32 @@
     height: calc(100vh - 160px);
   }
 }
+
+/* AI Model Badges */
+.mode-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 0.65rem;
+  font-weight: 600;
+  margin: 0 8px;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  vertical-align: middle;
+}
+
+.mode-badge.doc-mode {
+  background: rgba(147, 51, 234, 0.12); /* Subtle purple/violet */
+  color: #c084fc;
+  border: 1px solid rgba(147, 51, 234, 0.25);
+  box-shadow: 0 0 10px rgba(147, 51, 234, 0.1);
+}
+
+.mode-badge.general-mode {
+  background: rgba(16, 185, 129, 0.12); /* Subtle green/teal */
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.1);
+}

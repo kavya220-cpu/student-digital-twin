@@ -37,6 +37,54 @@ public class GroqService {
         return apiKey != null && !apiKey.trim().isEmpty();
     }
 
+    public static boolean referencesDocument(String userMessage, String filename, String topics, String keywords) {
+        if (userMessage == null) return false;
+        String q = userMessage.toLowerCase();
+        
+        // Mentions document directly
+        if (q.contains("this document") || q.contains("the document") || q.contains("uploaded document") ||
+            q.contains("my document") || q.contains("this pdf") || q.contains("the pdf") ||
+            q.contains("uploaded pdf") || q.contains("my pdf") || q.contains("this file") ||
+            q.contains("the file") || q.contains("uploaded file") || q.contains("my file") ||
+            q.contains("summarize") || q.contains("summary") || q.contains("mcqs") ||
+            q.contains("flashcards") || q.contains("chapter") || q.contains("study guide")) {
+            return true;
+        }
+        
+        // Check filename matches
+        if (filename != null) {
+            String cleanName = filename.toLowerCase().replaceAll("\\.[^.]+$", "");
+            String[] nameParts = cleanName.split("[\\s_.-]+");
+            for (String part : nameParts) {
+                if (part.length() > 2 && q.contains(part)) {
+                    return true;
+                }
+            }
+        }
+        
+        // Check topics matches
+        if (topics != null) {
+            String[] topicParts = topics.toLowerCase().split("[,\\s]+");
+            for (String part : topicParts) {
+                if (part.length() > 3 && q.contains(part)) {
+                    return true;
+                }
+            }
+        }
+        
+        // Check keywords matches
+        if (keywords != null) {
+            String[] kwParts = keywords.toLowerCase().split("[,\\s]+");
+            for (String part : kwParts) {
+                if (part.length() > 3 && q.contains(part)) {
+                    return true;
+                }
+            }
+        }
+        
+        return false;
+    }
+
     public static String generateChatResponse(String systemPrompt, String userMessage, String historyJsonArray) {
         if (!isKeyConfigured()) {
             return "Error: Groq API Key is not configured. Please add groq.api.key inside src/config.properties.";

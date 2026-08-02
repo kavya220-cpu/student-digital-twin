@@ -379,7 +379,8 @@ document.addEventListener('DOMContentLoaded', () => {
       .then(data => {
         typingBubble.remove();
         if (data.status === 'success') {
-          appendChatMessage('ai', data.reply);
+          const isDocMode = data.isDocMode || false;
+          appendChatMessage('ai', data.reply, isDocMode);
           conversationHistory += `User: ${query}\nAI: ${data.reply}\n`;
         } else {
           appendChatMessage('ai', 'Error generating response: ' + data.message);
@@ -391,10 +392,18 @@ document.addEventListener('DOMContentLoaded', () => {
       });
   });
 
-  const appendChatMessage = (sender, text) => {
+  const appendChatMessage = (sender, text, isDocMode = false) => {
     const bubble = document.createElement('div');
     bubble.className = `chat-msg ${sender === 'user' ? 'user-msg' : 'ai-msg'}`;
-    bubble.innerHTML = formatTextContent(text);
+    
+    let badgeHtml = '';
+    if (sender === 'ai') {
+      badgeHtml = `<span class="mode-badge ${isDocMode ? 'doc-mode' : 'general-mode'}" style="margin: 0 0 6px 0; display: inline-flex;">
+        ${isDocMode ? '📄 Using Uploaded Document' : '🤖 General AI Mode'}
+      </span><br>`;
+    }
+    
+    bubble.innerHTML = badgeHtml + formatTextContent(text);
     chatMessages.appendChild(bubble);
     chatMessages.scrollTop = chatMessages.scrollHeight;
 
@@ -505,26 +514,103 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
+  // Client-side document routing check inside analysis.js
+  function checkDocumentRoute(query) {
+    if (!documentMetadata) {
+      return false;
+    }
+    
+    const q = query.toLowerCase();
+    
+    // Explicit mentions
+    const mentionsDoc = q.includes("this document") || q.includes("the document") || q.includes("uploaded document") ||
+        q.includes("my document") || q.includes("this pdf") || q.includes("the pdf") ||
+        q.includes("uploaded pdf") || q.includes("my pdf") || q.includes("this file") ||
+        q.includes("the file") || q.includes("uploaded file") || q.includes("my file") ||
+        q.includes("summarize") || q.includes("summary") || q.includes("mcqs") ||
+        q.includes("flashcards") || q.includes("chapter") || q.includes("study guide");
+        
+    if (mentionsDoc) {
+      return true;
+    }
+    
+    // Check filename terms
+    if (documentMetadata.filename) {
+      const cleanName = documentMetadata.filename.toLowerCase().replace(/\.[^.]+$/, "");
+      const nameParts = cleanName.split(/[\s_.-]+/);
+      for (let part of nameParts) {
+        if (part.length > 2 && q.includes(part)) {
+          return true;
+        }
+      }
+    }
+    
+    // Check topics matching
+    if (documentMetadata.topics) {
+      const topicParts = documentMetadata.topics.toLowerCase().split(/[\s,]+/);
+      for (let part of topicParts) {
+        if (part.length > 3 && q.includes(part)) {
+          return true;
+        }
+      }
+    }
+    
+    // Check keywords matching
+    if (documentMetadata.keywords) {
+      const kwParts = documentMetadata.keywords.toLowerCase().split(/[\s,]+/);
+      for (let part of kwParts) {
+        if (part.length > 3 && q.includes(part)) {
+          return true;
+        }
+      }
+    }
+    
+    return false;
+  }
+
   // Dynamic chatbot tutor logic querying Groq directly in browser when offline
   const simulateTutoringReply = async (q, typingBubble) => {
     try {
       const apiKey = await getGroqApiKey();
       if (!apiKey) throw new Error("No Groq API key available");
 
+      // Smart routing check on client side
+      const isDocMode = checkDocumentRoute(q);
+
       const docContext = documentMetadata 
         ? `Document Name: "${documentMetadata.filename}"\nSummary: ${documentMetadata.summary}\nTopics: ${documentMetadata.topics}\nStudy Notes Outline: ${documentMetadata.notes.substring(0, 4000)}` 
         : '';
 
-      const systemPrompt = `You are an AI Study Tutor for the Student Growth Platform NexusED.
-Answer the student's question about their document contents. Use the document summary/notes outline context below.
-Be concise, smart, and helpful. Always format code in standard Markdown blocks.
-
-Document Context:
-${docContext}`;
+      const systemPrompt = "You are NexusAI,\nthe AI assistant for NexusED.\n\n"
+          + "You are an intelligent AI assistant capable of answering\n"
+          + "• Study Questions\n"
+          + "• Programming\n"
+          + "• Mathematics\n"
+          + "• Artificial Intelligence\n"
+          + "• Machine Learning\n"
+          + "• Cloud Computing\n"
+          + "• DBMS\n"
+          + "• Java\n"
+          + "• Python\n"
+          + "• SQL\n"
+          + "• Resume\n"
+          + "• Career Guidance\n"
+          + "• Interview Preparation\n"
+          + "• General Knowledge\n"
+          + "• Writing Assistance\n"
+          + "• Productivity\n\n"
+          + "If an uploaded document exists,\n"
+          + "use it ONLY when the user's question refers to that document.\n"
+          + "If the question is unrelated,\n"
+          + "ignore the document and answer using your own knowledge.\n\n"
+          + "Never reply with\n"
+          + "\"Based on your uploaded document\"\n"
+          + "unless the question is actually about the uploaded file.\n\n"
+          + "Always answer naturally like ChatGPT.";
 
       // Build conversation history
       const messages = [
-        { role: 'system', content: systemPrompt }
+        { role: 'system', content: isDocMode ? systemPrompt + `\n\n=== Associated Document Context ===\n${docContext}` : systemPrompt }
       ];
 
       // Parse current conversation history string into message objects
@@ -560,14 +646,14 @@ ${docContext}`;
       const reply = resultJson.choices[0].message.content;
 
       typingBubble.remove();
-      appendChatMessage('ai', reply);
+      appendChatMessage('ai', reply, isDocMode);
       conversationHistory += `User: ${q}\nAI: ${reply}\n`;
 
     } catch (e) {
       console.error("Groq tutoring query failed:", e);
       typingBubble.remove();
       const reply = simulateTutoringReplyStatic(q);
-      appendChatMessage('ai', reply);
+      appendChatMessage('ai', reply, false);
       conversationHistory += `User: ${q}\nAI: ${reply}\n`;
     }
   };

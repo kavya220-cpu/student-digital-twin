@@ -83,20 +83,75 @@ public class ChatServlet extends HttpServlet {
             }
         }
         
-        // Call Groq API
-        String systemPrompt = "You are NexusAI, a highly intelligent and helpful personal AI assistant inside the NexusED learning platform. "
-                + "You behave like ChatGPT and can answer almost any question naturally including study doubts, ML, DSA, resume guidance, writing help, and general knowledge. "
-                + "Always format code in standard Markdown blocks, use mathematical expressions in LaTeX if needed, and structure tables, numbered lists, or bullet points clearly.";
+        // Call Groq API with smart document mode routing
+        String systemPrompt = "You are NexusAI,\nthe AI assistant for NexusED.\n\n"
+                + "You are an intelligent AI assistant capable of answering\n"
+                + "• Study Questions\n"
+                + "• Programming\n"
+                + "• Mathematics\n"
+                + "• Artificial Intelligence\n"
+                + "• Machine Learning\n"
+                + "• Cloud Computing\n"
+                + "• DBMS\n"
+                + "• Java\n"
+                + "• Python\n"
+                + "• SQL\n"
+                + "• Resume\n"
+                + "• Career Guidance\n"
+                + "• Interview Preparation\n"
+                + "• General Knowledge\n"
+                + "• Writing Assistance\n"
+                + "• Productivity\n\n"
+                + "If an uploaded document exists,\n"
+                + "use it ONLY when the user's question refers to that document.\n"
+                + "If the question is unrelated,\n"
+                + "ignore the document and answer using your own knowledge.\n\n"
+                + "Never reply with\n"
+                + "\"Based on your uploaded document\"\n"
+                + "unless the question is actually about the uploaded file.\n\n"
+                + "Always answer naturally like ChatGPT.";
+
+        boolean isDocMode = false;
+        String finalSystemPrompt = systemPrompt;
+
+        try {
+            List<java.util.Map<String, Object>> recentDocs = DocumentRepository.getRecentDocuments(userId);
+            if (recentDocs != null && !recentDocs.isEmpty()) {
+                java.util.Map<String, Object> lastDoc = recentDocs.get(0);
+                String filename = (String) lastDoc.get("filename");
+                String docId = (String) lastDoc.get("id");
+                
+                java.util.Map<String, Object> analysis = DocumentRepository.getDocumentAnalysis(docId);
+                String summary = (String) analysis.getOrDefault("summary", "");
+                String notes = (String) analysis.getOrDefault("notes", "");
+                String topics = (String) analysis.getOrDefault("topics", "");
+                String keywords = (String) analysis.getOrDefault("keywords", "");
+                
+                if (GroqService.referencesDocument(message, filename, topics, keywords)) {
+                    isDocMode = true;
+                    finalSystemPrompt += "\n\n=== Document Study Context ===\n"
+                            + "Filename: " + filename + "\n"
+                            + "Topics Covered: " + topics + "\n"
+                            + "Summary:\n" + summary + "\n"
+                            + "Detailed Notes Outline:\n" + notes + "\n"
+                            + "==============================\n\n"
+                            + "Remember: The user's question is about this document. Answer it using the context provided above.";
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("[ChatServlet] Error resolving document routing context: " + e.getMessage());
+        }
         
-        String aiResponse = GroqService.generateChatResponse(systemPrompt, message, history);
+        String aiResponse = GroqService.generateChatResponse(finalSystemPrompt, message, history);
         
         // Save to database
         ChatHistoryDAO.saveMessage(userId, message, aiResponse);
         
-        // Build JSON response
+        // Build JSON response with mode indicator
         StringBuilder jsonResponse = new StringBuilder();
         jsonResponse.append("{");
-        jsonResponse.append("\"response\":\"").append(escapeJson(aiResponse)).append("\"");
+        jsonResponse.append("\"response\":\"").append(escapeJson(aiResponse)).append("\",");
+        jsonResponse.append("\"isDocMode\":").append(isDocMode);
         jsonResponse.append("}");
         
         try (PrintWriter out = response.getWriter()) {
