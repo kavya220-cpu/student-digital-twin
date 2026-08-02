@@ -20,6 +20,12 @@ document.addEventListener('DOMContentLoaded', () => {
         <span>Dashboard</span>
       </a>
 
+      <!-- NexusAI Assistant Link -->
+      <a href="nexus-ai.html" class="sidebar-item" id="nav-nexus-ai">
+        <i data-lucide="message-square"></i>
+        <span>NexusAI Assistant</span>
+      </a>
+
       <!-- Expandable Accordion: Learning & Portfolio -->
       <div class="sidebar-accordion-wrapper" id="learning-portfolio-accordion">
         <button type="button" class="sidebar-item sidebar-accordion-trigger" id="nav-learning-portfolio" aria-expanded="false" aria-controls="submenu-learning-portfolio">
@@ -217,6 +223,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Selector map targeting active page route
   const activeSelectors = {
     'dashboard.html': '#nav-dashboard',
+    'nexus-ai.html': '#nav-nexus-ai',
     'roadmap.html': '#nav-roadmap',
     'skills.html': '#nav-skills',
     'projects.html': '#nav-projects',
