@@ -111,7 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
         renderAnalysisPage(data);
       })
       .catch(err => {
-        console.error('Fetch analysis failed:', err);
+        console.warn('Servlet connection offline, checking local storage for document: ', err);
         // Look up localStorage first if docId starts with doc_local_
         if (docId && docId.startsWith('doc_local_')) {
           const localData = JSON.parse(localStorage.getItem(docId));
