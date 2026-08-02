@@ -312,14 +312,17 @@ document.addEventListener('DOMContentLoaded', () => {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${apiKey}`
           },
-          body: JSON.stringify({
-            model: 'llama3-8b-8192',
+            model: 'llama-3.1-8b-instant',
             messages: messages,
             temperature: 0.7
           })
         });
 
-        if (!directRes.ok) throw new Error(`Groq API returned status ${directRes.status}`);
+        if (!directRes.ok) {
+          const errorText = await directRes.text();
+          console.error("Groq API Fallback Error Details:", errorText);
+          throw new Error(`Groq API returned status ${directRes.status}`);
+        }
         const resultJson = await directRes.json();
         
         thinkingIndicator.remove();

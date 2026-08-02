@@ -635,13 +635,17 @@ document.addEventListener('DOMContentLoaded', () => {
           'Authorization': `Bearer ${apiKey}`
         },
         body: JSON.stringify({
-          model: 'llama3-8b-8192',
+          model: 'llama-3.1-8b-instant',
           messages: messages,
           temperature: 0.7
         })
       });
 
-      if (!res.ok) throw new Error(`Groq API returned status ${res.status}`);
+      if (!res.ok) {
+        const errorText = await res.text();
+        console.error("Groq API Error Details:", errorText);
+        throw new Error(`Groq API returned status ${res.status}`);
+      }
       const resultJson = await res.json();
       const reply = resultJson.choices[0].message.content;
 
