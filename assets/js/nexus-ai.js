@@ -38,34 +38,65 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  const API_BASE = window.location.port === '5500' ? 'http://localhost:8080' : '';
+
+  // Helper: Read API key from config.properties dynamically on client side
+  const getApiKey = async () => {
+    try {
+      const res = await fetch('src/config.properties');
+      if (!res.ok) throw new Error("Could not load config file");
+      const text = await res.text();
+      const match = text.match(/groq\.api\.key\s*=\s*(.+)/);
+      if (match && match[1]) {
+        return match[1].trim();
+      }
+    } catch (e) {
+      console.error("Failed to read local API key:", e);
+    }
+    return null;
+  };
+
   // Load chat history on startup
   loadHistory();
 
-  // Load history from API
+  // Load history from API or LocalStorage fallback
   function loadHistory() {
-    fetch('api/chat')
-      .then(res => res.json())
+    fetch(API_BASE + '/api/chat')
+      .then(res => {
+        if (!res.ok) throw new Error("Servlet offline");
+        return res.json();
+      })
       .then(data => {
         if (data && data.length > 0) {
-          // Hide welcome screen
-          if (chatWelcomeScreen) chatWelcomeScreen.style.display = 'none';
-          
-          data.forEach(item => {
-            // Add user message
-            addMessageToDOM('user', item.user_message, false);
-            // Add assistant message
-            addMessageToDOM('assistant', item.ai_response, false);
-            
-            // Build memory history array
-            chatHistory.push({ role: 'user', content: item.user_message });
-            chatHistory.push({ role: 'assistant', content: item.ai_response });
-          });
-          scrollToBottom();
+          renderLoadedHistory(data);
         }
       })
       .catch(err => {
-        console.warn("[NexusAI] Could not load chat history from servlet: ", err);
+        console.warn("[NexusAI] Servlet offline. Loading fallback local storage history: ", err);
+        const localHistoryStr = localStorage.getItem('nexusED_chat_history');
+        if (localHistoryStr) {
+          const localData = JSON.parse(localHistoryStr);
+          renderLoadedHistory(localData);
+        }
       });
+  }
+
+  function renderLoadedHistory(data) {
+    if (chatWelcomeScreen) chatWelcomeScreen.style.display = 'none';
+    chatMessagesContainer.innerHTML = '';
+    chatHistory = [];
+    
+    data.forEach(item => {
+      // Add user message
+      addMessageToDOM('user', item.user_message || item.user_message, false);
+      // Add assistant message
+      addMessageToDOM('assistant', item.ai_response || item.ai_response, false);
+      
+      // Build memory history array
+      chatHistory.push({ role: 'user', content: item.user_message });
+      chatHistory.push({ role: 'assistant', content: item.ai_response });
+    });
+    scrollToBottom();
   }
 
   // Handle Form Submission
@@ -90,24 +121,25 @@ document.addEventListener('DOMContentLoaded', () => {
   // Handle clear history
   clearHistoryBtn.addEventListener('click', () => {
     if (confirm("Are you sure you want to clear your chat history with NexusAI?")) {
-      fetch('api/chat', { method: 'DELETE' })
+      localStorage.removeItem('nexusED_chat_history');
+      chatHistory = [];
+      chatMessagesContainer.innerHTML = '';
+      if (chatWelcomeScreen) chatWelcomeScreen.style.display = 'block';
+
+      fetch(API_BASE + '/api/chat', { method: 'DELETE' })
         .then(res => res.json())
         .then(() => {
-          chatMessagesContainer.innerHTML = '';
-          if (chatWelcomeScreen) chatWelcomeScreen.style.display = 'block';
-          chatHistory = [];
-          window.toast?.show('info', 'Chat Cleared', 'Conversation history cleared successfully.', 2500);
+          window.toast?.show('success', 'Chat Cleared', 'Conversation history cleared successfully.', 2500);
         })
         .catch(err => {
-          console.error("[NexusAI] Failed to clear chat history: ", err);
-          window.toast?.show('danger', 'Action Failed', 'Could not clear history. Please try again.', 3000);
+          console.warn("[NexusAI] Clear servlet failed (offline), local cache cleared successfully.", err);
+          window.toast?.show('success', 'Chat Cleared', 'Offline conversation history cleared.', 2000);
         });
     }
   });
 
-  // Submit Query to Groq Backend
-  function submitQuery(query) {
-    // Hide welcome screen
+  // Submit Query to Groq Backend (Dual-mode: servlet attempt with direct Groq API client fallback)
+  async function submitQuery(query) {
     if (chatWelcomeScreen) chatWelcomeScreen.style.display = 'none';
     
     // Add User Message
@@ -115,7 +147,7 @@ document.addEventListener('DOMContentLoaded', () => {
     chatInput.value = '';
     scrollToBottom();
 
-    // Prepare history payload for multi-turn contextual tracking
+    // Prepare history payload for servlet
     const historyPayload = JSON.stringify(chatHistory);
     
     // Push user message to local memory
@@ -125,41 +157,112 @@ document.addEventListener('DOMContentLoaded', () => {
     const thinkingIndicator = showThinkingIndicator();
     isGenerating = true;
 
-    fetch('api/chat', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        message: query,
-        history: historyPayload
-      })
-    })
-      .then(res => {
-        thinkingIndicator.remove();
-        if (!res.ok) throw new Error("Backend server response failed");
-        return res.json();
-      })
-      .then(data => {
-        isGenerating = false;
-        const responseText = data.response;
+    try {
+      // 1. Try backend Servlet API
+      const res = await fetch(API_BASE + '/api/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          message: query,
+          history: historyPayload
+        })
+      });
+
+      if (!res.ok) throw new Error("Servlet server not responding");
+      const data = await res.json();
+      
+      thinkingIndicator.remove();
+      isGenerating = false;
+      const responseText = data.response;
+      
+      // Save offline fallback history copy locally
+      saveLocalOfflineHistory(query, responseText);
+
+      // Push assistant response to local memory
+      chatHistory.push({ role: 'assistant', content: responseText });
+      
+      // Render assistant message to DOM with simulated streaming effect
+      addMessageToDOM('assistant', responseText, true);
+
+    } catch (servletErr) {
+      console.warn("[NexusAI] Servlet offline. Initiating direct client-side Groq fallback query...", servletErr);
+      
+      try {
+        // 2. Client-side Groq Direct fallback query
+        const apiKey = await getApiKey();
+        if (!apiKey) {
+          throw new Error("Groq API Key not found in config.properties");
+        }
+
+        const systemPrompt = "You are NexusAI, a highly intelligent and helpful personal AI assistant inside the NexusED learning platform. "
+            + "You behave like ChatGPT and can answer almost any question naturally including study doubts, ML, DSA, resume guidance, writing help, and general knowledge. "
+            + "Always format code in standard Markdown blocks, use mathematical expressions in LaTeX if needed, and structure tables, numbered lists, or bullet points clearly.";
+
+        // Build message payload
+        const messages = [{ role: 'system', content: systemPrompt }];
+        // Append conversation history
+        chatHistory.forEach(item => {
+          messages.push({ role: item.role, content: item.content });
+        });
+
+        const directRes = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${apiKey}`
+          },
+          body: JSON.stringify({
+            model: 'llama3-8b-8192',
+            messages: messages,
+            temperature: 0.7
+          })
+        });
+
+        if (!directRes.ok) throw new Error(`Groq API returned status ${directRes.status}`);
+        const resultJson = await directRes.json();
         
+        thinkingIndicator.remove();
+        isGenerating = false;
+        const responseText = resultJson.choices[0].message.content;
+
+        // Save offline fallback history copy locally
+        saveLocalOfflineHistory(query, responseText);
+
         // Push assistant response to local memory
         chatHistory.push({ role: 'assistant', content: responseText });
         
         // Render assistant message to DOM with simulated streaming effect
         addMessageToDOM('assistant', responseText, true);
-      })
-      .catch(err => {
+
+      } catch (directErr) {
         isGenerating = false;
         if (thinkingIndicator) thinkingIndicator.remove();
-        console.error(err);
+        console.error("[NexusAI] Direct Groq query failed:", directErr);
         
-        // Error display
+        // Display user error notification
         const errorText = "I'm having trouble connecting to the AI service. Please try again in a few moments.";
         addMessageToDOM('assistant', errorText, false, true);
         window.toast?.show('danger', 'Connection Error', 'Groq service connectivity failed.', 4000);
+      }
+    }
+  }
+
+  // Helper: Save copy of chat history to LocalStorage
+  function saveLocalOfflineHistory(userMsg, aiMsg) {
+    try {
+      const localHistoryStr = localStorage.getItem('nexusED_chat_history') || '[]';
+      const historyArr = JSON.parse(localHistoryStr);
+      historyArr.push({
+        user_message: userMsg,
+        ai_response: aiMsg,
+        created_at: new Date().toLocaleTimeString()
       });
+      localStorage.setItem('nexusED_chat_history', JSON.stringify(historyArr));
+    } catch (e) {
+      console.warn("Failed to write to offline localStorage log: ", e);
+    }
   }
 
   // Render Message Bubble to DOM
