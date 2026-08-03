@@ -274,7 +274,7 @@ document.addEventListener('DOMContentLoaded', () => {
       localStorage.removeItem('nexusED_profile');
       window.toast.show('info', 'Signed Out', 'Tearing down twin session...', 2500);
       setTimeout(() => {
-        window.location.href = 'index.html';
+        window.location.href = 'login.html';
       }, 1500);
     });
   }

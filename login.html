@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NexusED – Student Digital Twin & Growth Intelligence Platform</title>
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Track. Learn. Build. Prepare. Get Hired. Join NexusED, the premium digital twin growth dashboard mapping student skills directly to tech careers.">
+  <meta name="keywords" content="NexusED, Student Digital Twin, Skill Tracking, Career Readiness, Portfolio Scanner, EdTech">
+  <meta name="author" content="NexusED Team">
+  <meta name="robots" content="index, follow">
+
+  <!-- Favicon placeholder (Lucide Icon styling matches) -->
+  <link rel="icon" type="image/png" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%236C63FF%22 stroke-width=%222%22><path d=%22M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z%22/><path d=%22M12 6v6l4 2%22/></svg>">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- External Stylesheets (CDNs) -->
+  <!-- Bootstrap 5 Grid and Utilities only -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap-grid.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap-utilities.min.css">
+  <!-- Animate.css for micro-interactions -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+  <!-- AOS (Animate on Scroll) for entering transitions -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+
+  <!-- Custom Stylesheets -->
+  <link rel="stylesheet" href="assets/css/variables.css">
+  <link rel="stylesheet" href="assets/css/theme.css">
+  <link rel="stylesheet" href="assets/css/animations.css">
+  <link rel="stylesheet" href="assets/css/buttons.css">
+  <link rel="stylesheet" href="assets/css/forms.css">
+  <link rel="stylesheet" href="assets/css/auth.css">
+  <link rel="stylesheet" href="assets/css/responsive.css">
+</head>
+<body>
+
+  <!-- 1. SPLASH SCREEN -->
+  <div class="splash-screen mesh-gradient-bg" id="splash-node">
+    <div class="splash-particles"></div>
+    <div class="splash-content animate__animated animate__fadeIn">
+      <div class="splash-logo">
+        <i data-lucide="cpu"></i>
+      </div>
+      <h1 class="splash-title">NexusED</h1>
+      <p class="splash-tagline">"Track. Learn. Build. Prepare. Get Hired."</p>
+      
+      <div class="splash-loader-container">
+        <div class="splash-progress-bar">
+          <div class="splash-progress"></div>
+        </div>
+        <div class="splash-percent">0%</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. MAIN APPLICATION WRAPPER -->
+  <div class="auth-wrapper">
+    <!-- Interactive Background Glow & Blobs -->
+    <div class="cursor-glow"></div>
+    <div class="bg-blobs">
+      <div class="blob blob-1"></div>
+      <div class="blob blob-2"></div>
+      <div class="blob blob-3"></div>
+    </div>
+
+    <!-- LEFT PANEL: SaaS Branding and Features -->
+    <section class="auth-left-panel">
+      <!-- Top Branding Brand Header -->
+      <div class="left-brand">
+        <div class="brand-icon-wrapper">
+          <i data-lucide="layers"></i>
+        </div>
+        <span class="brand-name">NexusED</span>
+        <!-- Floating Sync Badge -->
+        <div class="hud-badge ms-auto">
+          <div class="pulse-indicator"></div>
+          <span>Digital Twin Syncing...</span>
+        </div>
+      </div>
+
+      <!-- Center Copy -->
+      <div class="left-branding-content">
+        <h2 class="left-headline">Welcome Back 👋</h2>
+        <p class="left-subheading">"Continue building your future." Enter the workspace to forecast GPAs, map milestone plans, and synchronize portfolio tasks.</p>
+      </div>
+
+      <!-- Immersion Student Graphic Background -->
+      <div class="left-student-bg-container">
+        <div class="student-bg-mask"></div>
+        <img src="assets/images/student_learning.png" alt="Student Learning" class="student-bg-img">
+      </div>
+
+      <!-- Vertical Animated Feature List -->
+      <div class="left-features-list">
+        <div class="feature-item-list float-element">
+          <div class="feature-icon-list"><i data-lucide="bar-chart-3"></i></div>
+          <div class="feature-info-list">
+            <h4>Academic Tracking</h4>
+            <p>Real-time forecast models, credit mapping, and dynamic CGPA trend graphs.</p>
+          </div>
+        </div>
+
+        <div class="feature-item-list float-element-delayed">
+          <div class="feature-icon-list"><i data-lucide="target"></i></div>
+          <div class="feature-info-list">
+            <h4>Career Roadmap</h4>
+            <p>Target goals, build skill badges, and follow guided milestones to recruitment.</p>
+          </div>
+        </div>
+
+        <div class="feature-item-list float-element">
+          <div class="feature-icon-list"><i data-lucide="briefcase"></i></div>
+          <div class="feature-info-list">
+            <h4>Project Portfolio</h4>
+            <p>Scan GitHub commits, deploy mock demos, and showcase clean, ready structures.</p>
+          </div>
+        </div>
+
+        <div class="feature-item-list float-element-delayed">
+          <div class="feature-icon-list"><i data-lucide="mic"></i></div>
+          <div class="feature-info-list">
+            <h4>Mock Interview</h4>
+            <p>AI vocal evaluation, body language alerts, and custom resume questions.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Floating 3D-Style SVG Vector Graphics (For visual wow factor) -->
+      <!-- Floater 1: Abstract Hexagonal Code Core -->
+      <svg class="decor-object decor-1 float-element" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="svgGlow1" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#6C63FF" stop-opacity="0.6"/>
+            <stop offset="100%" stop-color="#A855F7" stop-opacity="0.1"/>
+          </linearGradient>
+        </defs>
+        <path d="M50 5 L90 28 L90 72 L50 95 L10 72 L10 28 Z" stroke="url(#svgGlow1)" stroke-width="2" fill="rgba(108, 99, 255, 0.05)" />
+        <circle cx="50" cy="50" r="15" stroke="#8B5CF6" stroke-width="1.5" stroke-dasharray="4 2" />
+        <line x1="50" y1="5" x2="50" y2="95" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+        <line x1="10" y1="28" x2="90" y2="72" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+      </svg>
+
+      <!-- Floater 2: Rocket Growth Trend Vector -->
+      <svg class="decor-object decor-2 float-element-delayed" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="svgGlow2" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#8B5CF6" stop-opacity="0.7"/>
+            <stop offset="100%" stop-color="#22C55E" stop-opacity="0.1"/>
+          </linearGradient>
+        </defs>
+        <path d="M20 80 Q 40 40, 80 20" stroke="url(#svgGlow2)" stroke-width="3" stroke-linecap="round"/>
+        <circle cx="80" cy="20" r="6" fill="#22C55E" filter="drop-shadow(0 0 8px #22C55E)" />
+        <rect x="15" y="75" width="10" height="10" rx="2" fill="rgba(255,255,255,0.1)" stroke="rgba(255,255,255,0.2)"/>
+      </svg>
+    </section>
+
+    <!-- RIGHT PANEL: Glassmorphism Auth Card forms -->
+    <main class="auth-right-panel">
+      <div class="auth-cards-container">
+
+        <!-- ========================================== -->
+        <!-- VIEW A: LOGIN CARD                         -->
+        <!-- ========================================== -->
+        <div class="auth-card active" id="login-card" role="dialog" aria-labelledby="login-title">
+          <div class="auth-card-header">
+            <div class="auth-card-logo-container">
+              <div class="brand-icon-wrapper">
+                <i data-lucide="layers"></i>
+              </div>
+            </div>
+            <h2 id="login-title">Sign In</h2>
+            <p>Welcome back! Fill in your growth dashboard credentials.</p>
+          </div>
+
+          <form id="login-form" autocomplete="on">
+            <!-- Email -->
+            <div class="form-group">
+              <input type="email" id="login-email" name="email" class="form-input focus-glow-transition" placeholder=" " required autocomplete="username">
+              <label for="login-email" class="form-label">Email Address</label>
+              <span class="error-msg" id="login-email-error" aria-live="polite"></span>
+            </div>
+
+            <!-- Password -->
+            <div class="form-group">
+              <input type="password" id="login-pass" name="password" class="form-input focus-glow-transition" placeholder=" " required autocomplete="current-password">
+              <label for="login-pass" class="form-label">Password</label>
+              <button type="button" class="password-toggle-btn" aria-label="Toggle Password Visibility">
+                <i data-lucide="eye"></i>
+              </button>
+              <span class="error-msg" id="login-pass-error" aria-live="polite"></span>
+            </div>
+
+            <!-- Remember & Forgot Options -->
+            <div class="d-flex justify-content-between align-items-center mb-4">
+              <label class="custom-control" for="login-remember">
+                <input type="checkbox" id="login-remember" class="custom-control-input">
+                <span>Remember me</span>
+              </label>
+              <a href="#" class="go-to-forgot text-sm">Forgot Password?</a>
+            </div>
+
+            <!-- Action Submit -->
+            <button type="submit" class="btn-premium btn-premium-primary" id="login-btn">
+              <span>Sign In Workspace</span>
+              <i data-lucide="log-in" class="arrow-icon"></i>
+            </button>
+          </form>
+
+          <div class="divider">Or Connect Via</div>
+
+          <!-- Social Buttons UI -->
+          <div class="btn-social-container">
+            <button type="button" class="btn-social" aria-label="Sign in with GitHub">
+              <i data-lucide="github"></i>
+            </button>
+            <button type="button" class="btn-social" aria-label="Sign in with Google">
+              <!-- Inline Custom Google Icon representing Google Branding -->
+              <svg viewBox="0 0 24 24" width="20" height="20" xmlns="http://www.w3.org/2000/svg">
+                <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+                <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" fill="#FBBC05"/>
+                <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" fill="#EA4335"/>
+              </svg>
+            </button>
+            <button type="button" class="btn-social" aria-label="Sign in with Apple">
+              <!-- Lucide custom layout standard fallback -->
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 4.17c.66-.81 1.11-1.93.99-3.06-1 .04-2.22.67-2.94 1.49-.62.72-1.16 1.87-1.02 2.98 1.11.09 2.23-.55 2.97-1.41z"/>
+              </svg>
+            </button>
+          </div>
+
+          <div class="auth-card-footer">
+            Don't have an account? <a href="#" class="go-to-register">Create Account</a>
+          </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- VIEW B: REGISTER CARD                      -->
+        <!-- ========================================== -->
+        <div class="auth-card" id="register-card" role="dialog" aria-labelledby="register-title">
+          <div class="auth-card-header">
+            <div class="auth-card-logo-container">
+              <div class="brand-icon-wrapper">
+                <i data-lucide="layers"></i>
+              </div>
+            </div>
+            <h2 id="register-title">Create Account</h2>
+            <p>Setup your parameters to synchronize your Digital Twin.</p>
+          </div>
+
+          <!-- Wizard Stepper Circles -->
+          <div class="step-progress-indicator">
+            <div class="step-progress-line">
+              <div class="step-progress-fill"></div>
+            </div>
+            <div class="step-indicator-node active">1</div>
+            <div class="step-indicator-node">2</div>
+            <div class="step-indicator-node">3</div>
+            <div class="step-indicator-node">4</div>
+          </div>
+
+          <form id="register-form" onsubmit="return false;">
+            <!-- STEP 1: Basic Details -->
+            <div class="reg-step-content active" id="reg-step-1">
+              <div class="form-group">
+                <input type="text" id="reg-name" name="fullname" class="form-input focus-glow-transition" placeholder=" " required>
+                <label for="reg-name" class="form-label">Full Name</label>
+                <span class="error-msg" id="reg-name-error" aria-live="polite"></span>
+              </div>
+              <div class="form-group">
+                <input type="email" id="reg-email" name="email" class="form-input focus-glow-transition" placeholder=" " required>
+                <label for="reg-email" class="form-label">Email Address</label>
+                <span class="error-msg" id="reg-email-error" aria-live="polite"></span>
+              </div>
+              <div class="form-group">
+                <input type="tel" id="reg-phone" name="phone" class="form-input focus-glow-transition" placeholder=" " required>
+                <label for="reg-phone" class="form-label">Phone Number</label>
+                <span class="error-msg" id="reg-phone-error" aria-live="polite"></span>
+              </div>
+            </div>
+
+            <!-- STEP 2: Password Setting -->
+            <div class="reg-step-content" id="reg-step-2">
+              <div class="form-group">
+                <input type="password" id="reg-pass" name="password" class="form-input focus-glow-transition" placeholder=" " required>
+                <label for="reg-pass" class="form-label">Password</label>
+                <button type="button" class="password-toggle-btn" aria-label="Toggle Password Visibility">
+                  <i data-lucide="eye"></i>
+                </button>
+                <span class="error-msg" id="reg-pass-error" aria-live="polite"></span>
+              </div>
+              
+              <!-- Password Strength Meter -->
+              <div class="strength-meter-container">
+                <span class="strength-text" id="reg-pass-strength">Strength: Weak ⚠️</span>
+                <div class="strength-meter-bars">
+                  <div class="strength-bar"></div>
+                  <div class="strength-bar"></div>
+                  <div class="strength-bar"></div>
+                  <div class="strength-bar"></div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <input type="password" id="reg-confirm" name="confirm" class="form-input focus-glow-transition" placeholder=" " required>
+                <label for="reg-confirm" class="form-label">Confirm Password</label>
+                <span class="error-msg" id="reg-confirm-error" aria-live="polite"></span>
+              </div>
+            </div>
+
+            <!-- STEP 3: Profile Picture Upload -->
+            <div class="reg-step-content" id="reg-step-3">
+              <p class="text-center text-muted mb-3" style="font-size: 0.88rem;">Add a photo to personalize your twin card.</p>
+              
+              <div class="avatar-drag-drop" id="avatar-dropzone">
+                <input type="file" id="avatar-file-input" name="avatar" accept="image/*" class="d-none">
+                
+                <div class="avatar-upload-placeholder">
+                  <div class="avatar-upload-icon">
+                    <i data-lucide="upload-cloud"></i>
+                  </div>
+                  <h4 style="font-size: 0.95rem; font-weight: 600; margin-bottom: 4px;">Drag & Drop Image</h4>
+                  <p class="text-muted" style="font-size: 0.78rem;">Supports PNG, JPG, or GIF up to 5MB</p>
+                </div>
+
+                <div class="avatar-preview-wrapper">
+                  <button type="button" class="avatar-remove-btn" aria-label="Remove Avatar">×</button>
+                  <img src="" alt="Avatar Preview" class="avatar-preview-img">
+                </div>
+              </div>
+            </div>
+
+            <!-- STEP 4: Consent Agreement -->
+            <div class="reg-step-content" id="reg-step-4">
+              <div class="p-3 mb-4" style="background: rgba(108, 99, 255, 0.05); border-radius: var(--radius-md); border: 1px solid rgba(108, 99, 255, 0.1);">
+                <h4 style="font-size: 0.88rem; font-weight: 600; margin-bottom: 6px; color: var(--primary);">Growth Terms Summary</h4>
+                <p class="text-muted" style="font-size: 0.75rem; line-height: 1.45;">By checking the box below, you consent to let NexusED index your public academic milestones and codebase structures to synthesize your predictive digital twin.</p>
+              </div>
+
+              <label class="custom-control align-items-start" for="reg-terms">
+                <input type="checkbox" id="reg-terms" class="custom-control-input" style="margin-top: 2px;">
+                <span style="font-size: 0.82rem; line-height: 1.45;">I accept the NexusED terms of use, growth policies, and data processing consent guidelines.</span>
+              </label>
+            </div>
+
+            <!-- Stepper controls -->
+            <div class="reg-navigation">
+              <button type="button" class="btn-premium btn-premium-secondary" id="reg-prev">
+                <i data-lucide="arrow-left"></i>
+                <span>Back</span>
+              </button>
+              <button type="button" class="btn-premium btn-premium-primary" id="reg-next">
+                <span>Next Step</span>
+                <i data-lucide="arrow-right" class="arrow-icon"></i>
+              </button>
+            </div>
+          </form>
+
+          <div class="auth-card-footer">
+            Already have an account? <a href="#" class="go-to-login">Sign In</a>
+          </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- VIEW C: FORGOT PASSWORD CARD               -->
+        <!-- ========================================== -->
+        <div class="auth-card" id="forgot-card" role="dialog" aria-labelledby="forgot-title">
+          <div class="auth-card-header">
+            <div class="auth-card-logo-container">
+              <div class="brand-icon-wrapper">
+                <i data-lucide="layers"></i>
+              </div>
+            </div>
+            <h2 id="forgot-title">Reset Security</h2>
+            <p>Enter details to restore your workspace security codes.</p>
+          </div>
+
+          <form id="forgot-form" onsubmit="return false;">
+            
+            <!-- STAGE 1: Email Input -->
+            <div id="forgot-sec-email">
+              <div class="form-group">
+                <input type="email" id="forgot-email" name="email" class="form-input focus-glow-transition" placeholder=" ">
+                <label for="forgot-email" class="form-label">Account Email Address</label>
+                <span class="error-msg" id="forgot-email-error" aria-live="polite"></span>
+              </div>
+            </div>
+
+            <!-- STAGE 2: OTP (UI Code block entry) -->
+            <div id="forgot-sec-otp" style="display: none;">
+              <p class="text-center text-muted mb-3" style="font-size: 0.85rem;">Input the 6-digit confirmation key sent to your inbox.</p>
+              <div class="otp-input-grid">
+                <input type="text" class="otp-input focus-glow-transition" maxlength="1" pattern="\d*" aria-label="Digit 1">
+                <input type="text" class="otp-input focus-glow-transition" maxlength="1" pattern="\d*" aria-label="Digit 2">
+                <input type="text" class="otp-input focus-glow-transition" maxlength="1" pattern="\d*" aria-label="Digit 3">
+                <input type="text" class="otp-input focus-glow-transition" maxlength="1" pattern="\d*" aria-label="Digit 4">
+                <input type="text" class="otp-input focus-glow-transition" maxlength="1" pattern="\d*" aria-label="Digit 5">
+                <input type="text" class="otp-input focus-glow-transition" maxlength="1" pattern="\d*" aria-label="Digit 6">
+              </div>
+            </div>
+
+            <!-- STAGE 3: New password entry -->
+            <div id="forgot-sec-reset" style="display: none;">
+              <div class="form-group">
+                <input type="password" id="reset-pass" name="password" class="form-input focus-glow-transition" placeholder=" ">
+                <label for="reset-pass" class="form-label">New Password</label>
+                <button type="button" class="password-toggle-btn" aria-label="Toggle Password Visibility">
+                  <i data-lucide="eye"></i>
+                </button>
+                <span class="error-msg" id="reset-pass-error" aria-live="polite"></span>
+              </div>
+              <div class="form-group">
+                <input type="password" id="reset-confirm" name="confirm" class="form-input focus-glow-transition" placeholder=" ">
+                <label for="reset-confirm" class="form-label">Confirm Password</label>
+                <span class="error-msg" id="reset-confirm-error" aria-live="polite"></span>
+              </div>
+            </div>
+
+            <!-- Forgot Trigger Button -->
+            <button type="button" class="btn-premium btn-premium-primary" id="forgot-btn" style="margin-top: 10px;">
+              <span>Send Reset Code</span>
+              <i data-lucide="key-round" class="arrow-icon"></i>
+            </button>
+          </form>
+
+          <div class="auth-card-footer">
+            <a href="#" class="go-to-login">Back to Sign In</a>
+          </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- VIEW D: WELCOME & STUDENT PROFILE SETUP   -->
+        <!-- ========================================== -->
+        <div class="auth-card" id="welcome-card" role="dialog" aria-labelledby="welcome-title">
+          <div class="auth-card-header">
+            <div class="auth-card-logo-container">
+              <div class="brand-icon-wrapper">
+                <i data-lucide="cpu"></i>
+              </div>
+            </div>
+            <h2 id="welcome-title">Onboarding</h2>
+            <p>Calibrate your academic twin to customize skill graphs.</p>
+          </div>
+
+          <div id="onboarding-body" class="animate__animated">
+            <!-- Domain Selection Tags -->
+            <label class="d-block mb-2 font-weight-500" style="font-size: 0.88rem; font-weight: 500;">Select Growth Domain Domains (Multiple)</label>
+            <div class="interest-tag-grid">
+              <div class="interest-tag-card" data-domain="uiux">
+                <i data-lucide="palette" style="color: var(--accent);"></i>
+                <span class="interest-title">UI/UX Design</span>
+                <div class="interest-checkbox"></div>
+              </div>
+              
+              <div class="interest-tag-card" data-domain="frontend">
+                <i data-lucide="code-2" style="color: var(--primary);"></i>
+                <span class="interest-title">Frontend Dev</span>
+                <div class="interest-checkbox"></div>
+              </div>
+              
+              <div class="interest-tag-card" data-domain="backend">
+                <i data-lucide="server" style="color: var(--secondary);"></i>
+                <span class="interest-title">Backend Dev</span>
+                <div class="interest-checkbox"></div>
+              </div>
+              
+              <div class="interest-tag-card" data-domain="ai">
+                <i data-lucide="brain-circuit" style="color: #EF4444;"></i>
+                <span class="interest-title">AI & ML</span>
+                <div class="interest-checkbox"></div>
+              </div>
+            </div>
+
+            <!-- Graduation Target -->
+            <div class="form-group">
+              <select id="onboard-grad" class="form-input focus-glow-transition" style="cursor: pointer; appearance: none; -webkit-appearance: none; padding-right: 40px;" required>
+                <option value="" disabled selected hidden></option>
+                <option value="2026">Class of 2026</option>
+                <option value="2027">Class of 2027</option>
+                <option value="2028">Class of 2028</option>
+                <option value="2029">Class of 2029</option>
+              </select>
+              <label for="onboard-grad" class="form-label">Expected Graduation Year</label>
+              <!-- Arrow symbol for clean custom dropdown visual -->
+              <div style="position: absolute; right: 16px; top: 50%; transform: translateY(-50%); pointer-events: none; color: var(--text-muted);">
+                <i data-lucide="chevron-down" style="width: 18px; height: 18px;"></i>
+              </div>
+            </div>
+
+            <!-- Daily Target -->
+            <div class="form-group">
+              <select id="onboard-target" class="form-input focus-glow-transition" style="cursor: pointer; appearance: none; -webkit-appearance: none; padding-right: 40px;" required>
+                <option value="" disabled selected hidden></option>
+                <option value="30">30 Minutes / day (Casual)</option>
+                <option value="60" selected>1 Hour / day (Moderate)</option>
+                <option value="120">2 Hours / day (Intense)</option>
+              </select>
+              <label for="onboard-target" class="form-label">Daily Goal Target</label>
+              <div style="position: absolute; right: 16px; top: 50%; transform: translateY(-50%); pointer-events: none; color: var(--text-muted);">
+                <i data-lucide="chevron-down" style="width: 18px; height: 18px;"></i>
+              </div>
+            </div>
+          </div>
+
+          <!-- Finish Onboarding Button -->
+          <button type="button" class="btn-premium btn-premium-primary" id="onboarding-finish" style="margin-top: 15px;">
+            <span>Finish Onboarding</span>
+            <i data-lucide="check" class="arrow-icon"></i>
+          </button>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- JavaScript Libraries (CDNs) -->
+  <!-- GSAP for core view fades, slides and entries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <!-- AOS for Scroll items -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    // Initialize Lucide icons on load
+    document.addEventListener('DOMContentLoaded', () => {
+      if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+      }
+    });
+  </script>
+
+  <!-- Custom Scripts -->
+  <script src="assets/js/toast.js"></script>
+  <script src="assets/js/validation.js"></script>
+  <script src="assets/js/animations.js"></script>
+  <script src="assets/js/loader.js"></script>
+  <script src="assets/js/auth.js"></script>
+</body>
+</html>
+
