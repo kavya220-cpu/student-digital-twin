@@ -352,4 +352,194 @@ document.addEventListener('DOMContentLoaded', () => {
       }, 1500);
     });
   }
+
+  // --- Achievements Widget Logic ---
+  function loadAchievements() {
+    const API_BASE = window.location.port === '5500' ? 'http://localhost:8080' : '';
+    fetch(API_BASE + '/api/achievements?userId=1')
+      .then(res => {
+        if (!res.ok) throw new Error("Achievements servlet offline");
+        return res.json();
+      })
+      .then(data => {
+        renderAchievements(data);
+      })
+      .catch(err => {
+        console.warn("[Dashboard] Achievements servlet offline. Loading fallback mocks.", err);
+        const fallback = {
+          totalXp: 135,
+          currentLevel: 2,
+          nextLevelXpThreshold: 100,
+          nextLevelProgress: 35,
+          achievements: [
+            { badge_name: 'First Login', badge_icon: '🏅', category: 'Academic', description: 'Successfully logged into NexusED.', xp: 10, earned_date: '2026-07-24', status: 'Unlocked' },
+            { badge_name: 'Coding Explorer', badge_icon: '💻', category: 'Coding', description: 'Solved your first coding problem.', xp: 15, earned_date: '2026-07-24', status: 'Unlocked' },
+            { badge_name: 'Resume Ready', badge_icon: '📄', category: 'Resume', description: 'Generated your first professional resume.', xp: 50, earned_date: '2026-07-25', status: 'Unlocked' },
+            { badge_name: 'Interview Beginner', badge_icon: '🎤', category: 'Interview', description: 'Completed your first mock interview.', xp: 60, earned_date: '2026-07-25', status: 'Unlocked' },
+            { badge_name: 'Java Master', badge_icon: '🏆', category: 'Academic', description: 'Reached Advanced level in Java.', xp: 100, earned_date: null, status: 'Locked' },
+            { badge_name: 'Cloud Explorer', badge_icon: '☁', category: 'Certificates', description: 'Completed Google Cloud Certification.', xp: 150, earned_date: null, status: 'Locked' },
+            { badge_name: 'AI Learner', badge_icon: '🚀', category: 'Roadmap', description: 'Completed AI Engineer Roadmap Milestone.', xp: 80, earned_date: null, status: 'Locked' },
+            { badge_name: 'Placement Ready', badge_icon: '🎯', category: 'Career', description: 'Career Readiness Index reached Industry Ready.', xp: 200, earned_date: null, status: 'Locked' }
+          ]
+        };
+        renderAchievements(fallback);
+      });
+  }
+
+  function renderAchievements(data) {
+    const grid = document.getElementById('achievements-badges-grid');
+    if (!grid) return;
+
+    // 1. Update Mini XP Progress Ring
+    document.getElementById('xp-count-display').textContent = `${data.totalXp} XP`;
+    document.getElementById('xp-current-level').textContent = data.currentLevel;
+    
+    const circle = document.getElementById('xp-progress-circle');
+    if (circle) {
+      const radius = 13;
+      const circumference = 2 * Math.PI * radius;
+      const offset = circumference - (data.nextLevelProgress / 100) * circumference;
+      circle.style.strokeDasharray = `${circumference}`;
+      circle.style.strokeDashoffset = `${offset}`;
+    }
+
+    // 2. Populate Badges Grid
+    grid.innerHTML = '';
+    data.achievements.forEach(a => {
+      const col = document.createElement('div');
+      col.className = 'col-md-6';
+      
+      const isLocked = a.status.toLowerCase() === 'locked';
+      const statusClass = isLocked ? 'locked' : 'unlocked';
+      const desc = isLocked ? 'Complete required milestone to unlock.' : a.description;
+      const dateText = !isLocked && a.earned_date ? `<span class="badge-description text-muted mt-1" style="font-size: 8px;">Earned: ${a.earned_date}</span>` : '';
+
+      col.innerHTML = `
+        <div class="achievement-badge-card ${statusClass}">
+          <div class="badge-icon-box">${a.badge_icon}</div>
+          <div class="badge-meta">
+            <span class="badge-category">${a.category}</span>
+            <span class="badge-name">${a.badge_name}</span>
+            <span class="badge-description mt-0.5">${desc}</span>
+            ${dateText}
+            <span class="badge-xp-tag">+ ${a.xp} XP</span>
+          </div>
+          ${isLocked ? `<div class="lock-overlay"><i data-lucide="lock" style="width:12px; height:12px;"></i></div>` : ''}
+        </div>
+      `;
+      grid.appendChild(col);
+    });
+
+    if (typeof lucide !== 'undefined') lucide.createIcons({ node: grid });
+  }
+
+  // --- Growth Timeline Widget Logic ---
+  let timelineMilestones = [];
+
+  function loadTimeline() {
+    const API_BASE = window.location.port === '5500' ? 'http://localhost:8080' : '';
+    fetch(API_BASE + '/api/timeline?userId=1')
+      .then(res => {
+        if (!res.ok) throw new Error("Timeline servlet offline");
+        return res.json();
+      })
+      .then(data => {
+        timelineMilestones = data;
+        renderTimeline('all');
+      })
+      .catch(err => {
+        console.warn("[Dashboard] Timeline servlet offline. Loading fallback mocks.", err);
+        timelineMilestones = [
+          { title: 'Joined NexusED', description: 'Initialized twin profile mapping parameters.', category: 'Achievements', event_date: '2026-07-24', related_module: 'Dashboard', completion_percentage: 10 },
+          { title: 'Created Student Profile', description: 'Completed basic profile twin setup metrics.', category: 'Academic', event_date: '2026-07-24', related_module: 'Profile', completion_percentage: 20 },
+          { title: 'Selected Career Goal', description: 'Set professional target to AI Engineer.', category: 'Career', event_date: '2026-07-24', related_module: 'Roadmap', completion_percentage: 30 },
+          { title: 'Completed Java Basics', description: 'Finished syntax and inheritance fundamentals.', category: 'Skills', event_date: '2026-07-24', related_module: 'Skill Tracker', completion_percentage: 45 },
+          { title: 'Learned SQL', description: 'Gained basic understanding of database relations.', category: 'Skills', event_date: '2026-07-24', related_module: 'Skill Tracker', completion_percentage: 55 },
+          { title: 'Completed Google Cloud Certificate', description: 'Obtained verified GCP Foundational badge.', category: 'Certificates', event_date: '2026-07-25', related_module: 'Certificates', completion_percentage: 65 },
+          { title: 'Built Smart Complaint Project', description: 'Deployed intelligent classifier solution with Github sync.', category: 'Projects', event_date: '2026-07-25', related_module: 'Projects', completion_percentage: 75 },
+          { title: 'Completed Mock Interview', description: 'Passed initial Technical Screening session successfully.', category: 'Interview', event_date: '2026-07-25', related_module: 'AI Mock Interview', completion_percentage: 80 },
+          { title: 'Resume ATS Score Improved to 86%', description: 'Enhanced resume keywords optimization.', category: 'Resume', event_date: '2026-07-25', related_module: 'Resume Analyzer', completion_percentage: 85 },
+          { title: 'Solved 100 Coding Problems', description: 'Milestone completed in Coding Tracker.', category: 'Coding', event_date: '2026-07-26', related_module: 'Coding Tracker', completion_percentage: 90 },
+          { title: 'Career Readiness reached 78%', description: 'Graduated to placement readiness stage.', category: 'Career', event_date: '2026-07-26', related_module: 'Career Readiness', completion_percentage: 95 },
+          { title: 'Industry Ready', description: 'Unlocked peak technical alignment metrics.', category: 'Achievements', event_date: '2026-07-26', related_module: 'Career Readiness', completion_percentage: 100 }
+        ];
+        renderTimeline('all');
+      });
+
+    setupTimelineFilters();
+  }
+
+  function renderTimeline(filterCategory) {
+    const list = document.getElementById('timeline-milestones-list');
+    if (!list) return;
+
+    list.innerHTML = '';
+    const filtered = timelineMilestones.filter(m => {
+      if (filterCategory === 'all') return true;
+      return m.category.toLowerCase() === filterCategory.toLowerCase();
+    });
+
+    if (filtered.length === 0) {
+      list.innerHTML = `
+        <div class="text-center py-4">
+          <p class="text-muted fs-xs">No milestones logged for this category.</p>
+        </div>
+      `;
+      return;
+    }
+
+    filtered.forEach(m => {
+      const node = document.createElement('div');
+      node.className = 'timeline-milestone-node animate__animated animate__fadeInUp';
+      
+      const moduleBadge = m.related_module ? `<span class="timeline-module-tag ms-2">${m.related_module}</span>` : '';
+
+      node.innerHTML = `
+        <div class="timeline-bullet"></div>
+        <div class="timeline-milestone-card">
+          <div class="timeline-card-category">${m.category}</div>
+          <div class="timeline-card-header">
+            <h4 class="timeline-card-title">${m.title}</h4>
+            <span class="timeline-card-date">${m.event_date}</span>
+          </div>
+          <p class="timeline-card-description">${m.description}</p>
+          <div class="d-flex align-items-center">
+            <span class="text-white text-[9px] fw-bold">Progress: ${m.completion_percentage}%</span>
+            ${moduleBadge}
+          </div>
+          <div class="timeline-progress-track">
+            <div class="timeline-progress-fill" style="width: ${m.completion_percentage}%"></div>
+          </div>
+        </div>
+      `;
+      list.appendChild(node);
+    });
+
+    // Update vertical line height dynamically
+    setTimeout(() => {
+      const line = document.getElementById('timeline-line');
+      if (line && list) {
+        line.style.height = `${list.scrollHeight - 20}px`;
+      }
+    }, 100);
+  }
+
+  function setupTimelineFilters() {
+    const wrapper = document.getElementById('timeline-category-filters');
+    if (!wrapper) return;
+
+    wrapper.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        wrapper.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        
+        const filterVal = btn.getAttribute('data-filter');
+        renderTimeline(filterVal);
+      });
+    });
+  }
+
+  // Self-execute startup loaders
+  loadAchievements();
+  loadTimeline();
 });

@@ -277,6 +277,78 @@
 
     </div>
 
+    <!-- Row 4: Achievements & Growth Timeline -->
+    <div class="row g-4 mt-2">
+      <!-- Achievements Panel (Left Side) -->
+      <div class="col-xl-6 col-12 animate__animated animate__fadeInLeft" style="animation-delay: 0.3s;">
+        <section class="dash-panel h-100">
+          <div class="d-flex align-items-center justify-content-between mb-4 flex-wrap gap-2">
+            <div>
+              <h3 class="panel-title mb-1 d-flex align-items-center gap-2">
+                <i data-lucide="trophy" class="text-warning" style="width: 20px; height: 20px;"></i>
+                Achievements
+              </h3>
+              <p class="text-muted fs-xs">Your accomplishments and learning milestones.</p>
+            </div>
+            
+            <!-- XP System badge -->
+            <div class="xp-level-badge d-flex align-items-center gap-2 px-3 py-1.5 rounded-pill">
+              <div class="xp-progress-ring-mini position-relative" style="width: 32px; height: 32px;">
+                <svg width="32" height="32">
+                  <circle cx="16" cy="16" r="13" stroke="rgba(255,255,255,0.05)" stroke-width="3" fill="transparent"/>
+                  <circle id="xp-progress-circle" cx="16" cy="16" r="13" stroke="var(--primary)" stroke-width="3" fill="transparent" stroke-dasharray="81.68" stroke-dashoffset="81.68"/>
+                </svg>
+                <div class="position-absolute translate-middle top-50 start-50 text-white font-bold" id="xp-current-level" style="font-size: 10px; font-weight: 800; transform: translate(-50%, -50%) !important;">1</div>
+              </div>
+              <div class="xp-text-info d-flex flex-column">
+                <span class="text-white fw-bold" id="xp-count-display" style="font-size: 11px;">0 XP</span>
+                <span class="text-muted" style="font-size: 8px; font-weight: 600;">Next Level</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Badges Grid -->
+          <div class="row g-3" id="achievements-badges-grid" style="max-height: 380px; overflow-y: auto; padding-right: 4px;">
+            <!-- Dynamically populated badge cards -->
+          </div>
+        </section>
+      </div>
+
+      <!-- Growth Timeline Panel (Right Side) -->
+      <div class="col-xl-6 col-12 animate__animated animate__fadeInRight" style="animation-delay: 0.3s;">
+        <section class="dash-panel h-100">
+          <div class="d-flex align-items-center justify-content-between mb-2 flex-wrap gap-2">
+            <div>
+              <h3 class="panel-title mb-1 d-flex align-items-center gap-2">
+                <i data-lucide="trending-up" class="text-accent" style="width: 20px; height: 20px;"></i>
+                Growth Timeline
+              </h3>
+              <p class="text-muted fs-xs">Your complete learning journey.</p>
+            </div>
+            
+            <!-- Filters -->
+            <div class="timeline-filters d-flex gap-1.5 flex-wrap" id="timeline-category-filters">
+              <button class="filter-btn active" data-filter="all">All</button>
+              <button class="filter-btn" data-filter="academic">Academic</button>
+              <button class="filter-btn" data-filter="coding">Coding</button>
+              <button class="filter-btn" data-filter="projects">Projects</button>
+              <button class="filter-btn" data-filter="certificates">Certs</button>
+              <button class="filter-btn" data-filter="resume">Resume</button>
+              <button class="filter-btn" data-filter="interview">Interview</button>
+            </div>
+          </div>
+
+          <!-- Interactive Vertical Timeline -->
+          <div class="timeline-scroll-container position-relative mt-4" style="max-height: 380px; overflow-y: auto; padding-left: 20px; padding-right: 4px;">
+            <div class="timeline-vertical-line" id="timeline-line"></div>
+            <div class="timeline-milestones-wrapper" id="timeline-milestones-list">
+              <!-- Dynamically populated milestones -->
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+
     <!-- Opportunity Hub Widget -->
     <section class="row g-4 mt-4 animate__animated animate__fadeInUp" style="animation-delay: 0.35s;">
       <div class="col-12">

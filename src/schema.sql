@@ -356,3 +356,59 @@ CREATE TABLE IF NOT EXISTS chat_history (
     FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
+-- 25. Achievements & Badges Table
+CREATE TABLE IF NOT EXISTS achievements (
+    achievement_id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT NOT NULL,
+    badge_name VARCHAR(100) NOT NULL,
+    badge_icon VARCHAR(50) NOT NULL,
+    category VARCHAR(50) NOT NULL,
+    description TEXT,
+    xp INT DEFAULT 0,
+    earned_date VARCHAR(20),
+    status VARCHAR(20) DEFAULT 'Locked', -- 'Unlocked', 'Locked'
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
+);
+
+-- 26. Student Growth Timeline Table
+CREATE TABLE IF NOT EXISTS growth_timeline (
+    timeline_id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT NOT NULL,
+    title VARCHAR(150) NOT NULL,
+    description TEXT,
+    category VARCHAR(50) NOT NULL,
+    event_date VARCHAR(20) NOT NULL,
+    related_module VARCHAR(100),
+    completion_percentage INT DEFAULT 0,
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
+);
+
+-- Seed Data for Achievements & Badges
+INSERT INTO achievements (user_id, badge_name, badge_icon, category, description, xp, earned_date, status) VALUES
+(1, 'First Login', '🏅', 'Academic', 'Successfully logged into NexusED.', 10, '2026-07-24', 'Unlocked'),
+(1, 'Coding Explorer', '💻', 'Coding', 'Solved your first coding problem.', 15, '2026-07-24', 'Unlocked'),
+(1, 'Resume Ready', '📄', 'Resume', 'Generated your first professional resume.', 50, '2026-07-25', 'Unlocked'),
+(1, 'Interview Beginner', '🎤', 'Interview', 'Completed your first mock interview.', 60, '2026-07-25', 'Unlocked'),
+(1, 'Java Master', '🏆', 'Academic', 'Reached Advanced level in Java.', 100, NULL, 'Locked'),
+(1, 'Cloud Explorer', '☁', 'Certificates', 'Completed Google Cloud Certification.', 150, NULL, 'Locked'),
+(1, 'AI Learner', '🚀', 'Roadmap', 'Completed AI Engineer Roadmap Milestone.', 80, NULL, 'Locked'),
+(1, 'Placement Ready', '🎯', 'Career', 'Career Readiness Index reached Industry Ready.', 200, NULL, 'Locked')
+ON DUPLICATE KEY UPDATE achievement_id=achievement_id;
+
+-- Seed Data for Growth Timeline
+INSERT INTO growth_timeline (user_id, title, description, category, event_date, related_module, completion_percentage) VALUES
+(1, 'Joined NexusED', 'Initialized twin profile mapping parameters.', 'Achievements', '2026-07-24', 'Dashboard', 10),
+(1, 'Created Student Profile', 'Completed basic profile twin setup metrics.', 'Academic', '2026-07-24', 'Profile', 20),
+(1, 'Selected Career Goal', 'Set professional target to AI Engineer.', 'Career', '2026-07-24', 'Roadmap', 30),
+(1, 'Completed Java Basics', 'Finished syntax and inheritance fundamentals.', 'Skills', '2026-07-24', 'Skill Tracker', 45),
+(1, 'Learned SQL', 'Gained basic understanding of database relations.', 'Skills', '2026-07-24', 'Skill Tracker', 55),
+(1, 'Completed Google Cloud Certificate', 'Obtained verified GCP Foundational badge.', 'Certificates', '2026-07-25', 'Certificates', 65),
+(1, 'Built Smart Complaint Project', 'Deployed intelligent classifier solution with Github sync.', 'Projects', '2026-07-25', 'Projects', 75),
+(1, 'Completed Mock Interview', 'Passed initial Technical Screening session successfully.', 'Interview', '2026-07-25', 'AI Mock Interview', 80),
+(1, 'Resume ATS Score Improved to 86%', 'Enhanced resume keywords optimization.', 'Resume', '2026-07-25', 'Resume Analyzer', 85),
+(1, 'Solved 100 Coding Problems', 'Milestone completed in Coding Tracker.', 'Coding', '2026-07-26', 'Coding Tracker', 90),
+(1, 'Career Readiness reached 78%', 'Graduated to placement readiness stage.', 'Career', '2026-07-26', 'Career Readiness', 95),
+(1, 'Industry Ready', 'Unlocked peak technical alignment metrics.', 'Achievements', '2026-07-26', 'Career Readiness', 100)
+ON DUPLICATE KEY UPDATE timeline_id=timeline_id;
+
+

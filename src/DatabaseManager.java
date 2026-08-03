@@ -438,4 +438,108 @@ public class DatabaseManager {
             System.err.println("Error updating goal status: " + e.getMessage());
         }
     }
+
+    // --- Achievements Queries ---
+    public static List<Map<String, Object>> getAchievements(int userId) {
+        List<Map<String, Object>> list = new ArrayList<>();
+        if (useFallback) {
+            list.add(createAchievementMap("First Login", "🏅", "Academic", "Successfully logged into NexusED.", 10, "2026-07-24", "Unlocked"));
+            list.add(createAchievementMap("Coding Explorer", "💻", "Coding", "Solved your first coding problem.", 15, "2026-07-24", "Unlocked"));
+            list.add(createAchievementMap("Resume Ready", "📄", "Resume", "Generated your first professional resume.", 50, "2026-07-25", "Unlocked"));
+            list.add(createAchievementMap("Interview Beginner", "🎤", "Interview", "Completed your first mock interview.", 60, "2026-07-25", "Unlocked"));
+            list.add(createAchievementMap("Java Master", "🏆", "Academic", "Reached Advanced level in Java.", 100, null, "Locked"));
+            list.add(createAchievementMap("Cloud Explorer", "☁", "Certificates", "Completed Google Cloud Certification.", 150, null, "Locked"));
+            list.add(createAchievementMap("AI Learner", "🚀", "Roadmap", "Completed AI Engineer Roadmap Milestone.", 80, null, "Locked"));
+            list.add(createAchievementMap("Placement Ready", "🎯", "Career", "Career Readiness Index reached Industry Ready.", 200, null, "Locked"));
+            return list;
+        }
+
+        String sql = "SELECT * FROM achievements WHERE user_id = ? ORDER BY status DESC, achievement_id ASC";
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, userId);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Map<String, Object> a = new HashMap<>();
+                    a.put("id", rs.getInt("achievement_id"));
+                    a.put("badge_name", rs.getString("badge_name"));
+                    a.put("badge_icon", rs.getString("badge_icon"));
+                    a.put("category", rs.getString("category"));
+                    a.put("description", rs.getString("description"));
+                    a.put("xp", rs.getInt("xp"));
+                    a.put("earned_date", rs.getString("earned_date"));
+                    a.put("status", rs.getString("status"));
+                    list.add(a);
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error fetching achievements: " + e.getMessage());
+        }
+        return list;
+    }
+
+    private static Map<String, Object> createAchievementMap(String name, String icon, String cat, String desc, int xp, String date, String status) {
+        Map<String, Object> a = new HashMap<>();
+        a.put("badge_name", name);
+        a.put("badge_icon", icon);
+        a.put("category", cat);
+        a.put("description", desc);
+        a.put("xp", xp);
+        a.put("earned_date", date);
+        a.put("status", status);
+        return a;
+    }
+
+    // --- Growth Timeline Queries ---
+    public static List<Map<String, Object>> getGrowthTimeline(int userId) {
+        List<Map<String, Object>> list = new ArrayList<>();
+        if (useFallback) {
+            list.add(createTimelineMap("Joined NexusED", "Initialized twin profile mapping parameters.", "Achievements", "2026-07-24", "Dashboard", 10));
+            list.add(createTimelineMap("Created Student Profile", "Completed basic profile twin setup metrics.", "Academic", "2026-07-24", "Profile", 20));
+            list.add(createTimelineMap("Selected Career Goal", "Set professional target to AI Engineer.", "Career", "2026-07-24", "Roadmap", 30));
+            list.add(createTimelineMap("Completed Java Basics", "Finished syntax and inheritance fundamentals.", "Skills", "2026-07-24", "Skill Tracker", 45));
+            list.add(createTimelineMap("Learned SQL", "Gained basic understanding of database relations.", "Skills", "2026-07-24", "Skill Tracker", 55));
+            list.add(createTimelineMap("Completed Google Cloud Certificate", "Obtained verified GCP Foundational badge.", "Certificates", "2026-07-25", "Certificates", 65));
+            list.add(createTimelineMap("Built Smart Complaint Project", "Deployed intelligent classifier solution with Github sync.", "Projects", "2026-07-25", "Projects", 75));
+            list.add(createTimelineMap("Completed Mock Interview", "Passed initial Technical Screening session successfully.", "Interview", "2026-07-25", "AI Mock Interview", 80));
+            list.add(createTimelineMap("Resume ATS Score Improved to 86%", "Enhanced resume keywords optimization.", "Resume", "2026-07-25", "Resume Analyzer", 85));
+            list.add(createTimelineMap("Solved 100 Coding Problems", "Milestone completed in Coding Tracker.", "Coding", "2026-07-26", "Coding Tracker", 90));
+            list.add(createTimelineMap("Career Readiness reached 78%", "Graduated to placement readiness stage.", "Career", "2026-07-26", "Career Readiness", 95));
+            list.add(createTimelineMap("Industry Ready", "Unlocked peak technical alignment metrics.", "Achievements", "2026-07-26", "Career Readiness", 100));
+            return list;
+        }
+
+        String sql = "SELECT * FROM growth_timeline WHERE user_id = ? ORDER BY timeline_id ASC";
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, userId);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Map<String, Object> t = new HashMap<>();
+                    t.put("id", rs.getInt("timeline_id"));
+                    t.put("title", rs.getString("title"));
+                    t.put("description", rs.getString("description"));
+                    t.put("category", rs.getString("category"));
+                    t.put("event_date", rs.getString("event_date"));
+                    t.put("related_module", rs.getString("related_module"));
+                    t.put("completion_percentage", rs.getInt("completion_percentage"));
+                    list.add(t);
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error fetching growth timeline: " + e.getMessage());
+        }
+        return list;
+    }
+
+    private static Map<String, Object> createTimelineMap(String title, String desc, String cat, String date, String module, int pct) {
+        Map<String, Object> t = new HashMap<>();
+        t.put("title", title);
+        t.put("description", desc);
+        t.put("category", cat);
+        t.put("event_date", date);
+        t.put("related_module", module);
+        t.put("completion_percentage", pct);
+        return t;
+    }
 }
